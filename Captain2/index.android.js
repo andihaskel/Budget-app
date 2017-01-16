@@ -11,15 +11,11 @@ import {
   Text,
   View
 } from 'react-native';
-import Dialogo from './Dialogo';
-import BotonAndi from './BotonAndi';
-
 export default class Captain2 extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Dialogo nombre='Gabi' apellido='Bursztein' />
-         <BotonAndi />
+        
       </View>
     );
   }
