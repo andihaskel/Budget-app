@@ -11,16 +11,7 @@ import {
   Text,
   View
 } from 'react-native';
-
-export default class Captain2 extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        
-      </View>
-    );
-  }
-}
+import BotonAndi from './BotonAndi';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,5 +31,17 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+export default class Captain2 extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <BotonAndi />
+      </View>
+    );
+  }
+}
+
+
 
 AppRegistry.registerComponent('Captain2', () => Captain2);
