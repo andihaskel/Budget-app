@@ -11,11 +11,13 @@ import {
   Text,
   View
 } from 'react-native';
+import Dialogo from './Dialogo';
+
 export default class Captain2 extends Component {
   render() {
     return (
       <View style={styles.container}>
-        
+        <Dialogo nombre='Gabriel' apellido='Bursztein' />
       </View>
     );
   }
