@@ -12,16 +12,19 @@ import {
   View
 } from 'react-native';
 import Dialogo from './Dialogo';
+import BotonAndi from './BotonAndi';
 
 export default class Captain2 extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Dialogo nombre='Gabi' apellido='Bursztein'>
+        <Dialogo nombre='Gabi' apellido='Bursztein' />
+         <BotonAndi />
       </View>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -41,5 +44,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+
+
+
 
 AppRegistry.registerComponent('Captain2', () => Captain2);
