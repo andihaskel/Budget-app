@@ -65,7 +65,7 @@ export default class Captain2 extends Component {
   this.setLogin = this.setLogin.bind(this);
   this.setLogout = this.setLogout.bind(this);
   this.setUserData= this.setUserData.bind(this);
-  this.state = {isLogged: false, username: "", password: ""};
+  this.state = {isLogged: true, username: "", password: ""};
 }
 setLogin() {
   this.setState({ isLogged: true });
