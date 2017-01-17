@@ -10,6 +10,8 @@
   StyleSheet,
   Text,
   View,
+  ScrollView,
+  Button
 } from 'react-native';
 
 import BotonAndi from './BotonAndi';
@@ -17,18 +19,27 @@ import Dialogo from './Dialogo';
 import Page1 from './Page1';
 import Page2 from './Page2';
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import Home from './Home';
+import AddExpense from './AddExpense';
 
 export default class Captain2 extends Component {
-
+  constructor() {
+    super();
+    this.state = {expenses: []}
+  }
+  
   render() {
-
     return (
      <ScrollableTabView>
-     <Text tabLabel='Tab #1'>My</Text>
-     <Text tabLabel='Tab #2 word word'>favorite</Text>
-     <Text tabLabel='Tab #3 word word word'>project</Text>
-     <Text tabLabel='Tab #4 word word word word'>favorite</Text>
-     <Text tabLabel='Tab #5'>project</Text>
+     <ScrollView tabLabel='Datos'>
+     <Home />
+     </ScrollView>
+     <ScrollView tabLabel='Home'> 
+     <AddExpense />
+     </ScrollView>
+     <ScrollView tabLabel='Cuenta'> 
+     </ScrollView>
      </ScrollableTabView>
      );
   }
