@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  View, 
+  View,
   Text,
   Button,
   Navigator,
@@ -22,8 +22,6 @@ class AddIncome extends Component {
     super(props);
     this.addIncome = this.addIncome.bind(this);
     this.goBack = this.goBack.bind(this);
-    this.openModal = this.openModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
     this.state={price: '', description: '', category: 'General', coin: 'shk'}
   }
   addIncome(){
@@ -46,7 +44,7 @@ class AddIncome extends Component {
     handler: this.goBack
   }
 
- 
+
   var categories = [{name: 'General'}, {name: 'Comida'}, {name: 'Bebida'}];
   return (
     <View>
@@ -69,7 +67,6 @@ class AddIncome extends Component {
     </Picker>
     <TextInput  placeholder='Detail' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({description: text})} />
     <TextInput keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(num) => this.setState({price: num})} />
-    <Button title='Agregar categoria' onPress={this.openModal} />
     <Button title='Agregar' onPress={this.addIncome} />
     </View>
     )
@@ -80,5 +77,3 @@ class AddIncome extends Component {
 
 
 module.exports = AddIncome;
-
-
