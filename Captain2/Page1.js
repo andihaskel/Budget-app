@@ -3,23 +3,21 @@ import {
   Container,
   Content,
   Button } from 'native-base';
-class Page1 extends Component {
+  import Icon from 'react-native-vector-icons/FontAwesome';
+  class Page1 extends Component {
     render() {
-        return (
-            <Container>
-                <Content>
-                    //Small size button
-                    <Button small primary> Primary </Button>
+      return (
+        <Container>
+          <Content>
+            <Button small primary> Primary </Button>
+            <Icon name="rocket" size={30} color="#900" />
+            <Button success> Success </Button>
 
-                    //Regular size button
-                    <Button success> Success </Button>
-
-                    //Large size button
-                    <Button large info> Info </Button>
-                </Content>
-            </Container>
-        );
+            <Button large info> Info </Button>
+          </Content>
+        </Container>
+      );
     }
-}
+  }
 
-module.exports = Page1;
+  module.exports = Page1;

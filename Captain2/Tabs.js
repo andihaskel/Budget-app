@@ -19,16 +19,17 @@ class Tabs extends Component {
 	render() {
 		return (
 			<ScrollableTabView >
-			<ScrollView tabLabel='Datos'>
-			<Home navigator={this.props.navigator} />
-			</ScrollView>
-			<ScrollView tabLabel='Home'>
-			<DetailExpenses navigator={navigator}/>
-			</ScrollView>
-			<ScrollView tabLabel='Cuenta'>
-			</ScrollView>
+				<ScrollView tabLabel='Datos'>
+					<Home navigator={this.props.navigator} />
+				</ScrollView>
+				<ScrollView tabLabel='Home'>
+					<DetailExpenses navigator={navigator}/>
+				</ScrollView>
+				<ScrollView tabLabel='Cuenta'>
+					<Page1 />
+				</ScrollView>
 			</ScrollableTabView>
-			);
+		);
 	}
 }
 

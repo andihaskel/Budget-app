@@ -17,7 +17,7 @@
   ToastAndroid,
   Navigator,
   ToolbarAndroid,
-  Button
+  Button,
 } from 'react-native';
 import Dialogo from './Dialogo';
 import Page2 from './Page2';

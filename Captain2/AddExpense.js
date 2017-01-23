@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  View, 
+  View,
   Text,
   Button,
   TextInput,
@@ -10,6 +10,7 @@ import {
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import TextField from 'react-native-md-textinput';
 import NavigationBar from 'react-native-navbar';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class AddExpense extends Component {
   constructor(props) {
@@ -24,38 +25,36 @@ class AddExpense extends Component {
     this.props.navigator.pop();
   }
   render() {
-   var leftButtonConfig = {
-    title: 'Back',
-    handler: this.goBack
-  }
-  return (
-    <View>
-    <NavigationBar
-    title={{title:'Add expense'}}
-    leftButton={leftButtonConfig}
-    />
-    <Picker
-    selectedValue={this.state.category}
-    onValueChange={(cat) => this.setState({category: cat})}>
-    <Picker.Item label="Shekel" value="sjk" />
-    <Picker.Item label="Dolar" value="dol" />
-    </Picker>
-    <TextInput placeholder='Price' keyboardType='phone-pad' highlightColor={'#00BCD4'} onChangeText={(price) => this.setState({price})}/>
-    <Picker
-    selectedValue={this.state.category}
-    onValueChange={(cat) => this.setState({category: cat})}>
-    <Picker.Item label="General" value="General" />
-    <Picker.Item label="Comida" value="Comida" />
-    </Picker>
-    <Button title='Add' onPress={this.sendExpense.bind(this)} />
-    </View>
+    var leftButtonConfig = {
+      title: 'Back',
+      handler: this.goBack,
+    }
+    return (
+      <View>
+        <NavigationBar
+          title={{title:'Add expense'}}
+          leftButton={leftButtonConfig}
+        />
+        <Picker
+          selectedValue={this.state.category}
+          onValueChange={(cat) => this.setState({category: cat})}>
+          <Picker.Item label="Shekel" value="sjk" />
+          <Picker.Item label="Dolar" value="dol" />
+        </Picker>
+        <TextInput placeholder='Price' keyboardType='phone-pad' highlightColor={'#00BCD4'} onChangeText={(price) => this.setState({price})}/>
+        <Picker
+          selectedValue={this.state.category}
+          onValueChange={(cat) => this.setState({category: cat})}>
+          <Picker.Item label="General" value="General" />
+          <Picker.Item label="Comida" value="Comida" />
+        </Picker>
+        <Button title='Add' onPress={this.sendExpense.bind(this)} />
+      </View>
     )
-}
+  }
 
 
 }
 
 
 module.exports = AddExpense;
-
-
