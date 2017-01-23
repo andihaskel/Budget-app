@@ -1,19 +1,25 @@
-import React, {Component} from 'react';
-import {View, Text} from 'react-native'
-
+import React, { Component } from 'react';
+import {
+  Container,
+  Content,
+  Button } from 'native-base';
 class Page1 extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {nombre: this.props.nombre, apellido: this.props.apellido}
-	}
-	render() {
+    render() {
+        return (
+            <Container>
+                <Content>
+                    //Small size button
+                    <Button small primary> Primary </Button>
 
-		return(
-			<View>
-				<Text>Hola {this.state.nombre} {this.state.apellido}</Text>
-			</View>
-			)
-	}
+                    //Regular size button
+                    <Button success> Success </Button>
+
+                    //Large size button
+                    <Button large info> Info </Button>
+                </Content>
+            </Container>
+        );
+    }
 }
 
 module.exports = Page1;

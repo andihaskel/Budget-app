@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, Button, StyleSheet} from 'react-native'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-
+import AddExpense from './AddExpense';
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -23,38 +23,38 @@ const styles = StyleSheet.create({
 });
 
 class Home extends Component {
-	constructor() {
-		super();
-		this.state= {fill: 70};
+	constructor(props) {
+		super(props);
+		this.imprimir = this.imprimir.bind(this);
 	}
-
+	imprimir() {
+		console.log('Hola');
+	}
+	addExpense() {
+		this.props.navigator.push({id:'addExpense'});
+	}
+	addIncome() {
+		this.props.navigator.push({id:'addIncome'});
+	}
 	render() {
-
 		return(
 			<View style={styles.container}>
 			<Text style={styles.welcome}>Budget</Text>
 			<AnimatedCircularProgress
 			size={200}
 			width={10}
-			fill={this.state.fill}
+			fill={70}
 			tintColor="#00e0ff"
 			rotation={0}
 			linecap='round'
 			backgroundColor="#3d5875">
-			{
-				(fill) => (
-				<Text>
-				{ this.state.fill }
-				</Text>
-				)
-			}
 			</AnimatedCircularProgress>
-			<View style={styles.container}>
-			<Button title='Add Income' />
-			<Button title='Add Expense' />
-			</View>
+			<Button title='Add Expense' onPress={this.addExpense.bind(this)} />
+			<Button title='Add Income' onPress={this.addIncome.bind(this)} />
+			<Button title='Prueba' onPress={this.imprimir} />
 			</View>
 			)
+
 	}
 }
 
