@@ -11,7 +11,9 @@ import {
 	Container,
 	Content,
 	Button,
-	Tabs
+	Tabs,
+	Header,
+	Title
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -25,8 +27,13 @@ class TabsComponent extends Component {
 	constructor(props) {
 		super(props);
 	}
+	addExpense() {
+		this.props.navigator.push({id:'addExpense'});
+	}
+	addIncome() {
+		this.props.navigator.push({id:'addIncome'});
+	}
 	render() {
-
 		const styles = StyleSheet.create({
 			actionButtonIcon: {
 				fontSize: 30,
@@ -36,21 +43,21 @@ class TabsComponent extends Component {
 		});
 		return (
 			<ScrollView>
-				<ActionButton buttonColor="#2BB0FF" style={{zIndex:1}} >
-					<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={() => {}}>
+				<ActionButton buttonColor="#2BB0FF">
+					<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={this.addExpense.bind(this)}>
 						<Icon name="usd" style={styles.actionButtonIcon} />
 					</ActionButton.Item>
-					<ActionButton.Item buttonColor='#00CF5F' title="Add income" onPress={() => {}}>
+					<ActionButton.Item buttonColor='#00CF5F' title="Add income" onPress={this.addIncome.bind(this)}>
 						<Icon name="usd" style={styles.actionButtonIcon} />
 					</ActionButton.Item>
 				</ActionButton>
 				<View style={{zIndex:-1}}>
 					<Container>
 						<Content>
-							<Tabs>
-								<Home tabLabel='Home' navigator={this.props.navigator} />
-								<DetailExpenses tabLabel='Datos' navigator={this.props.navigator} />
+							<Tabs initialPage={1}>
 								<Page1 tabLabel='Cuenta' navigator={this.props.navigator} />
+								<Home tabLabel='Home' navigator={this.props.navigator} />
+								<DetailExpenses tabLabel='Fijos' navigator={this.props.navigator} />
 							</Tabs>
 						</Content>
 					</Container>

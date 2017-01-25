@@ -60,14 +60,9 @@ class Home extends Component {
 	imprimir() {
 		console.log('Hola');
 	}
-	addExpense() {
-		this.props.navigator.push({id:'addExpense'});
-	}
-	addIncome() {
-		this.props.navigator.push({id:'addIncome'});
-	}
+
 	render() {
-		var items = ['Simon Mignolet','Nathaniel Clyne','Dejan Lovren','Mama Sakho','Emre Can','Simon Mignolet','Nathaniel Clyne','Dejan Lovren','Mama Sakho','Emre Can'];
+		var items = [{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 5000},{name: 'Carlos Mignolet', price: 55},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},];
 
 		return(
 			<Container>
@@ -98,8 +93,8 @@ class Home extends Component {
 								renderRow={(item) =>
 									<ListItem>
 										<Thumbnail source={require('./cutlery.png')} />
-										<Text>{item}</Text>
-										<Text note>$200</Text>
+										<Text>{item.name}</Text>
+										<Text note>{item.price}</Text>
 									</ListItem>
 								}>
 							</List>

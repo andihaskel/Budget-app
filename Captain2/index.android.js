@@ -33,7 +33,7 @@ import ListViewDemo from './ListViewDemo';
 import ViewIncome from './ViewIncome';
 import Tabs from './Tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import EditFixed from './EditFixed';
 
 var t = require('tcomb-form-native');
 var Form = t.form.Form;
@@ -78,26 +78,16 @@ export default class Captain2 extends Component {
     this.setLogin = this.setLogin.bind(this);
     this.setLogout = this.setLogout.bind(this);
     this.setUserData= this.setUserData.bind(this);
-    this.showScreenExpense = this.showScreenExpense.bind(this);
-    this.showScreenIncome = this.showScreenIncome.bind(this);
-    this.hideScreenExpense = this.hideScreenExpense.bind(this);
-    this.hideScreenIncome = this.hideScreenIncome.bind(this);
     this.addOneExpense = this.addOneExpense.bind(this);
     this.addOneIncome = this.addOneIncome.bind(this);
-    this.showIncomeView = this.showIncomeView.bind(this);
-    this.hideIncomeView = this.hideIncomeView.bind(this);
-    this.setIncomeDetail = this.setIncomeDetail.bind(this);
     this.navigatorRenderScene = this.navigatorRenderScene.bind(this);
     this.state = {isLogged: true,
       username: "",
       password: "",
-      showScreenExpense: false,
-      showScreenIncome:false,
       incomes: 100,
       expenses: 8,
       categories: ['General', 'Comida', 'Salidas'],
       incomesList: [ {amount:20, description: 'Prueba', category: 'General'}, {amount:80, description: 'Prueba 2', category: 'Comida'}],
-      showScreenViewIncome: false,
       incomeDetail: {}
     };
   }
@@ -114,29 +104,7 @@ export default class Captain2 extends Component {
       isLogged: true,
     });
   }
-  setIncomeDetail(desc, price) {
-    var obj = {description: desc, price: price};
-    this.setState({incomeDetail: obj})
-    this.showIncomeView();
-  }
-  showScreenExpense() {
-    this.setState({showScreenExpense: true});
-  }
-  hideScreenExpense() {
-    this.setState({showScreenExpense: false});
-  }
-  showScreenIncome() {
-    this.setState({showScreenIncome: true});
-  }
-  hideScreenIncome() {
-    this.setState({showScreenIncome: false});
-  }
-  showIncomeView() {
-    this.setState({showScreenViewIncome: true})
-  }
-  hideIncomeView() {
-    this.setState({showScreenViewIncome: false})
-  }
+
   addOneExpense(val) {
     var exp = this.state.expenses;
     var total = exp + parseInt(val);
@@ -162,23 +130,15 @@ export default class Captain2 extends Component {
     var show = null;
     switch (route.id) {
       case 'tabs':
-      show = <Tabs navigator={navigator} />
-      break;
+      return <Tabs navigator={navigator} />
       case 'addExpense':
-      show = <AddExpense navigator={navigator} />
-      break;
+      return <AddExpense navigator={navigator} />
       case 'addIncome':
-      show = <AddIncome navigator={navigator} />
-      break;
+      return <AddIncome navigator={navigator} />
+      case 'editFixed':
+      return <EditFixed navigator={navigator} item={route.data} />
     }
-    return (
-        show
-
-
-    );
-
   }
-
 
   render() {
     return (
