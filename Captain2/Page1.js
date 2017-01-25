@@ -4,9 +4,14 @@ import {
   Content,
   Button,
   Fab,
+  List,
+  ListItem,
+  Title,
+  H1
 } from 'native-base';
 import {
-  StyleSheet
+  StyleSheet,
+  Text
 } from 'react-native'
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -50,7 +55,6 @@ const styles = StyleSheet.create({
 class Page1 extends Component {
   constructor(props) {
     super(props)
-    this.state = {active: true};
   }
 
 
@@ -59,11 +63,16 @@ class Page1 extends Component {
     return (
       <Container>
         <Content>
-          
-          </Content>
-        </Container>
-      );
-    }
+          <List>
+            <ListItem>
+              <H1>Ahorrar $1000</H1>
+              <Text>Progreso = 50 </Text>
+            </ListItem>
+          </List>
+        </Content>
+      </Container>
+    );
   }
+}
 
-  module.exports = Page1;
+module.exports = Page1;

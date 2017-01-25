@@ -10,6 +10,7 @@ import {
   Alert,
   ToastAndroid,
   Navigator,
+  DrawerLayoutAndroid,
   ToolbarAndroid
 } from 'react-native';
 import {
@@ -19,7 +20,6 @@ import {
   Button,
   Content
 } from 'native-base';
-
 import Dialogo from './Dialogo';
 import Page2 from './Page2';
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
@@ -34,6 +34,7 @@ import ViewIncome from './ViewIncome';
 import Tabs from './Tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EditFixed from './EditFixed';
+
 
 var t = require('tcomb-form-native');
 var Form = t.form.Form;
@@ -81,6 +82,7 @@ export default class Captain2 extends Component {
     this.addOneExpense = this.addOneExpense.bind(this);
     this.addOneIncome = this.addOneIncome.bind(this);
     this.navigatorRenderScene = this.navigatorRenderScene.bind(this);
+    this.openDrawer = this.openDrawer.bind(this);
     this.state = {isLogged: true,
       username: "",
       password: "",
@@ -91,6 +93,7 @@ export default class Captain2 extends Component {
       incomeDetail: {}
     };
   }
+
   setLogin() {
     this.setState({ isLogged: true });
   }
@@ -104,6 +107,9 @@ export default class Captain2 extends Component {
       isLogged: true,
     });
   }
+  openDrawer() {
+		this.refs['DRAWER'].openDrawer();
+	}
 
   addOneExpense(val) {
     var exp = this.state.expenses;
@@ -130,7 +136,7 @@ export default class Captain2 extends Component {
     var show = null;
     switch (route.id) {
       case 'tabs':
-      return <Tabs navigator={navigator} />
+      return <Tabs navigator={navigator} drawer={this.openDrawer} />
       case 'addExpense':
       return <AddExpense navigator={navigator} />
       case 'addIncome':
@@ -141,11 +147,32 @@ export default class Captain2 extends Component {
   }
 
   render() {
+    var navigationView = (
+      <View style={{flex: 1, backgroundColor: '#fff'}}>
+        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>I'm in the Drawer!</Text>
+      </View>
+    );
     return (
+      <DrawerLayoutAndroid
+        ref='DRAWER'
+        drawerWidth={300}
+        drawerPosition={DrawerLayoutAndroid.positions.Left}
+        renderNavigationView={() => navigationView}>
+        <Header>
+          <Button transparent onPress={this.openDrawer}>
+            <Icon name='bars' size={30} />
+          </Button>
+          <Title>Aplicacion</Title>
+          <Button transparent>
+            <Icon name='cog' size={30}/>
+          </Button>
+        </Header>
       <Navigator
         initialRoute={{id:'tabs'}}
         renderScene={this.navigatorRenderScene}
       />
+    </DrawerLayoutAndroid>
+
 
     );
   }

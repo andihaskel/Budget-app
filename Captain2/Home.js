@@ -88,11 +88,11 @@ class Home extends Component {
 					</AnimatedCircularProgress>
 
 
-					<ScrollView style={{height:350}}>
+					<ScrollView style={{height:300}}>
 							<List dataArray={items}
 								renderRow={(item) =>
 									<ListItem>
-										<Thumbnail source={require('./cutlery.png')} />
+										<Thumbnail size={40} source={require('./cutlery.png')} />
 										<Text>{item.name}</Text>
 										<Text note>{item.price}</Text>
 									</ListItem>
