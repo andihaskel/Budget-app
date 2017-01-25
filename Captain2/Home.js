@@ -1,26 +1,36 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet} from 'react-native'
+import {View, StyleSheet, ScrollView} from 'react-native'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import AddExpense from './AddExpense';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {
+	Container,
+	Header,
+	Title,
+	Button,
+	Content,
+	List,
+	ListItem,
+	Fab,
+	Thumbnail,
+	Text
+} from 'native-base';
+
 
 const styles = StyleSheet.create({
 	points: {
-		fontFamily: 'Helvetica',
 		backgroundColor: 'transparent',
 		position: 'absolute',
-		top: 70,
-		left: 50,
-		width: 90,
+		top: 90,
+		left: 170,
 		textAlign: 'center',
 		color: '#7591af',
-		fontSize: 35,
-		fontWeight: "100"
+		fontSize: 30
 	},
 	container: {
 		flex: 1,
-		height: 600,
+		height: 270,
 		alignItems: 'center',
 		backgroundColor: '#F5FCFF',
 	},
@@ -57,34 +67,46 @@ class Home extends Component {
 		this.props.navigator.push({id:'addIncome'});
 	}
 	render() {
+		var items = ['Simon Mignolet','Nathaniel Clyne','Dejan Lovren','Mama Sakho','Emre Can','Simon Mignolet','Nathaniel Clyne','Dejan Lovren','Mama Sakho','Emre Can'];
+
 		return(
-			<View style={styles.container}>
-				<Text style={styles.welcome}>Budget</Text>
-				<AnimatedCircularProgress
-					size={200}
-					width={10}
-					fill={this.state.fill}
-					tintColor="#00e0ff"
-					rotation={0}
-					linecap='round'
-					backgroundColor="#3d5875">
-					{
-						(fill) => (
-							<Text style={styles.points}>
-								$150
-							</Text>
-						)
-					}
-				</AnimatedCircularProgress>
-				<ActionButton buttonColor="#2BB0FF" >
-					<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={this.addExpense.bind(this)}>
-						<Icon name="usd" style={styles.actionButtonIcon} />
-					</ActionButton.Item>
-					<ActionButton.Item buttonColor='#00CF5F' title="Add income" onPress={this.addIncome.bind(this)}>
-						<Icon name="usd" style={styles.actionButtonIcon} />
-					</ActionButton.Item>
-				</ActionButton>
-			</View>
+			<Container>
+				<Content>
+					<Text style={styles.welcome}>Budget</Text>
+					<AnimatedCircularProgress
+						size={200}
+						width={7}
+						fill={this.state.fill}
+						tintColor="#00e0ff"
+						rotation={0}
+						linecap='round'
+						backgroundColor="#3d5875"
+						style={{alignItems:'center'}}
+						>
+						{
+							(fill) => (
+								<Text style={styles.points}>
+									$150
+								</Text>
+							)
+						}
+					</AnimatedCircularProgress>
+
+
+					<ScrollView style={{height:350}}>
+							<List dataArray={items}
+								renderRow={(item) =>
+									<ListItem>
+										<Thumbnail source={require('./cutlery.png')} />
+										<Text>{item}</Text>
+										<Text note>$200</Text>
+									</ListItem>
+								}>
+							</List>
+					</ScrollView>
+				</Content>
+
+			</Container>
 		)
 
 	}

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {
 	View,
-	Text, 
-	Button, 
+	Text,
+	Button,
 	StyleSheet,
 	ListView
 } from 'react-native';
@@ -18,7 +18,7 @@ class DetailExpenses extends Component {
 	}
 	render() {
 		return(
-			<View style={{flex: 1, paddingTop: 22}}>
+			<View style={{flex: 1, paddingTop: 22, zIndex:-1}}>
 			<ListView
 			dataSource={this.state.dataSource}
 			renderRow={(rowData) => { return(
@@ -37,6 +37,6 @@ class DetailExpenses extends Component {
 			</View>
 			);
 	}
-} 
+}
 
 module.exports = DetailExpenses;

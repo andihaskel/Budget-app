@@ -1,9 +1,3 @@
-/**
-* Sample React Native App
-* https://github.com/facebook/react-native
-* @flow
-*/
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -16,9 +10,16 @@ import {
   Alert,
   ToastAndroid,
   Navigator,
-  ToolbarAndroid,
-  Button,
+  ToolbarAndroid
 } from 'react-native';
+import {
+  Container,
+  Header,
+  Title,
+  Button,
+  Content
+} from 'native-base';
+
 import Dialogo from './Dialogo';
 import Page2 from './Page2';
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
@@ -31,6 +32,7 @@ import IncomeList from './IncomeList';
 import ListViewDemo from './ListViewDemo';
 import ViewIncome from './ViewIncome';
 import Tabs from './Tabs';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 var t = require('tcomb-form-native');
@@ -157,23 +159,34 @@ export default class Captain2 extends Component {
 
   navigatorRenderScene(route, navigator) {
     _navigator = navigator;
+    var show = null;
     switch (route.id) {
       case 'tabs':
-      return <Tabs navigator={navigator} />
+      show = <Tabs navigator={navigator} />
+      break;
       case 'addExpense':
-      return <AddExpense navigator={navigator} />
+      show = <AddExpense navigator={navigator} />
+      break;
       case 'addIncome':
-      return <AddIncome navigator={navigator} />
+      show = <AddIncome navigator={navigator} />
+      break;
     }
+    return (
+        show
+
+
+    );
+
   }
 
 
   render() {
     return (
-        <Navigator
-          initialRoute={{id:'tabs'}}
-          renderScene={this.navigatorRenderScene}
-        />
+      <Navigator
+        initialRoute={{id:'tabs'}}
+        renderScene={this.navigatorRenderScene}
+      />
+
     );
   }
 
