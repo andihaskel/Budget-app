@@ -7,14 +7,20 @@ import {
   List,
   ListItem,
   Title,
-  H1
+  H2,
+  Card,
+  CardItem,
+  Thumbnail
 } from 'native-base';
 import {
   StyleSheet,
-  Text
+  Text,
+  Image,
+  View
 } from 'react-native'
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import * as Progress from 'react-native-progress';
 
 const styles = StyleSheet.create({
   points: {
@@ -62,13 +68,71 @@ class Page1 extends Component {
   render() {
     return (
       <Container>
-        <Content>
-          <List>
-            <ListItem>
-              <H1>Ahorrar $1000</H1>
-              <Text>Progreso = 50 </Text>
-            </ListItem>
-          </List>
+        <Content alignItems='center'>
+          <Card style={{width:380}}>
+            <CardItem cardBody>
+
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{width: 80}}>
+                  <Thumbnail cardBody source={require('./badge.png')}  size={100} style={{alignItems:'center'}} />
+                </View>
+                <View style={{width: 280, marginTop:20, marginRight:50 ,alignItems:'center'}}>
+                  <H2 style={{marginBottom:20}}>
+                    Comprarme un auto {'\n'}
+                  </H2>
+                  <Progress.Bar progress={0.3} width={209} height={8} />
+                </View>
+              </View>
+
+            </CardItem>
+
+
+            <CardItem style={{alignItems:'center'}}>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{width: 130}}>
+                  <Text  style={{fontSize:18}}>42% {'\n'}founded</Text>
+                </View>
+                <View style={{width: 130}}>
+                  <Text  style={{fontSize:18}}>$327 {'\n'}pledged</Text>
+                </View>
+                <View style={{width: 130}}>
+                  <Text style={{fontSize:18}}> 32{'\n'}days to go</Text>
+                </View>
+              </View>
+            </CardItem>
+          </Card>
+
+
+
+          <Card style={{width:380}}>
+            <CardItem cardBody>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{width: 80}}>
+                  <Thumbnail cardBody source={require('./badge.png')}  size={100} style={{alignItems:'center'}} />
+                </View>
+                <View style={{width: 280, marginTop:20, marginRight:50 ,alignItems:'center'}}>
+                  <H2 style={{marginBottom:20}}>
+                    Ahorrar $10000 {'\n'}
+                  </H2>
+                  <Progress.Bar color='#00CF5F' progress={1} width={209} height={8} />
+                </View>
+              </View>
+            </CardItem>
+            <CardItem style={{alignItems:'center'}}>
+              <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={{width: 130}}>
+                  <Text  style={{fontSize:18}}>100% {'\n'}founded</Text>
+                </View>
+                <View style={{width: 130}}>
+                  <Text  style={{fontSize:18}}>$10000 {'\n'}pledged</Text>
+                </View>
+                <View style={{width: 130}}>
+                  <Text style={{fontSize:18}}> 0{'\n'}days to go</Text>
+                </View>
+              </View>
+            </CardItem>
+          </Card>
+
         </Content>
       </Container>
     );
