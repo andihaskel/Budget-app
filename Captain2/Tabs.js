@@ -21,8 +21,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import DetailExpenses from './DetailExpenses';
 import Home from './Home';
-import Page1 from './Page1';
 import ActionButton from 'react-native-action-button';
+import Objectives from './Objectives';
 
 class TabsComponent extends Component {
 	constructor(props) {
@@ -64,7 +64,7 @@ class TabsComponent extends Component {
 						<Content>
 
 							<Tabs initialPage={0}>
-								<Page1 tabLabel='Objectives' navigator={this.props.navigator} />
+								<Objectives tabLabel='Objectives' navigator={this.props.navigator} />
 								<Home tabLabel='Home' navigator={this.props.navigator} />
 								<DetailExpenses tabLabel='Fijos' navigator={this.props.navigator} />
 							</Tabs>
