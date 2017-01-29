@@ -141,7 +141,7 @@ export default class Captain2 extends Component {
     var show = null;
     switch (route.id) {
       case 'tabs':
-      return <Tabs navigator={navigator} drawer={this.openDrawer} />
+      return <Tabs navigator={navigator} openDrawer={this.openDrawer} />
       case 'addExpense':
       return <AddExpense navigator={navigator} />
       case 'addIncome':
@@ -195,27 +195,23 @@ export default class Captain2 extends Component {
         drawerWidth={300}
         drawerPosition={DrawerLayoutAndroid.positions.Left}
         renderNavigationView={() => navigationView}>
-        <Header>
-          <Button block transparent onPress={this.openDrawer}>
-            <Icon name='bars' size={30} />
-          </Button>
-          <Title>Aplicacion</Title>
-        </Header>
         <Navigator
           initialRoute={{id:'tabs'}}
           renderScene={this.navigatorRenderScene}
-        />
-      </DrawerLayoutAndroid>
+          configureScene={(route, routeStack) =>
+            Navigator.SceneConfigs.FloatFromBottom}
+          />
+        </DrawerLayoutAndroid>
 
 
-    );
+      );
+    }
+
   }
 
-}
 
 
 
 
 
-
-AppRegistry.registerComponent('Captain2', () => Captain2);
+  AppRegistry.registerComponent('Captain2', () => Captain2);

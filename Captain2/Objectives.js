@@ -57,6 +57,10 @@ const styles = StyleSheet.create({
     fontSize: 30,
     height: 30,
     color: 'white',
+  },
+  blurEffect: {
+    backgroundColor:'green',
+    opacity:0.5
   }
 });
 
@@ -73,7 +77,6 @@ class Objectives extends Component {
         <Content alignItems='center'>
           <Card style={{width:380}}>
             <CardItem cardBody>
-
               <View style={{flex: 1, flexDirection: 'row'}}>
                 <View style={{width: 80}}>
                   <Thumbnail cardBody source={require('./badge.png')}  size={100} style={{alignItems:'center'}} />
@@ -103,35 +106,38 @@ class Objectives extends Component {
               </View>
             </CardItem>
           </Card>
-
+          <View style={{zIndex:-1}}>
             <Card style={{width:380}}>
-              <CardItem cardBody>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                  <View style={{width: 80}}>
-                    <Thumbnail cardBody source={require('./badge.png')}  size={100} style={{alignItems:'center'}} />
+              <View style={styles.blurEffect}>
+                <CardItem cardBody>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <View style={{width: 80}}>
+                      <Thumbnail cardBody source={require('./badge.png')}  size={100} style={{alignItems:'center'}} />
+                    </View>
+                    <View style={{width: 280, marginTop:20, marginRight:50 ,alignItems:'center'}}>
+                      <H2 style={{marginBottom:20}}>
+                        Ahorrar $10000 {'\n'}
+                      </H2>
+                      <Progress.Bar color='#00CF5F' progress={1} width={209} height={8} />
+                    </View>
                   </View>
-                  <View style={{width: 280, marginTop:20, marginRight:50 ,alignItems:'center'}}>
-                    <H2 style={{marginBottom:20}}>
-                      Ahorrar $10000 {'\n'}
-                    </H2>
-                    <Progress.Bar color='#00CF5F' progress={1} width={209} height={8} />
+                </CardItem>
+                <CardItem style={{alignItems:'center'}}>
+                  <View style={{flex: 1, flexDirection: 'row'}}>
+                    <View style={{width: 130}}>
+                      <Text  style={{fontSize:18}}>100% {'\n'}founded</Text>
+                    </View>
+                    <View style={{width: 130}}>
+                      <Text  style={{fontSize:18}}>$10000 {'\n'}pledged</Text>
+                    </View>
+                    <View style={{width: 130}}>
+                      <Text style={{fontSize:18}}> 0{'\n'}days to go</Text>
+                    </View>
                   </View>
-                </View>
-              </CardItem>
-              <CardItem style={{alignItems:'center'}}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                  <View style={{width: 130}}>
-                    <Text  style={{fontSize:18}}>100% {'\n'}founded</Text>
-                  </View>
-                  <View style={{width: 130}}>
-                    <Text  style={{fontSize:18}}>$10000 {'\n'}pledged</Text>
-                  </View>
-                  <View style={{width: 130}}>
-                    <Text style={{fontSize:18}}> 0{'\n'}days to go</Text>
-                  </View>
-                </View>
-              </CardItem>
+                </CardItem>
+              </View>
             </Card>
+          </View>
         </Content>
       </Container>
     );
