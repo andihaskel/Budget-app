@@ -56,9 +56,13 @@ class Home extends Component {
 		super(props);
 		this.imprimir = this.imprimir.bind(this);
 		this.state = {fill:70, excomes: []}
+		this.editFixed = this.editFixed.bind(this);
 	}
 	imprimir() {
 		console.log('Hola');
+	}
+	editFixed(item){
+		this.props.navigator.push({id: 'editFixed', data: item.value});
 	}
 
 	 componentWillMount() {
@@ -96,37 +100,36 @@ class Home extends Component {
 						backgroundColor="#3d5875"
 						style={{alignItems:'center'}}
 						>
-						{
-							(fill) => (
-								<Text style={styles.points}>
-									$150
-								</Text>
-							)
-						}
-					</AnimatedCircularProgress>
-
-
-					<ScrollView style={{height:300}}>
+							{
+								(fill) => (
+									<Text style={styles.points}>
+										$150
+									</Text>
+								)
+							}
+						</AnimatedCircularProgress>
 
 							<List dataArray={this.state.excomes}
-								renderRow={(excome) =>
-									<ListItem>
+						<ScrollView style={{height:300}}>
+							<List dataArray={items}
+								renderRow={(item) =>
+									<ListItem button  onPress={() => {this.editFixed(item)}}>
 										<Thumbnail size={40} source={require('./cutlery.png')} />
 										<Text>{excome.name}</Text>
 										<Text note>{excome.amount}</Text>
 									</ListItem>
 								}>
 							</List>
-					</ScrollView>
-				</Content>
+						</ScrollView>
+					</Content>
 
-			</Container>
-		)
+				</Container>
+			)
 
+		}
 	}
-}
 
 
 
 
-module.exports = Home;
+	module.exports = Home;

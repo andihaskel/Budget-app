@@ -5,13 +5,13 @@ import {
   Text,
   View,
   ScrollView,
-  TouchableHighlight,
   TextInput,
   Alert,
   ToastAndroid,
   Navigator,
   DrawerLayoutAndroid,
-  ToolbarAndroid
+  ToolbarAndroid,
+  TouchableNativeFeedback
 } from 'react-native';
 import {
   Container,
@@ -83,6 +83,8 @@ export default class Captain2 extends Component {
     this.addOneIncome = this.addOneIncome.bind(this);
     this.navigatorRenderScene = this.navigatorRenderScene.bind(this);
     this.openDrawer = this.openDrawer.bind(this);
+    this.closeDrawer = this.closeDrawer.bind(this);
+
     this.state = {isLogged: true,
       username: "",
       password: "",
@@ -108,8 +110,11 @@ export default class Captain2 extends Component {
     });
   }
   openDrawer() {
-		this.refs['DRAWER'].openDrawer();
-	}
+    this.refs['DRAWER'].openDrawer();
+  }
+  closeDrawer() {
+    this.refs['DRAWER'].closeDrawer();
+  }
 
   addOneExpense(val) {
     var exp = this.state.expenses;
@@ -136,7 +141,7 @@ export default class Captain2 extends Component {
     var show = null;
     switch (route.id) {
       case 'tabs':
-      return <Tabs navigator={navigator} drawer={this.openDrawer} />
+      return <Tabs navigator={navigator} openDrawer={this.openDrawer} />
       case 'addExpense':
       return <AddExpense navigator={navigator} />
       case 'addIncome':
@@ -149,7 +154,39 @@ export default class Captain2 extends Component {
   render() {
     var navigationView = (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
-        <Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>I'm in the Drawer!</Text>
+        <View style={{height:100}}>
+          <Text>HOla</Text>
+        </View>
+        <View style={{height:50,   justifyContent: 'center'}}>
+          <TouchableNativeFeedback activeOpacity={0.1} >
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <Icon name='cog' size={30} style={{width:50, paddingLeft: 10}} />
+              <Text style={{fontSize: 20}}>
+                Configuracion
+              </Text>
+            </View>
+          </TouchableNativeFeedback>
+        </View>
+        <View style={{height:50,  alignItems: 'center'}}>
+          <TouchableNativeFeedback activeOpacity={0.1} >
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <Icon name='cog' size={30} style={{width:50, paddingLeft: 10}} />
+              <Text style={{fontSize: 20}}>
+                Configuracion
+              </Text>
+            </View>
+          </TouchableNativeFeedback>
+        </View>
+        <View style={{height:50}}>
+          <TouchableNativeFeedback activeOpacity={0.1} >
+            <View style={{flex: 1, flexDirection: 'row'}}>
+              <Icon name='cog' size={30} style={{width:50, paddingLeft: 10}} />
+              <Text style={{fontSize: 20}}>
+                Configuracion
+              </Text>
+            </View>
+          </TouchableNativeFeedback>
+        </View>
       </View>
     );
     return (
@@ -158,30 +195,23 @@ export default class Captain2 extends Component {
         drawerWidth={300}
         drawerPosition={DrawerLayoutAndroid.positions.Left}
         renderNavigationView={() => navigationView}>
-        <Header>
-          <Button transparent onPress={this.openDrawer}>
-            <Icon name='bars' size={30} />
-          </Button>
-          <Title>Aplicacion</Title>
-          <Button transparent>
-            <Icon name='cog' size={30}/>
-          </Button>
-        </Header>
-      <Navigator
-        initialRoute={{id:'tabs'}}
-        renderScene={this.navigatorRenderScene}
-      />
-    </DrawerLayoutAndroid>
+        <Navigator
+          initialRoute={{id:'tabs'}}
+          renderScene={this.navigatorRenderScene}
+          configureScene={(route, routeStack) =>
+            Navigator.SceneConfigs.FloatFromBottom}
+          />
+        </DrawerLayoutAndroid>
 
 
-    );
+      );
+    }
+
   }
 
-}
 
 
 
 
 
-
-AppRegistry.registerComponent('Captain2', () => Captain2);
+  AppRegistry.registerComponent('Captain2', () => Captain2);

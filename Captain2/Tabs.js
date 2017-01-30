@@ -21,8 +21,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import DetailExpenses from './DetailExpenses';
 import Home from './Home';
-import Page1 from './Page1';
 import ActionButton from 'react-native-action-button';
+import Objectives from './Objectives';
 
 class TabsComponent extends Component {
 	constructor(props) {
@@ -35,9 +35,10 @@ class TabsComponent extends Component {
 	addIncome() {
 		this.props.navigator.push({id:'addIncome'});
 	}
+
 	render() {
 		var navigationView = (
-			<View style={{flex: 1, backgroundColor: '#fff'}}>
+			<View style={{flex: 1, backgroundColor: '#000'}}>
 				<Text style={{margin: 10, fontSize: 15, textAlign: 'left'}}>I'm in the Drawer!</Text>
 			</View>
 		);
@@ -50,6 +51,12 @@ class TabsComponent extends Component {
 		});
 		return (
 			<ScrollView>
+				<Header>
+          <Button block transparent onPress={this.props.openDrawer}>
+            <Icon name='bars' size={30} />
+          </Button>
+          <Title>Aplicacion</Title>
+        </Header>
 					<ActionButton buttonColor="#2BB0FF">
 						<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={this.addExpense.bind(this)}>
 							<Icon name="usd" style={styles.actionButtonIcon} />
@@ -63,8 +70,8 @@ class TabsComponent extends Component {
 					<Container>
 						<Content>
 
-							<Tabs initialPage={1}>
-								<Page1 tabLabel='Objectives' navigator={this.props.navigator} />
+							<Tabs initialPage={0}>
+								<Objectives tabLabel='Objectives' navigator={this.props.navigator} />
 								<Home tabLabel='Home' navigator={this.props.navigator} />
 								<DetailExpenses tabLabel='Fijos' navigator={this.props.navigator} />
 							</Tabs>
