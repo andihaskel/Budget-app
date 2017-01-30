@@ -55,15 +55,33 @@ class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.imprimir = this.imprimir.bind(this);
-		this.state = {fill:70}
+		this.state = {fill:70, excomes: []}
 	}
 	imprimir() {
 		console.log('Hola');
 	}
 
+	 componentWillMount() {
+       console.log("entro");
+       fetch('http://10.0.2.2:3000/payments/lastMonthPayments')
+       .then((response) => response.json())
+       .then((responseData) => {
+            this.setState({excomes: responseData});
+			console.log("as",responseData);
+
+      })
+      .catch(function(err) {  
+         console.log('Fetch Error', err);  
+
+      });
+
+
+      
+  }
+
 	render() {
 		var items = [{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 5000},{name: 'Carlos Mignolet', price: 55},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},{name: 'Simon Mignolet', price: 200},];
-
+		console.log(this.state.excomes);
 		return(
 			<Container>
 				<Content>
@@ -89,12 +107,13 @@ class Home extends Component {
 
 
 					<ScrollView style={{height:300}}>
-							<List dataArray={items}
-								renderRow={(item) =>
+
+							<List dataArray={this.state.excomes}
+								renderRow={(excome) =>
 									<ListItem>
 										<Thumbnail size={40} source={require('./cutlery.png')} />
-										<Text>{item.name}</Text>
-										<Text note>{item.price}</Text>
+										<Text>{excome.name}</Text>
+										<Text note>{excome.amount}</Text>
 									</ListItem>
 								}>
 							</List>

@@ -6,6 +6,7 @@ import {
   Navigator,
   TextInput,
   Picker,
+  PickerItem,
   Alert,
   ToastAndroid,
   ToolbarAndroid,
@@ -17,12 +18,31 @@ import TextField from 'react-native-md-textinput';
 import NavigationBar from 'react-native-navbar';
 
 
+
 class AddIncome extends Component {
   constructor(props) {
     super(props);
     this.addIncome = this.addIncome.bind(this);
     this.goBack = this.goBack.bind(this);
-    this.state={price: '', description: '', category: 'General', coin: 'shk'}
+    this.componentWillMount = this.componentWillMount.bind(this);
+    this.state={price: '', description: '', category: [], categorySelected: {}, coin: 'shk'}
+  }
+
+  componentWillMount() {
+       fetch('http://10.0.2.2:3000/categories')
+       .then((response) => response.json())
+       .then((responseData) => {
+
+            this.setState({category: responseData});
+
+      })
+      .catch(function(err) {  
+         console.log('Fetch Error', err);  
+
+      });
+
+
+
   }
   addIncome(){
     if(this.state.description === ''){
@@ -46,6 +66,9 @@ class AddIncome extends Component {
 
 
   var categories = [{name: 'General'}, {name: 'Comida'}, {name: 'Bebida'}];
+   
+   console.log('esto!!!!', this.state.category)
+ 
   return (
     <View>
     <NavigationBar
@@ -55,15 +78,22 @@ class AddIncome extends Component {
     <Picker
     selectedValue={this.state.coin}
     onValueChange={(coinVal) => this.setState({coin: coinVal})}>
-    <Picker.Item label="Shekel" value="shk" />
+    <Picker.Item label="Currency" value="shk" />
     <Picker.Item label="Dolar" value="dol" />
     </Picker>
-
+  
     <Picker
-    selectedValue={this.state.category}
-    onValueChange={(cat) => this.setState({category: cat})}>
-    <Picker.Item label="General" value="general" />
-    <Picker.Item label="Comida" value="comida" />
+    selectedValue={this.state.category[0]}
+    onValueChange={(cat) => this.setState({categorySelected: cat})}>
+    
+    { this.state.category.map((s,i) => {
+                        return <PickerItem
+                                 key = {i}
+                                 value={s}
+                                 label={s.name} /> 
+                                }) }
+
+ 
     </Picker>
     <TextInput  placeholder='Detail' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({description: text})} />
     <TextInput keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(num) => this.setState({price: num})} />
