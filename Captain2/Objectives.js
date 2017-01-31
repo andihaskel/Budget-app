@@ -21,7 +21,7 @@ import {
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Progress from 'react-native-progress';
-import EffectsView from 'react-native-effects-view';
+
 
 
 const styles = StyleSheet.create({

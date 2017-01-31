@@ -70,7 +70,7 @@ class TabsComponent extends Component {
 					<Container>
 						<Content>
 
-							<Tabs initialPage={0}>
+							<Tabs initialPage={1}>
 								<Objectives tabLabel='Objectives' navigator={this.props.navigator} />
 								<Home tabLabel='Home' navigator={this.props.navigator} />
 								<DetailExpenses tabLabel='Fijos' navigator={this.props.navigator} />

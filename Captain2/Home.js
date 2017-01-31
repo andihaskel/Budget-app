@@ -18,6 +18,7 @@ import {
 } from 'native-base';
 
 
+
 const styles = StyleSheet.create({
 	points: {
 		backgroundColor: 'transparent',
@@ -109,14 +110,14 @@ class Home extends Component {
 							}
 						</AnimatedCircularProgress>
 
-							<List dataArray={this.state.excomes}
+				
 						<ScrollView style={{height:300}}>
-							<List dataArray={items}
+							<List dataArray={this.state.excomes}
 								renderRow={(item) =>
 									<ListItem button  onPress={() => {this.editFixed(item)}}>
 										<Thumbnail size={40} source={require('./cutlery.png')} />
-										<Text>{excome.name}</Text>
-										<Text note>{excome.amount}</Text>
+										<Text>{item.name}</Text>
+										<Text note>{item.amount}</Text>
 									</ListItem>
 								}>
 							</List>
