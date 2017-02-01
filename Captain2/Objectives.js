@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import {
-  Container,
-  Content,
-  Button,
-  Fab,
   List,
   ListItem,
   Title,
   H2,
   Card,
   CardItem,
-  Thumbnail
+  Thumbnail,
+  Button
 } from 'native-base';
 import {
   StyleSheet,
   Text,
   Image,
-  View
+  View,
+  ScrollView,
+  Alert,
+  ToolbarAndroid,
 } from 'react-native'
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Progress from 'react-native-progress';
-import EffectsView from 'react-native-effects-view';
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 
 const styles = StyleSheet.create({
@@ -60,88 +60,92 @@ const styles = StyleSheet.create({
   },
   blurEffect: {
     backgroundColor:'green',
-    opacity:0.5
+    opacity:0.5,
+    width:380
   }
 });
 
 class Objectives extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.onActionSelected = this.onActionSelected.bind(this);
   }
 
-
+  onActionSelected(position, item) {
+    console.log('entro a actionSelected');
+    console.log('Position: ' + position);
+    if(position === 0){
+      console.log('Voy a mandar el item');
+      this.props.navigator.push({id:'addFromSavings', data: item.name})
+    }else {
+      Alert.alert(
+        'Delete objective',
+      'Are you sure?',
+        [
+          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]
+      )
+    }
+  }
 
   render() {
+    var objectives = [{name:'Comprarme una impresora', price:1000, pledged:300, days:48},{name:'Comprarme un auto', price:90000, pledged:8000, days:12}]
     return (
-      <Container>
-        <Content alignItems='center'>
-          <Card style={{width:380}}>
-            <CardItem cardBody>
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <View style={{width: 80}}>
-                  <Thumbnail cardBody source={require('./badge.png')}  size={100} style={{alignItems:'center'}} />
-                </View>
-                <View style={{width: 280, marginTop:20, marginRight:50 ,alignItems:'center'}}>
-                  <H2 style={{marginBottom:20}}>
-                    Comprarme un auto {'\n'}
-                  </H2>
-                  <Progress.Bar progress={0.3} width={209} height={8} />
-                </View>
-              </View>
-
-            </CardItem>
-
-
-            <CardItem style={{alignItems:'center'}}>
-              <View style={{flex: 1, flexDirection: 'row'}}>
-                <View style={{width: 130}}>
-                  <Text  style={{fontSize:18}}>42% {'\n'}founded</Text>
-                </View>
-                <View style={{width: 130}}>
-                  <Text  style={{fontSize:18}}>$327 {'\n'}pledged</Text>
-                </View>
-                <View style={{width: 130}}>
-                  <Text style={{fontSize:18}}> 32{'\n'}days to go</Text>
-                </View>
-              </View>
-            </CardItem>
-          </Card>
-          <View style={{zIndex:-1}}>
-            <Card style={{width:380}}>
-              <View style={styles.blurEffect}>
-                <CardItem cardBody>
-                  <View style={{flex: 1, flexDirection: 'row'}}>
-                    <View style={{width: 80}}>
+      <ScrollView alignItems='center' height={550} >
+        <List width={415} dataArray={objectives}
+          renderRow={(item) =>
+            <ListItem >
+              <Card>
+                <CardItem>
+                  <Grid>
+                    <Col style={{width: 60, alignItems:'center'}}>
                       <Thumbnail cardBody source={require('./badge.png')}  size={100} style={{alignItems:'center'}} />
-                    </View>
-                    <View style={{width: 280, marginTop:20, marginRight:50 ,alignItems:'center'}}>
-                      <H2 style={{marginBottom:20}}>
-                        Ahorrar $10000 {'\n'}
-                      </H2>
-                      <Progress.Bar color='#00CF5F' progress={1} width={209} height={8} />
-                    </View>
-                  </View>
-                </CardItem>
-                <CardItem style={{alignItems:'center'}}>
-                  <View style={{flex: 1, flexDirection: 'row'}}>
-                    <View style={{width: 130}}>
-                      <Text  style={{fontSize:18}}>100% {'\n'}founded</Text>
-                    </View>
-                    <View style={{width: 130}}>
-                      <Text  style={{fontSize:18}}>$10000 {'\n'}pledged</Text>
-                    </View>
-                    <View style={{width: 130}}>
-                      <Text style={{fontSize:18}}> 0{'\n'}days to go</Text>
-                    </View>
-                  </View>
-                </CardItem>
-              </View>
-            </Card>
-          </View>
-        </Content>
-      </Container>
-    );
-  }
-}
+                    </Col>
+                    <Col style={{alignItems:'center'}}>
+                      <Row>
+                        <Col style={{width:220, alignItems:'center'}}>
+                          <H2>{item.name}</H2>
+                        </Col>
+                        <Col>
 
-module.exports = Objectives;
+                          <ToolbarAndroid
+                            style={{height: 50, width: 40}}
+                            actions={[{title: 'Add from savings', show: 'never'}, {title: 'Delete', show: 'never'}]}
+                            onActionSelected={(position) => { this.onActionSelected(position,item) }} />
+
+                          </Col>
+                        </Row>
+                        <Row>
+                          <View style={{width: 260, alignItems:'center'}}>
+                            <Progress.Bar progress={item.pledged /item.price} width={209} height={8} />
+                          </View>
+                        </Row>
+                      </Col>
+                    </Grid>
+                  </CardItem>
+
+                  <CardItem style={{alignItems:'center'}}>
+                    <Grid>
+                      <Col>
+                        <Text  style={{fontSize:18}}>{(Math.ceil((item.pledged * 100)/item.price)) + '%'} {'\n'}founded</Text>
+                      </Col>
+                      <Col>
+                        <Text  style={{fontSize:18}}>{'$' + item.pledged} {'\n'}pledged</Text>
+                      </Col>
+                      <Col>
+                        <Text style={{fontSize:18}}>{item.days} {'\n'}days to go</Text>
+                      </Col>
+                    </Grid>
+
+                  </CardItem>
+                </Card>
+              </ListItem>
+            }>
+          </List>
+        </ScrollView>
+      );
+    }
+  }
+
+  module.exports = Objectives;

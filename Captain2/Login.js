@@ -7,8 +7,9 @@ import { AppRegistry,
 	TouchableHighlight,
 } from 'react-native';
 class Login extends Component {
-	
+
 	render () {
+		console.log('Render de login');
 		return  (
 			<View style={styles.container}>
 			<Form

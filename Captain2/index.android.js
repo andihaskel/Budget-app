@@ -18,7 +18,8 @@ import {
   Header,
   Title,
   Button,
-  Content
+  Content,
+  H2
 } from 'native-base';
 import Dialogo from './Dialogo';
 import Page2 from './Page2';
@@ -34,9 +35,18 @@ import ViewIncome from './ViewIncome';
 import Tabs from './Tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EditFixed from './EditFixed';
-
-
+import AddObjective from './AddObjective';
+import {
+  List,
+  ListItem,
+  Thumbnail
+} from 'native-base'
+import Configuration from './Configuration';
+import AddFromSavings from './AddFromSavings';
 var t = require('tcomb-form-native');
+
+
+
 var Form = t.form.Form;
 const styles = StyleSheet.create({
   container: {
@@ -139,6 +149,7 @@ export default class Captain2 extends Component {
   navigatorRenderScene(route, navigator) {
     _navigator = navigator;
     var show = null;
+    console.log('En el switch');
     switch (route.id) {
       case 'tabs':
       return <Tabs navigator={navigator} openDrawer={this.openDrawer} />
@@ -148,44 +159,63 @@ export default class Captain2 extends Component {
       return <AddIncome navigator={navigator} />
       case 'editFixed':
       return <EditFixed navigator={navigator} item={route.data} />
+      case 'addObjective':
+      return <AddObjective navigator={navigator} />
+      case 'configuration':
+      return <Configuration openDrawer={this.openDrawer} />
+      case 'addFromSavings':
+      return <AddFromSavings navigator={navigator} item={route.data}/>
+    }
+  }
+
+  goToOption(id) {
+    console.log('ENTRO A CAMBIAR DE OPCION');
+    this.refs['DRAWER'].closeDrawer();
+    var routes = this.refs['NAVIGATOR'].getCurrentRoutes(0);
+    if(routes[routes.length - 1].id === id){
+      return false
+    }
+    console.log('No toque la misma');
+    var goTo = -1;
+    console.log('Routes length = ' + routes.length);
+    routes.map(function(route, index){
+      if(route.id === id){
+        console.log('Ya existe la ruta seleccionada');
+        goTo = index;
+      }
+    })
+
+    if(goTo > -1){
+      this.refs['NAVIGATOR'].popN(routes.length - (goTo + 1));
+    } else {
+      this.refs['NAVIGATOR'].push({id: id});
     }
   }
 
   render() {
+    var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Configuracion', icon:'cog', id:'configuration'}, {name:'Fijos', icon:'money', id:'fixed'}, {name:'Cerrar sesion', icon:'power-off', id:'closeSession'}]
     var navigationView = (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <View style={{height:100}}>
           <Text>HOla</Text>
         </View>
-        <View style={{height:50,   justifyContent: 'center'}}>
-          <TouchableNativeFeedback activeOpacity={0.1} >
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <Icon name='cog' size={30} style={{width:50, paddingLeft: 10}} />
-              <Text style={{fontSize: 20}}>
-                Configuracion
-              </Text>
-            </View>
-          </TouchableNativeFeedback>
-        </View>
-        <View style={{height:50,  alignItems: 'center'}}>
-          <TouchableNativeFeedback activeOpacity={0.1} >
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <Icon name='cog' size={30} style={{width:50, paddingLeft: 10}} />
-              <Text style={{fontSize: 20}}>
-                Configuracion
-              </Text>
-            </View>
-          </TouchableNativeFeedback>
-        </View>
-        <View style={{height:50}}>
-          <TouchableNativeFeedback activeOpacity={0.1} >
-            <View style={{flex: 1, flexDirection: 'row'}}>
-              <Icon name='cog' size={30} style={{width:50, paddingLeft: 10}} />
-              <Text style={{fontSize: 20}}>
-                Configuracion
-              </Text>
-            </View>
-          </TouchableNativeFeedback>
+        <View>
+          <List dataArray={items}
+            renderRow={(item) =>
+              <ListItem button onPress={() => {this.goToOption(item.id)}}>
+                <View style={{
+                  flex: 1,
+                  flexDirection: 'row'}}>
+                  <View style={{width: 50}} >
+                    <Icon name={item.icon} size={30}/>
+                  </View>
+                  <View>
+                    <H2>{item.name}</H2>
+                  </View>
+                </View>
+              </ListItem>
+            }>
+          </List>
         </View>
       </View>
     );
@@ -197,9 +227,10 @@ export default class Captain2 extends Component {
         renderNavigationView={() => navigationView}>
         <Navigator
           initialRoute={{id:'tabs'}}
+          ref='NAVIGATOR'
           renderScene={this.navigatorRenderScene}
           configureScene={(route, routeStack) =>
-            Navigator.SceneConfigs.FloatFromBottom}
+            Navigator.SceneConfigs.FadeAndroid}
           />
         </DrawerLayoutAndroid>
 

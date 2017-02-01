@@ -28,22 +28,7 @@ class AddIncome extends Component {
     this.state={price: '', description: '', category: [], categorySelected: {}, coin: 'shk'}
   }
 
-  componentWillMount() {
-       fetch('http://10.0.2.2:3000/categories')
-       .then((response) => response.json())
-       .then((responseData) => {
 
-            this.setState({category: responseData});
-
-      })
-      .catch(function(err) {  
-         console.log('Fetch Error', err);  
-
-      });
-
-
-
-  }
   addIncome(){
     if(this.state.description === ''){
       ToastAndroid.show('Must ingress detail', ToastAndroid.SHORT);
@@ -66,9 +51,8 @@ class AddIncome extends Component {
 
 
   var categories = [{name: 'General'}, {name: 'Comida'}, {name: 'Bebida'}];
-   
-   console.log('esto!!!!', this.state.category)
- 
+
+
   return (
     <View>
     <NavigationBar
@@ -81,19 +65,19 @@ class AddIncome extends Component {
     <Picker.Item label="Currency" value="shk" />
     <Picker.Item label="Dolar" value="dol" />
     </Picker>
-  
+
     <Picker
     selectedValue={this.state.category[0]}
     onValueChange={(cat) => this.setState({categorySelected: cat})}>
-    
+
     { this.state.category.map((s,i) => {
                         return <PickerItem
                                  key = {i}
                                  value={s}
-                                 label={s.name} /> 
+                                 label={s.name} />
                                 }) }
 
- 
+
     </Picker>
     <TextInput  placeholder='Detail' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({description: text})} />
     <TextInput keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(num) => this.setState({price: num})} />

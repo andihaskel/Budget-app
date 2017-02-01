@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  View, 
+  View,
   Text,
   Button,
   Navigator,
@@ -22,6 +22,7 @@ class IncomeList extends Component {
 
 
     render() {
+      console.log('Render de Income list');
       return (
         <View style={{flex: 1, paddingTop: 22}}>
         <ListView
@@ -38,5 +39,3 @@ class IncomeList extends Component {
 
 
   module.exports = IncomeList;
-
-

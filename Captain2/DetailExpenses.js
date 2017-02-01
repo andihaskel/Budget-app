@@ -33,9 +33,9 @@ class DetailExpenses extends Component {
 	}
 
 	render() {
+		console.log('Render de Details');
 		return(
-			<Container>
-				<Content>
+			<View>
 					<List dataArray={incomes}
 						renderRow={(item) =>
 							<ListItem button  onPress={() => {this.editFixed(item)}}>
@@ -65,8 +65,7 @@ class DetailExpenses extends Component {
 							>
 
 							</List>
-						</Content>
-					</Container>
+					</View>
 				);
 			}
 		}
