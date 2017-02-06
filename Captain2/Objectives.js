@@ -57,11 +57,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     height: 30,
     color: 'white',
-  },
-  blurEffect: {
-    backgroundColor:'green',
-    opacity:0.5,
-    width:380
   }
 });
 
@@ -93,7 +88,7 @@ class Objectives extends Component {
     var objectives = [{name:'Comprarme una impresora', price:1000, pledged:300, days:48},{name:'Comprarme un auto', price:90000, pledged:8000, days:12}]
     return (
       <ScrollView alignItems='center' height={550} >
-        <List width={415} dataArray={objectives}
+        <List width={411} dataArray={objectives}
           renderRow={(item) =>
             <ListItem >
               <Card>
@@ -104,17 +99,12 @@ class Objectives extends Component {
                     </Col>
                     <Col style={{alignItems:'center'}}>
                       <Row>
-                        <Col style={{width:220, alignItems:'center'}}>
-                          <H2>{item.name}</H2>
-                        </Col>
-                        <Col>
-
                           <ToolbarAndroid
-                            style={{height: 50, width: 40}}
+                            style={{height: 50, width: 300}}
+                            contentInsetEnd={22}
+                            title={item.name}
                             actions={[{title: 'Add from savings', show: 'never'}, {title: 'Delete', show: 'never'}]}
                             onActionSelected={(position) => { this.onActionSelected(position,item) }} />
-
-                          </Col>
                         </Row>
                         <Row>
                           <View style={{width: 260, alignItems:'center'}}>

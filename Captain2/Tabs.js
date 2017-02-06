@@ -22,6 +22,9 @@ import {
 	Title,
 	Button
 } from 'native-base'
+import Stats from './Stats';
+import Dimensions from 'Dimensions';
+
 
 
 class TabsComponent extends Component {
@@ -39,12 +42,15 @@ class TabsComponent extends Component {
 		this.props.navigator.push({id:'addIncome'});
 	}
 	addObjective() {
-			this.props.navigator.push({id:'addObjective'});
+		this.props.navigator.push({id:'addObjective'});
+		console.log('Width:  ' + Dimensions.get('window').width);
+		console.log('height:  ' + Dimensions.get('window').height);
+
 	}
 
 	changeTab(obj) {
 		const CustomLayoutLinear = {
-			duration: 500,
+			duration: 300,
 			//create: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity },
 			update: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity },
 			delete: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity }
@@ -72,79 +78,70 @@ class TabsComponent extends Component {
 					<Title>Aplicacion</Title>
 				</Header>
 				{this.state.isVisibleHome ?
-					(<ActionButton buttonColor="#2BB0FF" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="pencil" style={styles.actionButtonIcon} />}>
-						<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={this.addExpense.bind(this)}>
-							<Icon name="usd" style={styles.actionButtonIcon} />
-						</ActionButton.Item>
-						<ActionButton.Item buttonColor='#00CF5F' title="Add income" onPress={this.addIncome.bind(this)}>
-							<Icon name="usd" style={styles.actionButtonIcon} />
-						</ActionButton.Item>
-					</ActionButton>) :  this.state.isVisibleObj ?
-
-					(<ActionButton buttonColor="#ADFF2F" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="trophy" style={styles.actionButtonIcon} />}
-					onPress={this.addObjective.bind(this)}>
-					</ActionButton>) :
-
-					(<ActionButton buttonColor="#00CF5F" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="pencil" style={styles.actionButtonIcon} />}>
-						<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={this.addExpense.bind(this)}>
-							<Icon name="usd" style={styles.actionButtonIcon} />
-						</ActionButton.Item>
-						<ActionButton.Item buttonColor='#00CF5F' title="Add income" onPress={this.addIncome.bind(this)}>
-							<Icon name="usd" style={styles.actionButtonIcon} />
-						</ActionButton.Item>
-					</ActionButton>) }
-
-
-
-					<View style={{zIndex:-1}}>
-						<ScrollableTabView onChangeTab={this.changeTab} >
-							<ScrollView tabLabel='Objectives'>
-								<Objectives navigator={this.props.navigator} />
-							</ScrollView>
-							<ScrollView tabLabel='home'>
-								<Home navigator={this.props.navigator} />
-							</ScrollView>
-							<ScrollView tabLabel='Fijos'>
-								<DetailExpenses  navigator={this.props.navigator} />
-							</ScrollView>
-						</ScrollableTabView>
-					</View>
+					(<ActionButton  buttonColor="#2BB0FF" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="pencil" style={styles.actionButtonIcon} />}>
+					<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={this.addExpense.bind(this)}>
+						<Icon name="usd" style={styles.actionButtonIcon} />
+					</ActionButton.Item>
+					<ActionButton.Item buttonColor='#00CF5F' title="Add income" onPress={this.addIncome.bind(this)}>
+						<Icon name="usd" style={styles.actionButtonIcon} />
+					</ActionButton.Item>
+				</ActionButton>) :
+				(this.state.isVisibleObj ? (<ActionButton buttonColor="#ADFF2F" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="trophy" style={styles.actionButtonIcon} />}
+				onPress={this.addObjective.bind(this)}>
+			</ActionButton>) :
+			(<ActionButton buttonColor="#ADFF2F" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="trophy" style={styles.actionButtonIcon} />}
+			onPress={this.addObjective.bind(this)}>
+		</ActionButton>))
+		}
+		<View style={{zIndex:-1}}>
+			<ScrollableTabView onChangeTab={this.changeTab} >
+				<ScrollView tabLabel='Objectives'>
+					<Objectives navigator={this.props.navigator} />
 				</ScrollView>
-			);
-		}
+				<ScrollView tabLabel='home'>
+					<Home navigator={this.props.navigator} />
+				</ScrollView>
+				<ScrollView tabLabel='Fijos'>
+					<Stats />
+				</ScrollView>
+			</ScrollableTabView>
+		</View>
+	</ScrollView>
+);
+}
+}
+
+
+const styles = StyleSheet.create({
+	points: {
+		backgroundColor: 'transparent',
+		position: 'absolute',
+		top: 90,
+		left: 170,
+		textAlign: 'center',
+		color: '#7591af',
+		fontSize: 30
+	},
+	container: {
+		flex: 1,
+		height: 270,
+		alignItems: 'center',
+		backgroundColor: '#F5FCFF',
+	},
+	welcome: {
+		fontSize: 20,
+		textAlign: 'center',
+		margin: 10,
+	},
+	instructions: {
+		textAlign: 'center',
+		color: '#333333',
+		marginBottom: 5,
+	},
+	actionButtonIcon: {
+		fontSize: 30,
+		height: 30,
+		color: 'white',
 	}
-
-
-	const styles = StyleSheet.create({
-		points: {
-			backgroundColor: 'transparent',
-			position: 'absolute',
-			top: 90,
-			left: 170,
-			textAlign: 'center',
-			color: '#7591af',
-			fontSize: 30
-		},
-		container: {
-			flex: 1,
-			height: 270,
-			alignItems: 'center',
-			backgroundColor: '#F5FCFF',
-		},
-		welcome: {
-			fontSize: 20,
-			textAlign: 'center',
-			margin: 10,
-		},
-		instructions: {
-			textAlign: 'center',
-			color: '#333333',
-			marginBottom: 5,
-		},
-		actionButtonIcon: {
-			fontSize: 30,
-			height: 30,
-			color: 'white',
-		}
-	});
-	module.exports = TabsComponent;
+});
+module.exports = TabsComponent;

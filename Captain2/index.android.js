@@ -149,10 +149,9 @@ export default class Captain2 extends Component {
   navigatorRenderScene(route, navigator) {
     _navigator = navigator;
     var show = null;
-    console.log('En el switch');
     switch (route.id) {
       case 'tabs':
-      return <Tabs navigator={navigator} openDrawer={this.openDrawer} />
+      return  <Tabs navigator={navigator} openDrawer={this.openDrawer} />
       case 'addExpense':
       return <AddExpense navigator={navigator} />
       case 'addIncome':

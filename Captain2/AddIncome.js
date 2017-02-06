@@ -24,7 +24,6 @@ class AddIncome extends Component {
     super(props);
     this.addIncome = this.addIncome.bind(this);
     this.goBack = this.goBack.bind(this);
-    this.componentWillMount = this.componentWillMount.bind(this);
     this.state={price: '', description: '', category: [], categorySelected: {}, coin: 'shk'}
   }
 
