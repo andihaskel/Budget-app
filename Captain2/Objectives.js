@@ -87,7 +87,7 @@ class Objectives extends Component {
   render() {
     var objectives = [{name:'Comprarme una impresora', price:1000, pledged:300, days:48},{name:'Comprarme un auto', price:90000, pledged:8000, days:12}]
     return (
-      <ScrollView alignItems='center' height={550} >
+      <ScrollView alignItems='center' height={550}>
         <List width={411} dataArray={objectives}
           renderRow={(item) =>
             <ListItem >

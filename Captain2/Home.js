@@ -16,22 +16,24 @@ import {
 	Thumbnail
 } from 'native-base'
 import Style from './Styles';
+import Dimensions from 'Dimensions';
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 const styles = StyleSheet.create({
-	points: {
+	pointsView: {
 		backgroundColor: 'transparent',
 		position: 'absolute',
-		top: 70,
-		left: 70,
-		textAlign: 'center',
+		top: 120,
+		alignItems: 'center',
+		width: Style.DEVICE_WIDTH
+	},
+	points: {
 		color: '#7591af',
-		fontSize: 30
+		fontSize: 30,
 	},
 	container: {
-		flex: 1,
-		height: 270,
-		alignItems: 'center',
-		backgroundColor: '#F5FCFF',
+		height: Style.VIEW_HEIGHT,
+		alignItems: 'center'
 	},
 	welcome: {
 		fontSize: 20,
@@ -48,8 +50,10 @@ const styles = StyleSheet.create({
 		height: 30,
 		color: 'white',
 	},
-	importado: {
-		height: Style.DEVICE_HEIGHT,
+	textImportado: {
+		fontSize: Style.FONT_SIZE,
+		textAlign: 'center',
+		margin: 10,
 	}
 });
 
@@ -58,6 +62,7 @@ class Home extends Component {
 		super(props);
 		this.state = {fill:70};
 		this.editFixed = this.editFixed.bind(this);
+		console.log('Widht: ' + Style.DEVICE_WIDTH);
 	}
 
 	editFixed(item){
@@ -65,40 +70,47 @@ class Home extends Component {
 	}
 
 	render() {
-		console.log('total heigth: ' + Style.getViewHeight );
-		var items = [{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 5000, income: true},{name: 'Carlos Mignolet', price: 55, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: true},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},];
+		var items = [{name: 'Cena en las gaviotas con muchos amigos de la escuela', price: 200, income: false},{name: 'Simon Mignolet', price: 5000, income: true},{name: 'Carlos Mignolet', price: 55, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: true},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},];
 		return(
-			<View style={{alignItems:'center', height:553}}>
-				<Text style={styles.welcome}>Budget</Text>
+			<View style={styles.container}>
+				<Text style={styles.textImportado}>Budget</Text>
 				<AnimatedCircularProgress
-					size={200}
+					size={Style.CIRCLE_SIZE}
 					width={7}
 					fill={this.state.fill}
 					tintColor="#00e0ff"
 					rotation={0}
 					linecap='round'
-					backgroundColor="#3d5875">
-					{
-						(fill) => (
-							<Text style={styles.points}>
-								$150
-							</Text>
-						)
-					}
-				</AnimatedCircularProgress>
-				<ScrollView style={{width:400, marginTop:10}}>
+					backgroundColor="#3d5875" />
+
+					<View style={styles.pointsView}>
+						<Text style={styles.points}>{'$' + (this.state.fill * 100)}</Text>
+					</View>
+				<ScrollView style={{width:Style.DEVICE_WIDTH, marginTop:10}}>
 					<List dataArray={items}
 						renderRow={(item) =>
 							<ListItem button onPress={() => {this.editFixed(item)}}>
 								<View style={{flex:1, flexDirection:'row', justifyContent:'space-between'}}>
-								<Thumbnail size={35} source={require('./cutlery.png')} />
-								<Text>{item.name}</Text>
-								<Text>{'$' + item.price}</Text>
-								{item.income ?
-									<Icon  size={30} name="angle-double-up"  color='rgb(20,255,20)'/>
-									:<Icon size={30} name="angle-double-down"  color='rgb(255,0,0)'/>
-								}
-							</View>
+									<Grid>
+										<Row>
+											<Col style={{width:50}}>
+												<Thumbnail size={Style.THUMBNAIL_SIZE} source={require('./cutlery.png')} />
+											</Col>
+											<Col style={{width:Style.TEXTLIST_WIDTH, paddingLeft:10, paddingRight:10}}>
+												<Text style={{fontSize:20}}>{item.name}</Text>
+											</Col>
+											<Col style={{width:60}}>
+												<Text style={{fontSize:15}}>{'$' + item.price}</Text>
+											</Col>
+											<Col style={{width:40}}>
+												{item.income ?
+													<Icon  size={30} name="angle-double-up"  color='rgb(20,255,20)'/>
+													:<Icon size={30} name="angle-double-down"  color='rgb(255,0,0)'/>
+												}
+											</Col>
+										</Row>
+									</Grid>
+								</View>
 							</ListItem>
 						}>
 					</List>

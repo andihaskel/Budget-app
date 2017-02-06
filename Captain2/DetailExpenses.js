@@ -36,6 +36,12 @@ class DetailExpenses extends Component {
 		console.log('Render de Details');
 		return(
 			<View>
+				<Header>
+          <Button block transparent onPress={this.props.openDrawer}>
+            <Icon name='bars' size={30} />
+          </Button>
+          <Title>Fixed</Title>
+        </Header>
 					<List dataArray={incomes}
 						renderRow={(item) =>
 							<ListItem button  onPress={() => {this.editFixed(item)}}>
@@ -45,7 +51,7 @@ class DetailExpenses extends Component {
 						}
 						renderHeader={() =>
 							<ListItem itemDivider>
-								<Text>Incomes</Text>
+								<Text style={{fontSize:25}}>Incomes</Text>
 							</ListItem>
 						}
 						>
@@ -59,7 +65,7 @@ class DetailExpenses extends Component {
 							}
 							renderHeader={() =>
 								<ListItem itemDivider>
-									<Text>Expenses</Text>
+									<Text style={{fontSize:25}}>Expenses</Text>
 								</ListItem>
 							}
 							>

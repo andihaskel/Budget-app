@@ -11,7 +11,8 @@ import {
   Navigator,
   DrawerLayoutAndroid,
   ToolbarAndroid,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  Image
 } from 'react-native';
 import {
   Container,
@@ -41,8 +42,9 @@ import {
   ListItem,
   Thumbnail
 } from 'native-base'
-import Configuration from './Configuration';
+import Settings from './Settings';
 import AddFromSavings from './AddFromSavings';
+import DetailExpenses from './DetailExpenses';
 var t = require('tcomb-form-native');
 
 
@@ -160,26 +162,25 @@ export default class Captain2 extends Component {
       return <EditFixed navigator={navigator} item={route.data} />
       case 'addObjective':
       return <AddObjective navigator={navigator} />
-      case 'configuration':
-      return <Configuration openDrawer={this.openDrawer} />
+      case 'settings':
+      return <Settings openDrawer={this.openDrawer} navigator={navigator}/>
       case 'addFromSavings':
       return <AddFromSavings navigator={navigator} item={route.data}/>
+      case 'fixed':
+      return <DetailExpenses navigator={navigator} openDrawer={this.openDrawer} />
     }
   }
 
   goToOption(id) {
-    console.log('ENTRO A CAMBIAR DE OPCION');
     this.refs['DRAWER'].closeDrawer();
     var routes = this.refs['NAVIGATOR'].getCurrentRoutes(0);
     if(routes[routes.length - 1].id === id){
       return false
     }
-    console.log('No toque la misma');
     var goTo = -1;
     console.log('Routes length = ' + routes.length);
     routes.map(function(route, index){
       if(route.id === id){
-        console.log('Ya existe la ruta seleccionada');
         goTo = index;
       }
     })
@@ -192,56 +193,61 @@ export default class Captain2 extends Component {
   }
 
   render() {
-    var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Configuracion', icon:'cog', id:'configuration'}, {name:'Fijos', icon:'money', id:'fixed'}, {name:'Cerrar sesion', icon:'power-off', id:'closeSession'}]
+    var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'Fixed', icon:'money', id:'fixed'}, {name:'', icon:'power-off', id:'closeSession'}]
     var navigationView = (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
-        <View style={{height:100}}>
-          <Text>HOla</Text>
-        </View>
         <View>
-          <List dataArray={items}
-            renderRow={(item) =>
-              <ListItem button onPress={() => {this.goToOption(item.id)}}>
-                <View style={{
-                  flex: 1,
-                  flexDirection: 'row'}}>
-                  <View style={{width: 50}} >
-                    <Icon name={item.icon} size={30}/>
-                  </View>
-                  <View>
-                    <H2>{item.name}</H2>
-                  </View>
-                </View>
-              </ListItem>
-            }>
-          </List>
-        </View>
+          <Image source={require('./sideBarTop.jpg')}  style={{height:180, width:300}}>
+          <View style={{marginTop:30, marginLeft: 10}}>
+            <Thumbnail size={80} source={require('./face.jpg')}/>
+            <Text style={{marginTop:5, fontSize:20}}>Barack Obama</Text>
+          </View>
+        </Image>
       </View>
+      <View>
+        <List dataArray={items}
+          renderRow={(item) =>
+            <ListItem button onPress={() => {this.goToOption(item.id)}}>
+              <View style={{
+                flex: 1,
+                flexDirection: 'row'}}>
+                <View style={{width: 50}} >
+                  <Icon name={item.icon} size={30}/>
+                </View>
+                <View>
+                  <H2>{item.name}</H2>
+                </View>
+              </View>
+            </ListItem>
+          }>
+        </List>
+      </View>
+    </View>
+  );
+  return (
+    <DrawerLayoutAndroid
+      ref='DRAWER'
+      drawerWidth={300}
+      drawerPosition={DrawerLayoutAndroid.positions.Left}
+      renderNavigationView={() => navigationView}>
+      <Navigator
+        initialRoute={{id:'tabs'}}
+        ref='NAVIGATOR'
+        renderScene={this.navigatorRenderScene}
+        configureScene={(route, routeStack) =>
+          Navigator.SceneConfigs.FadeAndroid}
+        />
+      </DrawerLayoutAndroid>
+
+
     );
-    return (
-      <DrawerLayoutAndroid
-        ref='DRAWER'
-        drawerWidth={300}
-        drawerPosition={DrawerLayoutAndroid.positions.Left}
-        renderNavigationView={() => navigationView}>
-        <Navigator
-          initialRoute={{id:'tabs'}}
-          ref='NAVIGATOR'
-          renderScene={this.navigatorRenderScene}
-          configureScene={(route, routeStack) =>
-            Navigator.SceneConfigs.FadeAndroid}
-          />
-        </DrawerLayoutAndroid>
-
-
-      );
-    }
-
   }
 
+}
 
 
 
 
 
-  AppRegistry.registerComponent('Captain2', () => Captain2);
+
+AppRegistry.registerComponent('Captain2', () => Captain2);
