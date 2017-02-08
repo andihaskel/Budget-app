@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
 class Home extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {fill:70};
+		this.state = {fill:70, randomPayments:[], balance: 0}
 		this.editFixed = this.editFixed.bind(this);
 	}
 
@@ -64,9 +64,39 @@ class Home extends Component {
 		this.props.navigator.push({id: 'editFixed', data: item.value});
 	}
 
+	//usuario por defecto
+	componentWillMount() {
+
+       fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/randomPayments')
+       	.then((response) => response.json())
+      	.then((responseData) => {
+            this.setState({randomPayments: responseData});
+            console.log('ex',this.state.randomPayments[0].name);
+            console.log('as', this.state.randomPayments[0].isIncome);
+
+      })
+      .catch(function(err) {  
+         console.log('Fetch Error', err);  
+
+      });
+
+      fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/balance')
+       	.then((response) => response.json())
+      	.then((responseData) => {
+            this.setState({balance: responseData});
+
+      })
+      .catch(function(err) {  
+         console.log('Fetch Error', err);  
+
+      });
+
+
+  }
+
 	render() {
 		console.log('total heigth: ' + Style.getViewHeight );
-		var items = [{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 5000, income: true},{name: 'Carlos Mignolet', price: 55, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: true},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},];
+		//var items = [{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 5000, income: true},{name: 'Carlos Mignolet', price: 55, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: true},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},];
 		return(
 			<View style={{alignItems:'center', height:553}}>
 				<Text style={styles.welcome}>Budget</Text>
@@ -81,20 +111,20 @@ class Home extends Component {
 					{
 						(fill) => (
 							<Text style={styles.points}>
-								$150
+								$ {this.state.balance}
 							</Text>
 						)
 					}
 				</AnimatedCircularProgress>
-				<ScrollView style={{width:400, marginTop:10}}>
-					<List dataArray={items}
-						renderRow={(item) =>
-							<ListItem button onPress={() => {this.editFixed(item)}}>
+				<ScrollView style={{width:250, marginTop:10}}>
+					<List dataArray={this.state.randomPayments}
+						renderRow={(payment) =>
+							<ListItem button onPress={() => {this.editFixed(payment)}}>
 								<View style={{flex:1, flexDirection:'row', justifyContent:'space-between'}}>
 								<Thumbnail size={35} source={require('./cutlery.png')} />
-								<Text>{item.name}</Text>
-								<Text>{'$' + item.price}</Text>
-								{item.income ?
+								<Text>{payment.name}</Text>
+								<Text>{'$' + payment.amount}</Text>
+								{payment.isIncome ?
 									<Icon  size={30} name="angle-double-up"  color='rgb(20,255,20)'/>
 									:<Icon size={30} name="angle-double-down"  color='rgb(255,0,0)'/>
 								}

@@ -96,7 +96,8 @@ class TabsComponent extends Component {
 		<View style={{zIndex:-1}}>
 			<ScrollableTabView onChangeTab={this.changeTab} >
 				<ScrollView tabLabel='Objectives'>
-					<Objectives navigator={this.props.navigator} />
+					<Objectives navigator={this.props.navigator} objectivesUpdated={this.props.objectivesUpdated} 
+								isObjectiveUpdated={this.props.isObjectiveUpdated}/>
 				</ScrollView>
 				<ScrollView tabLabel='home'>
 					<Home navigator={this.props.navigator} />

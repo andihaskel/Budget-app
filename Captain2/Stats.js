@@ -12,7 +12,6 @@ import {
 } from 'react-native'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import TextField from 'react-native-md-textinput';
-import PieChart from 'react-native-pie-chart';
 
 
 class Stats extends Component {
@@ -30,14 +29,7 @@ class Stats extends Component {
     return (
         <View style={styles.container}>
           <Text style={styles.title}>Expenses</Text>
-          <PieChart
-            chart_wh={chart_wh}
-            series={series}
-            sliceColor={sliceColor}
-            doughnut={true}
-            coverRadius={0.55}
-            coverFill={'#FFF'}
-          />
+         
         </View>
     );
   }

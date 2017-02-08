@@ -91,6 +91,7 @@ export default class Captain2 extends Component {
     this.setUserData= this.setUserData.bind(this);
     this.addOneExpense = this.addOneExpense.bind(this);
     this.addOneIncome = this.addOneIncome.bind(this);
+    this.updateObjectives = this.updateObjectives.bind(this);
     this.navigatorRenderScene = this.navigatorRenderScene.bind(this);
     this.openDrawer = this.openDrawer.bind(this);
     this.closeDrawer = this.closeDrawer.bind(this);
@@ -102,7 +103,8 @@ export default class Captain2 extends Component {
       expenses: 8,
       categories: ['General', 'Comida', 'Salidas'],
       incomesList: [ {amount:20, description: 'Prueba', category: 'General'}, {amount:80, description: 'Prueba 2', category: 'Comida'}],
-      incomeDetail: {}
+      incomeDetail: {},
+      objectivesUpdated: false
     };
   }
 
@@ -145,13 +147,23 @@ export default class Captain2 extends Component {
     this.setState({list});
   }
 
+  updateObjectives() {
+    console.log('update objectives en index');
+      this.setState({objectivesUpdated:true});
+  }
+
+  objectivesUpdated () {
+    this.setState({objectivesUpdated:false});
+  }
+
 
   navigatorRenderScene(route, navigator) {
     _navigator = navigator;
     var show = null;
     switch (route.id) {
       case 'tabs':
-      return  <Tabs navigator={navigator} openDrawer={this.openDrawer} />
+      return  <Tabs navigator={navigator} openDrawer={this.openDrawer} isObjectiveUpdated={this.state.objectivesUpdated}
+              objectivesUpdated={this.objectivesUpdated.bind(this)}/>
       case 'addExpense':
       return <AddExpense navigator={navigator} />
       case 'addIncome':
@@ -159,7 +171,7 @@ export default class Captain2 extends Component {
       case 'editFixed':
       return <EditFixed navigator={navigator} item={route.data} />
       case 'addObjective':
-      return <AddObjective navigator={navigator} />
+      return <AddObjective navigator={navigator} updateObj={this.updateObjectives} />
       case 'configuration':
       return <Configuration openDrawer={this.openDrawer} />
       case 'addFromSavings':
@@ -168,13 +180,11 @@ export default class Captain2 extends Component {
   }
 
   goToOption(id) {
-    console.log('ENTRO A CAMBIAR DE OPCION');
     this.refs['DRAWER'].closeDrawer();
     var routes = this.refs['NAVIGATOR'].getCurrentRoutes(0);
     if(routes[routes.length - 1].id === id){
       return false
     }
-    console.log('No toque la misma');
     var goTo = -1;
     console.log('Routes length = ' + routes.length);
     routes.map(function(route, index){
