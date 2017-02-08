@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 class Home extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {fill:70, randomPayments:[], balance: 0}
+		this.state = {fill:70, monthlyPayments:[], balance: 0}
 		this.editFixed = this.editFixed.bind(this);
 		console.log('Widht: ' + Style.DEVICE_WIDTH);
 		console.log('Height: ' + Style.DEVICE_HEIGHT);
@@ -77,12 +77,10 @@ class Home extends Component {
 	//usuario por defecto
 	componentWillMount() {
 
-		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/randomPayments')
+		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/monthlyPayments')
 		.then((response) => response.json())
 		.then((responseData) => {
-			this.setState({randomPayments: responseData});
-			console.log('ex',this.state.randomPayments[0].name);
-			console.log('as', this.state.randomPayments[0].isIncome);
+			this.setState({monthlyPayments: responseData});
 
 		})
 		.catch(function(err) {
@@ -125,7 +123,7 @@ class Home extends Component {
 
 
 				<ScrollView style={{width:Style.DEVICE_WIDTH, marginTop:10}}>
-					<List dataArray={items}
+					<List dataArray={this.state.monthlyPayments}
 						renderRow={(item) =>
 							<ListItem button onPress={() => {this.editFixed(item)}}>
 								<View style={{flex:1, flexDirection:'row', justifyContent:'space-between'}}>
@@ -138,10 +136,10 @@ class Home extends Component {
 												<Text style={{fontSize:20}}>{item.name}</Text>
 											</Col>
 											<Col style={{width:60}}>
-												<Text style={{fontSize:15}}>{'$' + item.price}</Text>
+												<Text style={{fontSize:15}}>{'$' + item.amount}</Text>
 											</Col>
 											<Col style={{width:40}}>
-												{item.income ?
+												{item.isIncome ?
 													<Icon  size={30} name="angle-double-up"  color='rgb(20,255,20)'/>
 													:<Icon size={30} name="angle-double-down"  color='rgb(255,0,0)'/>
 												}

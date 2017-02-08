@@ -130,7 +130,6 @@ class Objectives extends Component {
 
 
       render() {
-        var objectives = [{name:'Comprarme una impresora', price:1000, pledged:300, days:48},{name:'Comprarme un auto', price:90000, pledged:8000, days:12},{name:'Comprarme una impresora', price:1000, pledged:300, days:48}]
         return (
           <ScrollView alignItems='center'>
             <List width={Style.DEVICE_WIDTH} dataArray={this.state.objectives}
@@ -155,7 +154,7 @@ class Objectives extends Component {
                           </Row>
                           <Row>
                             <View style={{alignItems:'center'}}>
-                              <Progress.Bar progress={item.pledged /item.price} width={Style.CARD_PROGRESS_WIDTH} height={8} />
+                              <Progress.Bar progress={item.currentAmount /item.amountToSave} width={Style.CARD_PROGRESS_WIDTH} height={8} />
                             </View>
                           </Row>
                         </Col>
@@ -165,13 +164,13 @@ class Objectives extends Component {
                     <CardItem style={{alignItems:'center'}}>
                       <Grid>
                         <Col>
-                          <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{(Math.ceil((item.pledged * 100)/item.price)) + '%'} {'\n'}founded</Text>
+                          <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{(Math.ceil((item.currentAmount * 100)/item.amountToSave)) + '%'} {'\n'}founded</Text>
                         </Col>
                         <Col>
-                          <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{'$' + item.pledged} {'\n'}pledged</Text>
+                          <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{'$' + item.currentAmount} {'\n'}pledged</Text>
                         </Col>
                         <Col>
-                          <Text style={{fontSize:Style.CARD_FONT_SIZE}}>{item.days} {'\n'}days to go</Text>
+                          <Text style={{fontSize:Style.CARD_FONT_SIZE}}> x {'\n'}days to go</Text>
                         </Col>
                       </Grid>
 
@@ -180,7 +179,7 @@ class Objectives extends Component {
                 </ListItem>
               }>
           </List>
-\        </ScrollView>
+  </ScrollView>
       );
     }
   }

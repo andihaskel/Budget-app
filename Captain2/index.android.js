@@ -30,7 +30,6 @@ import Home from './Home';
 import AddExpense from './AddExpense';
 import Login from './Login';
 import AddIncome from './AddIncome';
-import ListViewDemo from './ListViewDemo';
 import ViewIncome from './ViewIncome';
 import Tabs from './Tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
