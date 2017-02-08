@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
 	actionButtonIcon: {
 		fontSize: 30,
 		height: 30,
-		color: 'white',
+		color: 'white'
 	}
 });
 module.exports = TabsComponent;

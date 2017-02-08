@@ -17,6 +17,7 @@ import {
 } from 'native-base'
 import Style from './Styles';
 
+
 const styles = StyleSheet.create({
 	points: {
 		backgroundColor: 'transparent',
@@ -135,9 +136,12 @@ class Home extends Component {
 				</ScrollView>
 			</View>
 		)
+			
+
+		}
 
 	}
-}
+
 
 
 
