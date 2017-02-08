@@ -1,0 +1,19 @@
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var connection = require('../app.js');
+var User = require ('./users');
+var savingAccount = require ('./savingsAccounts')
+
+var objectiveSchema = new Schema ({
+      name: String,
+      amountToSave:{type:Number, required:true},
+      amountToSavePerMonth: Number,
+      currentAmount: {type:Number, required: true},
+      isAchived: Boolean,
+      dateToAchive: Date,
+      userId: {type: Schema.Types.ObjectId, ref: 'User'},
+      savingsId: [{type: Schema.Types.ObjectId, ref: 'savingsAccount'}]
+});
+
+
+module.exports = mongoose.model('Objective', objectiveSchema);
