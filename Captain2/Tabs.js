@@ -24,13 +24,14 @@ import {
 } from 'native-base'
 import Stats from './Stats';
 import Dimensions from 'Dimensions';
-
+import Style from './Styles';
 
 
 class TabsComponent extends Component {
 	constructor(props) {
 		super(props);
 		this.changeTab = this.changeTab.bind(this);
+		this.renderButton = this.renderButton.bind(this);
 		UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
 		this.state={isVisibleHome:false, isVisibleObj: true}
 	}
@@ -43,15 +44,11 @@ class TabsComponent extends Component {
 	}
 	addObjective() {
 		this.props.navigator.push({id:'addObjective'});
-		console.log('Width:  ' + Dimensions.get('window').width);
-		console.log('height:  ' + Dimensions.get('window').height);
-
 	}
 
 	changeTab(obj) {
 		const CustomLayoutLinear = {
-			duration: 300,
-			//create: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity },
+			duration: 250,
 			update: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity },
 			delete: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity }
 		}
@@ -67,48 +64,51 @@ class TabsComponent extends Component {
 		}
 	}
 
+	renderButton() {
+		var aux;
+		if (this.state.isVisibleHome) {
+			return (<ActionButton  buttonColor="#2BB0FF" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="pencil" style={styles.actionButtonIcon} />}>
+			<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={this.addExpense.bind(this)}>
+				<Icon name="usd" style={styles.actionButtonIcon} />
+			</ActionButton.Item>
+			<ActionButton.Item buttonColor='#00CF5F' title="Add income" onPress={this.addIncome.bind(this)}>
+				<Icon name="usd" style={styles.actionButtonIcon} />
+			</ActionButton.Item>
+		</ActionButton>)
 
-	render() {
-		return (
-			<ScrollView>
-				<Header>
-					<Button block transparent onPress={this.props.openDrawer}>
-						<Icon name='bars' size={30} />
-					</Button>
-					<Title>Aplicacion</Title>
-				</Header>
-				{this.state.isVisibleHome ?
-					(<ActionButton  buttonColor="#2BB0FF" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="pencil" style={styles.actionButtonIcon} />}>
-					<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={this.addExpense.bind(this)}>
-						<Icon name="usd" style={styles.actionButtonIcon} />
-					</ActionButton.Item>
-					<ActionButton.Item buttonColor='#00CF5F' title="Add income" onPress={this.addIncome.bind(this)}>
-						<Icon name="usd" style={styles.actionButtonIcon} />
-					</ActionButton.Item>
-				</ActionButton>) :
-				(this.state.isVisibleObj ? (<ActionButton buttonColor="#ADFF2F" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="trophy" style={styles.actionButtonIcon} />}
-				onPress={this.addObjective.bind(this)}>
-			</ActionButton>) :
-			(<ActionButton buttonColor="#ADFF2F" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="trophy" style={styles.actionButtonIcon} />}
-			onPress={this.addObjective.bind(this)}>
-		</ActionButton>))
-		}
-		<View style={{zIndex:-1}}>
-			<ScrollableTabView onChangeTab={this.changeTab} >
+	} else if (this.state.isVisibleObj) {
+		return (<ActionButton buttonColor="#ADFF2F" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="trophy" style={styles.actionButtonIcon} />}
+		onPress={this.addObjective.bind(this)}>
+	</ActionButton>)
+
+}
+return null;
+}
+
+
+render() {
+	return (
+		<ScrollView>
+			<Header>
+				<Button block transparent onPress={this.props.openDrawer}>
+					<Icon name='bars' size={30} />
+				</Button>
+				<Title>Aplicacion</Title>
+			</Header>
+			<ScrollableTabView onChangeTab={this.changeTab} style={{height: Style.SCROLL_VIEW_HEIGHT}}>
 				<ScrollView tabLabel='Objectives'>
-					<Objectives navigator={this.props.navigator} objectivesUpdated={this.props.objectivesUpdated} 
-								isObjectiveUpdated={this.props.isObjectiveUpdated}/>
+					<Objectives navigator={this.props.navigator} />
 				</ScrollView>
 				<ScrollView tabLabel='home'>
 					<Home navigator={this.props.navigator} />
 				</ScrollView>
-				<ScrollView tabLabel='Fijos'>
+				<ScrollView tabLabel='Fixed'>
 					<Stats />
 				</ScrollView>
 			</ScrollableTabView>
-		</View>
-	</ScrollView>
-);
+			{this.renderButton.call()}
+		</ScrollView>
+	);
 }
 }
 
@@ -124,10 +124,7 @@ const styles = StyleSheet.create({
 		fontSize: 30
 	},
 	container: {
-		flex: 1,
-		height: 270,
-		alignItems: 'center',
-		backgroundColor: '#F5FCFF',
+		height: Style.DEVICE_HEIGHT,
 	},
 	welcome: {
 		fontSize: 20,

@@ -16,23 +16,25 @@ import {
 	Thumbnail
 } from 'native-base'
 import Style from './Styles';
+import Dimensions from 'Dimensions';
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 
 const styles = StyleSheet.create({
-	points: {
+	pointsView: {
 		backgroundColor: 'transparent',
 		position: 'absolute',
-		top: 70,
-		left: 70,
-		textAlign: 'center',
+		top: Style.TEXT_POINTS,
+		alignItems: 'center',
+		width: Style.DEVICE_WIDTH
+	},
+	points: {
 		color: '#7591af',
-		fontSize: 30
+		fontSize: Style.TEXT_POINTS_SIZE,
 	},
 	container: {
-		flex: 1,
-		height: 270,
-		alignItems: 'center',
-		backgroundColor: '#F5FCFF',
+		height: Style.VIEW_HEIGHT,
+		alignItems: 'center'
 	},
 	welcome: {
 		fontSize: 20,
@@ -49,8 +51,10 @@ const styles = StyleSheet.create({
 		height: 30,
 		color: 'white',
 	},
-	importado: {
-		height: Style.DEVICE_HEIGHT,
+	textImportado: {
+		fontSize: Style.FONT_SIZE,
+		textAlign: 'center',
+		margin: 10,
 	}
 });
 
@@ -59,6 +63,11 @@ class Home extends Component {
 		super(props);
 		this.state = {fill:70, randomPayments:[], balance: 0}
 		this.editFixed = this.editFixed.bind(this);
+		console.log('Widht: ' + Style.DEVICE_WIDTH);
+		console.log('Height: ' + Style.DEVICE_HEIGHT);
+		console.log('CIRCLE_SIZE: ' + Style.CIRCLE_SIZE);
+		console.log('VIEW_HEIGHT: ' + Style.VIEW_HEIGHT);
+		console.log('TEXT_POINTS: ' + Style.TEXT_POINTS);
 	}
 
 	editFixed(item){
@@ -68,79 +77,89 @@ class Home extends Component {
 	//usuario por defecto
 	componentWillMount() {
 
-       fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/randomPayments')
-       	.then((response) => response.json())
-      	.then((responseData) => {
-            this.setState({randomPayments: responseData});
-            console.log('ex',this.state.randomPayments[0].name);
-            console.log('as', this.state.randomPayments[0].isIncome);
+		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/randomPayments')
+		.then((response) => response.json())
+		.then((responseData) => {
+			this.setState({randomPayments: responseData});
+			console.log('ex',this.state.randomPayments[0].name);
+			console.log('as', this.state.randomPayments[0].isIncome);
 
-      })
-      .catch(function(err) {  
-         console.log('Fetch Error', err);  
+		})
+		.catch(function(err) {
+			console.log('Fetch Error', err);
 
-      });
+		});
 
-      fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/balance')
-       	.then((response) => response.json())
-      	.then((responseData) => {
-            this.setState({balance: responseData});
+		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/balance')
+		.then((response) => response.json())
+		.then((responseData) => {
+			this.setState({balance: responseData});
 
-      })
-      .catch(function(err) {  
-         console.log('Fetch Error', err);  
+		})
+		.catch(function(err) {
+			console.log('Fetch Error', err);
 
-      });
+		});
 
 
-  }
+	}
 
 	render() {
-		console.log('total heigth: ' + Style.getViewHeight );
-		//var items = [{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 5000, income: true},{name: 'Carlos Mignolet', price: 55, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: true},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},];
 		return(
-			<View style={{alignItems:'center', height:553}}>
-				<Text style={styles.welcome}>Budget</Text>
+			<View style={styles.container}>
+				<Text style={styles.textImportado}>Budget</Text>
 				<AnimatedCircularProgress
-					size={200}
+					size={Style.CIRCLE_SIZE}
 					width={7}
 					fill={this.state.fill}
 					tintColor="#00e0ff"
 					rotation={0}
 					linecap='round'
 					backgroundColor="#3d5875">
-					{
-						(fill) => (
-							<Text style={styles.points}>
-								$ {this.state.balance}
-							</Text>
-						)
-					}
 				</AnimatedCircularProgress>
-				<ScrollView style={{width:250, marginTop:10}}>
-					<List dataArray={this.state.randomPayments}
-						renderRow={(payment) =>
-							<ListItem button onPress={() => {this.editFixed(payment)}}>
+
+				<View style={styles.pointsView}>
+					<Text style={styles.points}>{'$' + this.state.balance}</Text>
+				</View>
+
+
+
+				<ScrollView style={{width:Style.DEVICE_WIDTH, marginTop:10}}>
+					<List dataArray={items}
+						renderRow={(item) =>
+							<ListItem button onPress={() => {this.editFixed(item)}}>
 								<View style={{flex:1, flexDirection:'row', justifyContent:'space-between'}}>
-								<Thumbnail size={35} source={require('./cutlery.png')} />
-								<Text>{payment.name}</Text>
-								<Text>{'$' + payment.amount}</Text>
-								{payment.isIncome ?
-									<Icon  size={30} name="angle-double-up"  color='rgb(20,255,20)'/>
-									:<Icon size={30} name="angle-double-down"  color='rgb(255,0,0)'/>
-								}
-							</View>
+									<Grid>
+										<Row>
+											<Col style={{width:50}}>
+												<Thumbnail size={Style.THUMBNAIL_SIZE} source={require('./cutlery.png')} />
+											</Col>
+											<Col style={{width:Style.TEXTLIST_WIDTH, paddingLeft:10, paddingRight:10}}>
+												<Text style={{fontSize:20}}>{item.name}</Text>
+											</Col>
+											<Col style={{width:60}}>
+												<Text style={{fontSize:15}}>{'$' + item.price}</Text>
+											</Col>
+											<Col style={{width:40}}>
+												{item.income ?
+													<Icon  size={30} name="angle-double-up"  color='rgb(20,255,20)'/>
+													:<Icon size={30} name="angle-double-down"  color='rgb(255,0,0)'/>
+												}
+											</Col>
+										</Row>
+									</Grid>
+								</View>
 							</ListItem>
 						}>
 					</List>
 				</ScrollView>
 			</View>
 		)
-			
 
-		}
 
 	}
+
+}
 
 
 
