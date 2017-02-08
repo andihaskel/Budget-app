@@ -24,7 +24,7 @@ import {
 } from 'native-base'
 import Stats from './Stats';
 import Dimensions from 'Dimensions';
-
+import Style from './Styles';
 
 
 class TabsComponent extends Component {
@@ -91,14 +91,13 @@ return null;
 render() {
 	return (
 		<ScrollView>
-			<View>
 				<Header>
 					<Button block transparent onPress={this.props.openDrawer}>
 						<Icon name='bars' size={30} />
 					</Button>
 					<Title>Aplicacion</Title>
 				</Header>
-				<ScrollableTabView onChangeTab={this.changeTab} >
+				<ScrollableTabView onChangeTab={this.changeTab} style={{height: Style.SCROLL_VIEW_HEIGHT}}>
 					<ScrollView tabLabel='Objectives'>
 						<Objectives navigator={this.props.navigator} />
 					</ScrollView>
@@ -110,7 +109,6 @@ render() {
 					</ScrollView>
 				</ScrollableTabView>
 				{this.renderButton.call()}
-			</View>
 		</ScrollView>
 	);
 }
@@ -128,10 +126,7 @@ const styles = StyleSheet.create({
 		fontSize: 30
 	},
 	container: {
-		flex: 1,
-		height: 270,
-		alignItems: 'center',
-		backgroundColor: '#F5FCFF',
+		height: Style.DEVICE_HEIGHT,
 	},
 	welcome: {
 		fontSize: 20,

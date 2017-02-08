@@ -23,13 +23,13 @@ const styles = StyleSheet.create({
 	pointsView: {
 		backgroundColor: 'transparent',
 		position: 'absolute',
-		top: 120,
+		top: Style.TEXT_POINTS,
 		alignItems: 'center',
 		width: Style.DEVICE_WIDTH
 	},
 	points: {
 		color: '#7591af',
-		fontSize: 30,
+		fontSize: Style.TEXT_POINTS_SIZE,
 	},
 	container: {
 		height: Style.VIEW_HEIGHT,
@@ -63,6 +63,10 @@ class Home extends Component {
 		this.state = {fill:70};
 		this.editFixed = this.editFixed.bind(this);
 		console.log('Widht: ' + Style.DEVICE_WIDTH);
+		console.log('Height: ' + Style.DEVICE_HEIGHT);
+		console.log('CIRCLE_SIZE: ' + Style.CIRCLE_SIZE);
+		console.log('VIEW_HEIGHT: ' + Style.VIEW_HEIGHT);
+		console.log('TEXT_POINTS: ' + Style.TEXT_POINTS);
 	}
 
 	editFixed(item){
@@ -70,7 +74,7 @@ class Home extends Component {
 	}
 
 	render() {
-		var items = [{name: 'Cena en las gaviotas con muchos amigos de la escuela', price: 200, income: false},{name: 'Simon Mignolet', price: 5000, income: true},{name: 'Carlos Mignolet', price: 55, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: true},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},];
+		var items = [{name: 'Gasto', price: 200, income: false},{name: 'Simon Mignolet', price: 5000, income: true},{name: 'Carlos Mignolet', price: 55, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: true},{name: 'Simon Mignolet', price: 200, income: false},{name: 'Simon Mignolet', price: 200, income: false},];
 		return(
 			<View style={styles.container}>
 				<Text style={styles.textImportado}>Budget</Text>

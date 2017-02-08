@@ -193,14 +193,14 @@ export default class Captain2 extends Component {
   }
 
   render() {
-    var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'Fixed', icon:'money', id:'fixed'}, {name:'', icon:'power-off', id:'closeSession'}]
+    var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'Fixed', icon:'money', id:'fixed'}, {name:'Close session', icon:'power-off', id:'closeSession'}]
     var navigationView = (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <View>
-          <Image source={require('./sideBarTop.jpg')}  style={{height:180, width:300}}>
+          <Image source={require('./sideBarTop.jpg')}  style={{height:Style.DRAWER_IMAGE_HEIGHT, width:Style.DRAWER_WIDTH}}>
           <View style={{marginTop:30, marginLeft: 10}}>
             <Thumbnail size={80} source={require('./face.jpg')}/>
-            <Text style={{marginTop:5, fontSize:20}}>Barack Obama</Text>
+            <Text style={{marginTop:5, fontSize:Style.DRAWER_FONT_SIZE}}>Barack Obama</Text>
           </View>
         </Image>
       </View>
@@ -215,7 +215,7 @@ export default class Captain2 extends Component {
                   <Icon name={item.icon} size={30}/>
                 </View>
                 <View>
-                  <H2>{item.name}</H2>
+                  <Text style={{fontSize:Style.DRAWER_FONT_SIZE}}>{item.name}</Text>
                 </View>
               </View>
             </ListItem>
@@ -227,7 +227,7 @@ export default class Captain2 extends Component {
   return (
     <DrawerLayoutAndroid
       ref='DRAWER'
-      drawerWidth={300}
+      drawerWidth={Style.DRAWER_WIDTH}
       drawerPosition={DrawerLayoutAndroid.positions.Left}
       renderNavigationView={() => navigationView}>
       <Navigator
