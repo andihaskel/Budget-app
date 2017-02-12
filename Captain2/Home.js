@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 class Home extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {fill:70, monthlyPayments:[], balance: 0}
+		this.state = {fill:70, monthlyPayments:[{name:'Comida', amount:300, isIncome:false},{name:'Comida', amount:300, isIncome:true},{name:'Comida', amount:300, isIncome:false},{name:'Comida', amount:300, isIncome:false},{name:'Comida', amount:300, isIncome:false}], balance: 0}
 		this.editFixed = this.editFixed.bind(this);
 		console.log('Widht: ' + Style.DEVICE_WIDTH);
 		console.log('Height: ' + Style.DEVICE_HEIGHT);
@@ -73,34 +73,34 @@ class Home extends Component {
 	editFixed(item){
 		this.props.navigator.push({id: 'editFixed', data: item.value});
 	}
-
-	//usuario por defecto
-	componentWillMount() {
-
-		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/monthlyPayments')
-		.then((response) => response.json())
-		.then((responseData) => {
-			this.setState({monthlyPayments: responseData});
-
-		})
-		.catch(function(err) {
-			console.log('Fetch Error', err);
-
-		});
-
-		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/balance')
-		.then((response) => response.json())
-		.then((responseData) => {
-			this.setState({balance: responseData});
-
-		})
-		.catch(function(err) {
-			console.log('Fetch Error', err);
-
-		});
-
-
-	}
+	//
+	// //usuario por defecto
+	// componentWillMount() {
+	//
+	// 	fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/monthlyPayments')
+	// 	.then((response) => response.json())
+	// 	.then((responseData) => {
+	// 		this.setState({monthlyPayments: responseData});
+	//
+	// 	})
+	// 	.catch(function(err) {
+	// 		console.log('Fetch Error', err);
+	//
+	// 	});
+	//
+	// 	fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/balance')
+	// 	.then((response) => response.json())
+	// 	.then((responseData) => {
+	// 		this.setState({balance: responseData});
+	//
+	// 	})
+	// 	.catch(function(err) {
+	// 		console.log('Fetch Error', err);
+	//
+	// 	});
+	//
+	//
+	// }
 
 	render() {
 		return(

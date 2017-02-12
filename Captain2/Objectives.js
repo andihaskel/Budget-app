@@ -65,7 +65,7 @@ class Objectives extends Component {
     console.log('const');
     super(props);
     this.onActionSelected = this.onActionSelected.bind(this);
-    this.state={objectives:[], show: false};
+    this.state={objectives:[{name:'Comprarme una casa', amountToSave:300, currentAmount:100}], show: false};
   }
 
   onActionSelected(position, item) {
@@ -83,33 +83,35 @@ class Objectives extends Component {
     }
   }
 
-  componentWillMount() {
-    console.log('mount');
-    fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objectives')
-    .then((response) => response.json())
-    .then((responseData) => {
-      this.setState({objectives: responseData, show: true});
-
-    })
-    .catch(function(err) {
-      console.log('Fetch Error', err);
-    });
-  }
-  componentWillUpdate(nextProps, nextState) {
-    if(nextProps.isObjectiveUpdated) {
-      nextProps.objectivesUpdated();
-      fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objectives')
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.setState({objectives: responseData, show: true});
-
-      })
-      .catch(function(err) {
-        console.log('Fetch Error', err);
-      });
-    }
-  }
-
+  // componentWillMount() {
+  //   console.log('mount');
+  //   fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objectives')
+  //   .then((response) => response.json())
+  //   .then((responseData) => {
+  //     this.setState({objectives: responseData, show: true});
+  //
+  //   })
+  //   .catch(function(err) {
+  //     this.setState({objectives:[{name:'Comprarme una casa', amountToSave:300, currentAmount:100}]})
+  //     console.log('Fetch Error', err);
+  //   });
+  // }
+  // componentWillUpdate(nextProps, nextState) {
+  //   if(nextProps.isObjectiveUpdated) {
+  //     nextProps.objectivesUpdated();
+  //     fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objectives')
+  //     .then((response) => response.json())
+  //     .then((responseData) => {
+  //       this.setState({objectives: responseData, show: true});
+  //
+  //     })
+  //     .catch(function(err) {
+  //       this.setState({objectives:[{name:'Comprarme una casa', amountToSave:300, currentAmount:100}]})
+  //       console.log('Fetch Error', err);
+  //     });
+  //   }
+  // }
+  //
 
   onActionSelected(position, item) {
     if(position === 0){

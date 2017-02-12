@@ -43,6 +43,7 @@ import {
 import Settings from './Settings';
 import AddFromSavings from './AddFromSavings';
 import DetailExpenses from './DetailExpenses';
+import History from './History';
 var t = require('tcomb-form-native');
 
 
@@ -178,6 +179,8 @@ export default class Captain2 extends Component {
       return <AddFromSavings navigator={navigator} item={route.data}/>
       case 'fixed':
       return <DetailExpenses navigator={navigator} openDrawer={this.openDrawer} />
+      case 'history':
+      return <History navigator={navigator} openDrawer={this.openDrawer} />
     }
   }
 
@@ -203,7 +206,7 @@ export default class Captain2 extends Component {
   }
 
   render() {
-    var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'Fixed', icon:'money', id:'fixed'}, {name:'Close session', icon:'power-off', id:'closeSession'}]
+    var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'History', icon:'history', id:'history'},{name:'Fixed', icon:'money', id:'fixed'}, {name:'Close session', icon:'power-off', id:'closeSession'}]
     var navigationView = (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <View>
@@ -241,7 +244,7 @@ export default class Captain2 extends Component {
       drawerPosition={DrawerLayoutAndroid.positions.Left}
       renderNavigationView={() => navigationView}>
       <Navigator
-        initialRoute={{id:'tabs'}}
+        initialRoute={{id:'addIncome'}}
         ref='NAVIGATOR'
         renderScene={this.navigatorRenderScene}
         configureScene={(route, routeStack) =>
