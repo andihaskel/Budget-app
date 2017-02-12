@@ -113,25 +113,9 @@ class Objectives extends Component {
   // }
   //
 
-  onActionSelected(position, item) {
-    if(position === 0){
-      this.props.navigator.push({id:'addFromSavings', data: item.name})
-    }else {
-      Alert.alert(
-        'Delete objective',
-        'Are you sure?',
-        [
-          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ]
-      )
-    }
-  }
-
-
-
 
       render() {
+        console.log('Render de Objectives');
         return (
           <ScrollView alignItems='center'>
             <List width={Style.DEVICE_WIDTH} dataArray={this.state.objectives}

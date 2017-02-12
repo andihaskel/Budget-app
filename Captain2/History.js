@@ -48,8 +48,6 @@ class History extends Component {
   }
 
   render() {
-    console.log('En render');
-    console.log('Selected value = ' + this.state.selectedValue);
     return (
       <View>
         <Header>

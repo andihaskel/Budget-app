@@ -13,9 +13,9 @@ const cardProgressWidth = mulProgressBar * x;
 const mulToolbarCard = 0.80;
 const cardToolbarWidth = mulToolbarCard * (x-60);
 const textList = x -161;
-const mulHeight = 0.93;
+const mulHeight = 0.945;
 const viewHeigth = mulHeight * (y - headerHeight - tabBarHeight);
-const scrollMul = 0.94759;
+const scrollMul = 0.95;
 const ScrollViewHeight = scrollMul * (y - headerHeight);
 
 //Drawer width

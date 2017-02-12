@@ -4,7 +4,8 @@ import {
   Text,
   TextInput,
   Picker,
-  ToolbarAndroid
+  ToolbarAndroid,
+  Switch
 } from 'react-native'
 import {
   Container,
@@ -19,6 +20,8 @@ import {
   H1,
   H2
 } from 'native-base';
+import { Col, Row, Grid } from "react-native-easy-grid";
+
 import TextField from 'react-native-md-textinput';
 import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -28,7 +31,7 @@ class EditFixed extends Component {
     super(props);
     this.goBack = this.goBack.bind(this);
     this.editFixed = this.editFixed.bind(this);
-    this.state = {edit: false, price: '0'};
+    this.state = {edit: false, price: '0',  categories: [{name:'General'}, {name:'Comida'}, {name:'Bebida'}], categorySelected: 'General', object:{title:'Enlatados', price:'250', categorySelected:'Comida', monthly:true}};
   }
   goBack() {
     this.props.navigator.pop();
@@ -41,33 +44,64 @@ class EditFixed extends Component {
     var leftButtonConfig = {
       title: 'Back',
       handler: this.goBack,
+    };
+    var rightButtonConfig = {
+      title: 'Save',
+      handler: this.editFixed
     }
     return (
-      <View>
+      <Container>
+        <Content style={{padding:10}}>
+          <NavigationBar
+            title={{title:'Add expense'}}
+            leftButton={leftButtonConfig}
+            rightButton={rightButtonConfig}
+          />
+          <Grid>
+            <Row>
+              <TextInput style={{width:Style.DEVICE_WIDTH, fontSize:20}} value={this.state.object.title} placeholder='Title' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({name: text})} />
+            </Row>
 
-        <NavigationBar
-          title={{title:'Edit fixed'}}
-          leftButton={leftButtonConfig}
-        />
-        {this.state.edit ?
-          <View style={{alignItems:'center', margin: 20}}>
-            <Text style={{fontSize:40}}>
-              {fixed.name}
-            </Text>
-            <TextInput style={{marginTop:30, fontSize:30, width: 200 ,color: fixed.income ? 'rgb(0,255,0)' : 'rgb(255,0,0)'}} placeholder={fixed.amount} keyboardType='phone-pad' highlightColor={'#00BCD4'} onChangeText={(price) => this.setState({price})}/>
-            <Button block warning style={{margin:30}} onPress={this.editFixed}>Done</Button>
+            <Row style={{alignItems: 'center'}}>
+              <Col size={1}>
+                <Text style={{fontSize:30, marginVertical:10}}>$</Text>
+              </Col>
+              <Col size={6}>
+                <TextInput value={this.state.object.price}  style={{fontSize:20, height:50}} keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(amount) => this.setState({amount: amount})} />
+              </Col>
+              <Col size={17}>
+                <Picker
+                  mode='dropdown'
+                  selectedValue={this.state.object.categorySelected}
+                  onValueChange={(cat) => this.setState({categorySelected: cat})}>
+                  { this.state.categories.map((s,i) => {
+                    return <Picker.Item
+                      key = {i}
+                      value={s.name}
+                      label={s.name} />
+                    }) }
+                  </Picker>
+                </Col>
+              </Row>
 
-          </View>
-          :
-          <View style={{alignItems:'center', margin: 20}}>
-            <Text style={{fontSize:40}}>
-              {fixed.name}
-            </Text>
-            <Text style={{marginTop:30, fontSize:30, color: fixed.income ? 'rgb(0,255,0)' : 'rgb(255,0,0)'}}>{'$' + fixed.amount}</Text>
-            <Button block warning style={{margin:30}} onPress={this.editFixed}>Edit</Button>
-          </View>
-        }
-      </View>
+              <Row>
+                <Col>
+                  <Text style={{fontSize:15}}>Monthly expense</Text>
+                </Col>
+                <Col>
+                  <Switch
+                    onValueChange={(value) => this.setState({monthly: value})}
+                    onTintColor="#00ff00"
+                    thumbTintColor="#0000ff"
+                    tintColor="#ff0000"
+                    style={{marginBottom: 10}}
+                    value={this.state.object.monthly} />
+
+                  </Col>
+                </Row>
+              </Grid>
+            </Content>
+          </Container>
 
     )
   }

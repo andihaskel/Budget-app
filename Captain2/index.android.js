@@ -159,6 +159,7 @@ export default class Captain2 extends Component {
 
 
   navigatorRenderScene(route, navigator) {
+    console.log('En el renderScene de index');
     _navigator = navigator;
     var show = null;
     switch (route.id) {
@@ -206,6 +207,7 @@ export default class Captain2 extends Component {
   }
 
   render() {
+    console.log('Render de index');
     var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'History', icon:'history', id:'history'},{name:'Fixed', icon:'money', id:'fixed'}, {name:'Close session', icon:'power-off', id:'closeSession'}]
     var navigationView = (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
@@ -244,7 +246,7 @@ export default class Captain2 extends Component {
       drawerPosition={DrawerLayoutAndroid.positions.Left}
       renderNavigationView={() => navigationView}>
       <Navigator
-        initialRoute={{id:'addIncome'}}
+        initialRoute={{id:'tabs'}}
         ref='NAVIGATOR'
         renderScene={this.navigatorRenderScene}
         configureScene={(route, routeStack) =>

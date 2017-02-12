@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
   View,
   Text,
-  Button,
   Navigator,
   TextInput,
   Picker,
@@ -11,13 +10,24 @@ import {
   ToastAndroid,
   ToolbarAndroid,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Switch
 } from 'react-native'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import TextField from 'react-native-md-textinput';
 import NavigationBar from 'react-native-navbar';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import Style from './Styles';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {
+  Button,
+  FooterTab,
+  Footer,
+  Badge,
+  Container,
+  Content,
+  Item
+} from 'native-base';
 
 
 
@@ -26,7 +36,7 @@ class AddIncome extends Component {
     super(props);
     this.addIncome = this.addIncome.bind(this);
     this.goBack = this.goBack.bind(this);
-    this.state={amount: 0, name:'', categories: [], categorySelected: {}, coin: 'shk'}
+    this.state={amount: 0, name:'', categories: [{name:'General'}, {name:'Comida'}, {name:'Bebida'}], categorySelected: {}, coin: 'shk', monthly: false}
   }
 
 
@@ -63,13 +73,6 @@ class AddIncome extends Component {
     this.props.navigator.pop();
   }
 
-  updatePrice(num) {
-    if(!num || num === '')
-      this.setState({amount: 0});
-    if(this.state.amount === 0){
-
-    }
-  }
 
   componentWillMount() {
     console.log('wil mount')
@@ -78,7 +81,8 @@ class AddIncome extends Component {
     .then((responseData) => {
       this.setState({categories: responseData});
       console.log(responseData);
-      this.setState({categorySelected: this.state.categories[0]})
+      this.setState({categorySelected: this.state.categories[0], simpleDate: new Date(2020, 4, 5),
+      })
 
 
     })
@@ -89,54 +93,74 @@ class AddIncome extends Component {
   }
 
   render() {
-    console.log('render');
     var leftButtonConfig = {
       title: 'Back',
       handler: this.goBack
     }
-
+    var rightButtonConfig = {
+      title: 'Save',
+      handler: this.addIncome
+    }
 
     // var categories = [{name: 'General'}, {name: 'Comida'}, {name: 'Bebida'}];
-
     return (
-      <View style={{height:300, width:Style.DEVICE_WIDTH}}>
-        <NavigationBar
-          title={{title:'Add income', }}
-          leftButton={leftButtonConfig}
-        />
-        <Grid>
-          <Row>
-            <TextInput style={{width:Style.DEVICE_WIDTH}}  placeholder='Title' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({name: text})} />
-          </Row>
-          <Row>
-            <Col size={1}>
-              <TextInput style={{width:(Style.DEVICE_WIDTH/3)}} keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(num) => this.updatePrice(num)} />
-            </Col>
-            <Col size={2}>
-              <Picker
-                selectedValue={this.state.categories[0]}
-                onValueChange={(cat) => this.setState({categorySelected: cat})}>
-
-                { this.state.categories.map((s,i) => {
-                  return <Picker.Item
-                    key = {i}
-                    value={s}
-                    label={s.name} />
-                  }) }
-                </Picker>
-              </Col>
-            </Row>
+      <Container>
+        <Content style={{padding:10}}>
+          <NavigationBar
+            title={{title:'Add income'}}
+            leftButton={leftButtonConfig}
+            rightButton={rightButtonConfig}
+          />
+          <Grid>
             <Row>
-              <TextInput ref='PRICE' style={{width:Style.DEVICE_WIDTH}} placeholder='Description' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({name: text})} />
+              <TextInput autoFocus={true} style={{width:Style.DEVICE_WIDTH, fontSize:20}}  placeholder='Title' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({name: text})} />
             </Row>
-          </Grid>
-          <Button title='Agregar' onPress={this.addIncome} />
-        </View>
-      )
+
+            <Row style={{alignItems: 'center'}}>
+              <Col size={1}>
+                <Text style={{fontSize:30, marginVertical:10}}>$</Text>
+              </Col>
+              <Col size={6}>
+                <TextInput style={{width:(Style.DEVICE_WIDTH/5), fontSize:20, height:50}} keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(num) => this.setState({amount: num})} />
+              </Col>
+              <Col size={17}>
+                <Picker
+                  mode='dropdown'
+                  selectedValue={this.state.categorySelected}
+                  onValueChange={(cat) => this.setState({categorySelected: cat})}>
+                  { this.state.categories.map((s,i) => {
+                    return <Picker.Item
+                      key = {i}
+                      value={s}
+                      label={s.name} />
+                    }) }
+                  </Picker>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Text style={{fontSize:15}}>Monthly income</Text>
+                </Col>
+                <Col>
+                  <Switch
+                    onValueChange={(value) => this.setState({monthly: value})}
+                    onTintColor="#00ff00"
+                    thumbTintColor="#0000ff"
+                    tintColor="#ff0000"
+                    style={{marginBottom: 10}}
+                    value={this.state.monthly} />
+
+                  </Col>
+                </Row>
+              </Grid>
+            </Content>
+          </Container>
+        )
+      }
+
+
     }
 
 
-  }
-
-
-  module.exports = AddIncome;
+    module.exports = AddIncome;

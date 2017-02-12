@@ -3,20 +3,16 @@ import {
 	View,
 	StyleSheet,
 	ScrollView,
-	ListView,
 	Text
 } from 'react-native'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import AddExpense from './AddExpense';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
-	Button,
 	List,
 	ListItem,
 	Thumbnail
 } from 'native-base'
 import Style from './Styles';
-import Dimensions from 'Dimensions';
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 
@@ -61,18 +57,15 @@ const styles = StyleSheet.create({
 class Home extends Component {
 	constructor(props) {
 		super(props);
+		console.log('Constructor de Home');
 		this.state = {fill:70, monthlyPayments:[{name:'Comida', amount:300, isIncome:false},{name:'Comida', amount:300, isIncome:true},{name:'Comida', amount:300, isIncome:false},{name:'Comida', amount:300, isIncome:false},{name:'Comida', amount:300, isIncome:false}], balance: 0}
 		this.editFixed = this.editFixed.bind(this);
-		console.log('Widht: ' + Style.DEVICE_WIDTH);
-		console.log('Height: ' + Style.DEVICE_HEIGHT);
-		console.log('CIRCLE_SIZE: ' + Style.CIRCLE_SIZE);
-		console.log('VIEW_HEIGHT: ' + Style.VIEW_HEIGHT);
-		console.log('TEXT_POINTS: ' + Style.TEXT_POINTS);
 	}
 
 	editFixed(item){
 		this.props.navigator.push({id: 'editFixed', data: item.value});
 	}
+
 	//
 	// //usuario por defecto
 	// componentWillMount() {
@@ -103,6 +96,7 @@ class Home extends Component {
 	// }
 
 	render() {
+		console.log('En render de Home');
 		return(
 			<View style={styles.container}>
 				<Text style={styles.textImportado}>Budget</Text>
