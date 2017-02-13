@@ -22,7 +22,7 @@ class AddExpense extends Component {
   constructor(props) {
     super(props);
     this.goBack = this.goBack.bind(this);
-    this.state={name: '', amount: 0, categories: [], categorySelected: {}, coin: 'shk'};
+    this.state={name: '', amount: 0, categories: [], paymentId: '', categorySelected: {}, coin: 'shk'};
   }
   sendExpense() {
     if(this.state.name == ''){
@@ -35,6 +35,7 @@ class AddExpense extends Component {
         amount: this.state.amount,
         categoryId: this.state.categorySelected._id,
         isIncome: false
+
     }
 
      fetch("http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payment",

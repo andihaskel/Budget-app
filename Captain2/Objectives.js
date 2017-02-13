@@ -62,29 +62,41 @@ const styles = StyleSheet.create({
 
 class Objectives extends Component {
   constructor(props) {
-    console.log('const');
     super(props);
     this.onActionSelected = this.onActionSelected.bind(this);
-    this.state={objectives:[], show: false};
+    this.deleteObjective = this.deleteObjective.bind(this);
+    this.state={objectives:[], show: false, itemSelected: {}};
   }
 
   onActionSelected(position, item) {
+    this.setState({itemSelected: item});
+    console.log(item);
     if(position === 0){
-      this.props.navigator.push({id:'addFromSavings', data: item.name})
+      this.props.navigator.push({id:'addFromSavings', data: item._id})
     }else {
       Alert.alert(
         'Delete objective',
         'Are you sure?',
         [
           {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
+          {text: 'OK', onPress: () => this.deleteObjective()},
         ]
       )
     }
   }
 
+  deleteObjective(item) {
+
+  return fetch('http://10.0.2.2:3000/' + this.state.itemSelected._id, {
+    method: 'delete'
+  }).then(response =>
+    response.json().then(json => {
+      return json;
+    })
+  );
+}
+
   componentWillMount() {
-    console.log('mount');
     fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objectives')
     .then((response) => response.json())
     .then((responseData) => {
@@ -109,27 +121,7 @@ class Objectives extends Component {
       });
     }
   }
-
-
-  onActionSelected(position, item) {
-    if(position === 0){
-      this.props.navigator.push({id:'addFromSavings', data: item.name})
-    }else {
-      Alert.alert(
-        'Delete objective',
-        'Are you sure?',
-        [
-          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ]
-      )
-    }
-  }
-
-
-
-
-      render() {
+    render() {
         return (
           <ScrollView alignItems='center'>
             <List width={Style.DEVICE_WIDTH} dataArray={this.state.objectives}
@@ -146,7 +138,7 @@ class Objectives extends Component {
                             <ToolbarAndroid
                               style={{height: 50, width: Style.CARD_TOOLBAR_WIDTH}}
                               actions={[{title: 'Add from savings', show: 'never'}, {title: 'Delete', show: 'never'}]}
-                              onActionSelected={(position) => { this.onActionSelected(position,item) }}>
+                              onActionSelected={(position) => {  this.onActionSelected(position,item) }}>
                               <View>
                                 <Text style={{fontSize:Style.CARD_TOOLBAR_FONT_SIZE}}>{item.name}</Text>
                               </View>

@@ -6,6 +6,7 @@ import {
   TextInput,
   Picker,
   ToastAndroid,
+  StyleSheet,
   PickerItem
 } from 'react-native'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
@@ -15,6 +16,17 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   H1
 } from 'native-base'
+
+const styles = StyleSheet.create({
+    description: {
+      fontWeight:'normal',
+      fontStyle:'italic',
+       fontSize:16,
+       textAlign:'left',
+       fontFamily:'arial'
+    }
+});
+
 class AddObjective extends Component {
   constructor(props) {
     super(props);
@@ -84,18 +96,13 @@ class AddObjective extends Component {
           leftButton={leftButtonConfig}
         />
         <TextInput placeholder='Title' highlightColor={'#00BCD4'} onChangeText={(name) => this.setState({name})}/>
-        <Picker
-          selectedValue='dol'
-          onValueChange={(cat) => {}}>
-          <Picker.Item label="Shekel" value="shk" />
-          <Picker.Item label="Dolar" value="dol" />
-        </Picker>
+
         <TextInput placeholder='Total to save' keyboardType='phone-pad' highlightColor={'#00BCD4'} onChangeText={(price) => this.setState({price})}/>
         <TextInput placeholder='Save per month' keyboardType='phone-pad' highlightColor={'#00BCD4'} onChangeText={(savePerMonth) => this.setState({savePerMonth})}/>
 
-        <H1>Achived in {this.state.price !== '0' && this.state.savePerMonth !== '0'
+        <Text style={styles.description}>You will achive the objective in {this.state.price !== '0' && this.state.savePerMonth !== '0'
           && this.state.price && this.state.savePerMonth && !isNaN(this.state.price) && !isNaN(this.state.savePerMonth)
-          ? (Math.ceil((parseInt(this.state.price) / parseInt(this.state.savePerMonth))) + ' month') : '0 month' } </H1>
+          ? (Math.ceil((parseInt(this.state.price) / parseInt(this.state.savePerMonth))) + ' month') : '0 month' } </Text>
           <Button title='Add' onPress={this.sendExpense.bind(this)} />
         </View>
       )

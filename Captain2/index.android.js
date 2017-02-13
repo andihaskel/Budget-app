@@ -178,6 +178,9 @@ export default class Captain2 extends Component {
       return <AddFromSavings navigator={navigator} item={route.data}/>
       case 'fixed':
       return <DetailExpenses navigator={navigator} openDrawer={this.openDrawer} />
+      case 'login':
+      return <Login navigator={navigator} />
+
     }
   }
 

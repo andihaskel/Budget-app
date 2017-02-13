@@ -26,10 +26,36 @@ class DetailExpenses extends Component {
 	constructor(props) {
 		super(props);
 		this.editFixed = this.editFixed.bind(this);
+		this.state = {incomes:[], expenses: []};
 	}
 
 	editFixed(item){
 		this.props.navigator.push({id: 'editFixed', data: item.value});
+	}
+
+	componentWillMount() {
+	var incomes= [];
+	var expenses = [];
+
+	fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/fixedPayments')
+    .then((response) => response.json())
+    .then((responseData) => {
+
+      responseData.map((obj,i) => {
+      		if(obj.isIncome){
+      			incomes.push(obj);
+      		} else {
+      			expenses.push(obj);
+      		}
+      });
+      this.setState({incomes: incomes, expenses: expenses});
+
+
+
+    })
+    .catch(function(err) {
+      console.log('Fetch Error', err);
+    });
 	}
 
 	render() {
@@ -42,11 +68,11 @@ class DetailExpenses extends Component {
           </Button>
           <Title>Fixed</Title>
         </Header>
-					<List dataArray={incomes}
+					<List dataArray={this.state.incomes}
 						renderRow={(item) =>
 							<ListItem button  onPress={() => {this.editFixed(item)}}>
-								<Text>{item.detail}</Text>
-								<Text>{item.value}</Text>
+								<Text>{item.name}</Text>
+								<Text>{item.amount}</Text>
 							</ListItem>
 						}
 						renderHeader={() =>
@@ -56,11 +82,11 @@ class DetailExpenses extends Component {
 						}
 						>
 						</List>
-						<List dataArray={expenses}
+						<List dataArray={this.state.expenses}
 							renderRow={(item) =>
 								<ListItem button onPress={() => {this.editFixed(item)}}>
-									<Text>{item.detail}</Text>
-									<Text>{item.value}</Text>
+									<Text>{item.name}</Text>
+									<Text>{item.amount}</Text>
 								</ListItem>
 							}
 							renderHeader={() =>
