@@ -57,8 +57,7 @@ const styles = StyleSheet.create({
 class Home extends Component {
 	constructor(props) {
 		super(props);
-		console.log('Constructor de Home');
-		this.state = {fill:70, monthlyPayments:[{name:'Comida', amount:300, isIncome:false},{name:'Comida', amount:300, isIncome:true},{name:'Comida', amount:300, isIncome:false},{name:'Comida', amount:300, isIncome:false},{name:'Comida', amount:300, isIncome:false}], balance: 0}
+		this.state = {fill:70, monthlyPayments:[{name:'Primer pago', amount: 200, isIncome:true}, {name:'Segundo Pago', amount:150, isIncome: false}, {name:'Tercer Pago', amount:100, isIncome: false}, {name:'Cuarto Pago', amount:100, isIncome:true}], balance: 0}
 		this.editFixed = this.editFixed.bind(this);
 	}
 
@@ -66,37 +65,35 @@ class Home extends Component {
 		this.props.navigator.push({id: 'editFixed', data: item.value});
 	}
 
-	//
-	// //usuario por defecto
-	// componentWillMount() {
-	//
-	// 	fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/monthlyPayments')
-	// 	.then((response) => response.json())
-	// 	.then((responseData) => {
-	// 		this.setState({monthlyPayments: responseData});
-	//
-	// 	})
-	// 	.catch(function(err) {
-	// 		console.log('Fetch Error', err);
-	//
-	// 	});
-	//
-	// 	fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/balance')
-	// 	.then((response) => response.json())
-	// 	.then((responseData) => {
-	// 		this.setState({balance: responseData});
-	//
-	// 	})
-	// 	.catch(function(err) {
-	// 		console.log('Fetch Error', err);
-	//
-	// 	});
-	//
-	//
-	// }
+
+	componentWillMount() {
+		//Esta linea hace el reverse de la lista
+
+		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/monthlyPayments')
+		.then((response) => response.json())
+		.then((responseData) => {
+			this.setState({monthlyPayments: responseData.reverse()});
+		})
+		.catch(function(err) {
+			console.log('Fetch Error', err);
+
+		});
+
+		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/balance')
+		.then((response) => response.json())
+		.then((responseData) => {
+			this.setState({balance: responseData});
+
+		})
+		.catch(function(err) {
+			console.log('Fetch Error', err);
+
+		});
+
+
+	}
 
 	render() {
-		console.log('En render de Home');
 		return(
 			<View style={styles.container}>
 				<Text style={styles.textImportado}>Budget</Text>
@@ -116,8 +113,8 @@ class Home extends Component {
 
 
 
-				<ScrollView style={{width:Style.DEVICE_WIDTH, marginTop:10}}>
 					<List dataArray={this.state.monthlyPayments}
+						style={{width:Style.DEVICE_WIDTH, marginTop:10}}
 						renderRow={(item) =>
 							<ListItem button onPress={() => {this.editFixed(item)}}>
 								<View style={{flex:1, flexDirection:'row', justifyContent:'space-between'}}>
@@ -144,7 +141,6 @@ class Home extends Component {
 							</ListItem>
 						}>
 					</List>
-				</ScrollView>
 			</View>
 		)
 

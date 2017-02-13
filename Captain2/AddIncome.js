@@ -36,11 +36,12 @@ class AddIncome extends Component {
     super(props);
     this.addIncome = this.addIncome.bind(this);
     this.goBack = this.goBack.bind(this);
-    this.state={amount: 0, name:'', categories: [{name:'General'}, {name:'Comida'}, {name:'Bebida'}], categorySelected: {}, coin: 'shk', monthly: false}
+    this.state={amount: 0, name:'', categories: [], categorySelected: {}, coin: 'shk', monthly: false}
   }
 
 
   addIncome(){
+    console.log('En addIncome');
     if(this.state.name == ''){
       ToastAndroid.show('Must ingress name', ToastAndroid.SHORT);
     }else if(this.state.amount == 0){
@@ -52,6 +53,7 @@ class AddIncome extends Component {
         categoryId: this.state.categorySelected._id,
         isIncome: true
       }
+      console.log('Voy a entrar al fetch');
 
       fetch("http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payment",
       {
@@ -75,12 +77,13 @@ class AddIncome extends Component {
 
 
   componentWillMount() {
-    console.log('wil mount')
+    console.log('wil mount add income');
     fetch('http://10.0.2.2:3000/categories')
     .then((response) => response.json())
     .then((responseData) => {
-      this.setState({categories: responseData});
+      console.log('Adentro del then');
       console.log(responseData);
+      this.setState({categories: responseData});
       this.setState({categorySelected: this.state.categories[0], simpleDate: new Date(2020, 4, 5),
       })
 
@@ -102,7 +105,6 @@ class AddIncome extends Component {
       handler: this.addIncome
     }
 
-    // var categories = [{name: 'General'}, {name: 'Comida'}, {name: 'Bebida'}];
     return (
       <Container>
         <Content style={{padding:10}}>
@@ -120,10 +122,10 @@ class AddIncome extends Component {
               <Col size={1}>
                 <Text style={{fontSize:30, marginVertical:10}}>$</Text>
               </Col>
-              <Col size={6}>
+              <Col size={5}>
                 <TextInput style={{width:(Style.DEVICE_WIDTH/5), fontSize:20, height:50}} keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(num) => this.setState({amount: num})} />
               </Col>
-              <Col size={17}>
+              <Col size={12}>
                 <Picker
                   mode='dropdown'
                   selectedValue={this.state.categorySelected}

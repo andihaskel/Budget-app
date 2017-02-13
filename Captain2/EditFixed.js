@@ -5,7 +5,8 @@ import {
   TextInput,
   Picker,
   ToolbarAndroid,
-  Switch
+  Switch,
+  Alert
 } from 'react-native'
 import {
   Container,
@@ -31,7 +32,7 @@ class EditFixed extends Component {
     super(props);
     this.goBack = this.goBack.bind(this);
     this.editFixed = this.editFixed.bind(this);
-    this.state = {edit: false, price: '0',  categories: [{name:'General'}, {name:'Comida'}, {name:'Bebida'}], categorySelected: 'General', object:{title:'Enlatados', price:'250', categorySelected:'Comida', monthly:true}};
+    this.state = {edit: false, price: '0',  categories: [{name:'General'}, {name:'Comida'}, {name:'Bebida'}], categorySelected: 'General', title:'Enlatados', price:'250', categorySelected:'Comida', monthly:true};
   }
   goBack() {
     this.props.navigator.pop();
@@ -39,6 +40,20 @@ class EditFixed extends Component {
   editFixed() {
     this.setState({edit: !this.state.edit})
   }
+
+  showDelete() {
+    return (
+      Alert.alert(
+        'Delete expense',
+        'Are you sure?',
+        [
+          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]
+      )
+    )
+  }
+
   render() {
     var fixed = {name: 'Salary', amount: '12000', income:  false};
     var leftButtonConfig = {
@@ -53,26 +68,26 @@ class EditFixed extends Component {
       <Container>
         <Content style={{padding:10}}>
           <NavigationBar
-            title={{title:'Add expense'}}
+            title={{title:'Edit'}}
             leftButton={leftButtonConfig}
             rightButton={rightButtonConfig}
           />
           <Grid>
             <Row>
-              <TextInput style={{width:Style.DEVICE_WIDTH, fontSize:20}} value={this.state.object.title} placeholder='Title' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({name: text})} />
+              <TextInput style={{width:Style.DEVICE_WIDTH, fontSize:20}} defaultValue={this.state.title} placeholder='Title' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({name: text})} />
             </Row>
 
             <Row style={{alignItems: 'center'}}>
               <Col size={1}>
                 <Text style={{fontSize:30, marginVertical:10}}>$</Text>
               </Col>
-              <Col size={6}>
-                <TextInput value={this.state.object.price}  style={{fontSize:20, height:50}} keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(amount) => this.setState({amount: amount})} />
+              <Col size={5}>
+                <TextInput defaultValue={this.state.price}  style={{fontSize:20, height:50}} keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(amount) => this.setState({amount: amount})} />
               </Col>
-              <Col size={17}>
+              <Col size={12}>
                 <Picker
                   mode='dropdown'
-                  selectedValue={this.state.object.categorySelected}
+                  selectedValue={this.state.categorySelected}
                   onValueChange={(cat) => this.setState({categorySelected: cat})}>
                   { this.state.categories.map((s,i) => {
                     return <Picker.Item
@@ -95,11 +110,13 @@ class EditFixed extends Component {
                     thumbTintColor="#0000ff"
                     tintColor="#ff0000"
                     style={{marginBottom: 10}}
-                    value={this.state.object.monthly} />
+                    value={this.state.monthly} />
 
                   </Col>
                 </Row>
               </Grid>
+              <Button block rounded danger style={{marginTop:20}} onPress={this.showDelete.bind(this)}> Delete </Button>
+
             </Content>
           </Container>
 

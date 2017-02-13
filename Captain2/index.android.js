@@ -12,7 +12,8 @@ import {
   DrawerLayoutAndroid,
   ToolbarAndroid,
   TouchableNativeFeedback,
-  Image
+  Image,
+  BackAndroid
 } from 'react-native';
 import {
   Container,
@@ -20,7 +21,10 @@ import {
   Title,
   Button,
   Content,
-  H2
+  H2,
+  List,
+  ListItem,
+  Thumbnail
 } from 'native-base';
 import Dialogo from './Dialogo';
 import Page2 from './Page2';
@@ -35,11 +39,6 @@ import Tabs from './Tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EditFixed from './EditFixed';
 import AddObjective from './AddObjective';
-import {
-  List,
-  ListItem,
-  Thumbnail
-} from 'native-base'
 import Settings from './Settings';
 import AddFromSavings from './AddFromSavings';
 import DetailExpenses from './DetailExpenses';
@@ -83,6 +82,14 @@ var Person = t.struct({
   password: t.String,
 });
 var options = {}; // optional rendering options (see documentation)
+
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator.getCurrentRoutes().length === 1  ) {
+     return false;
+  }
+  console.log('Entro al true');
+  return true;
+});
 
 export default class Captain2 extends Component {
   constructor() {

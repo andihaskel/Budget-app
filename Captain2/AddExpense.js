@@ -111,10 +111,10 @@ class AddExpense extends Component {
               <Col size={1}>
                 <Text style={{fontSize:30, marginVertical:10}}>$</Text>
               </Col>
-              <Col size={6}>
+              <Col size={5}>
                 <TextInput style={{width:(Style.DEVICE_WIDTH/5), fontSize:20, height:50}} keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(amount) => this.setState({amount: amount})} />
               </Col>
-              <Col size={17}>
+              <Col size={12}>
                 <Picker
                   mode='dropdown'
                   selectedValue={this.state.categorySelected}

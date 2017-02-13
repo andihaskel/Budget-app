@@ -96,7 +96,7 @@ render() {
 				</Button>
 				<Title>Aplicacion</Title>
 			</Header>
-			<ScrollableTabView onChangeTab={this.changeTab} style={{height: Style.SCROLL_VIEW_HEIGHT}} initialPage={1}>
+			<ScrollableTabView onChangeTab={this.changeTab} style={{height: Style.SCROLL_VIEW_HEIGHT}}>
 				<ScrollView tabLabel='Objectives'>
 					<Objectives navigator={this.props.navigator} />
 				</ScrollView>
