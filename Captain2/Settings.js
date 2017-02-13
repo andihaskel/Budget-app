@@ -7,7 +7,6 @@ import {
   PickerItem,
   ToolbarAndroid
 } from 'react-native'
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import TextField from 'react-native-md-textinput';
 import NavigationBar from 'react-native-navbar';
 import Icon from 'react-native-vector-icons/FontAwesome';

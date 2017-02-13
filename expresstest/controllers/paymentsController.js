@@ -12,6 +12,7 @@
     },
 
     store: function (req,res) {
+
         mongoose.model('User').findById(req.params.user, function(err, User){
           console.log(req.body);
           var payment = new Payment(req.body);

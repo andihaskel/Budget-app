@@ -12,7 +12,8 @@ import {
   DrawerLayoutAndroid,
   ToolbarAndroid,
   TouchableNativeFeedback,
-  Image
+  Image,
+  BackAndroid
 } from 'react-native';
 import {
   Container,
@@ -20,7 +21,10 @@ import {
   Title,
   Button,
   Content,
-  H2
+  H2,
+  List,
+  ListItem,
+  Thumbnail
 } from 'native-base';
 import Dialogo from './Dialogo';
 import Page2 from './Page2';
@@ -35,14 +39,10 @@ import Tabs from './Tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EditFixed from './EditFixed';
 import AddObjective from './AddObjective';
-import {
-  List,
-  ListItem,
-  Thumbnail
-} from 'native-base'
 import Settings from './Settings';
 import AddFromSavings from './AddFromSavings';
 import DetailExpenses from './DetailExpenses';
+import History from './History';
 var t = require('tcomb-form-native');
 
 
@@ -82,6 +82,14 @@ var Person = t.struct({
   password: t.String,
 });
 var options = {}; // optional rendering options (see documentation)
+
+BackAndroid.addEventListener('hardwareBackPress', () => {
+  if (_navigator.getCurrentRoutes().length === 1  ) {
+     return false;
+  }
+  console.log('Entro al true');
+  return true;
+});
 
 export default class Captain2 extends Component {
   constructor() {
@@ -158,6 +166,7 @@ export default class Captain2 extends Component {
 
 
   navigatorRenderScene(route, navigator) {
+    console.log('En el renderScene de index');
     _navigator = navigator;
     var show = null;
     switch (route.id) {
@@ -180,7 +189,8 @@ export default class Captain2 extends Component {
       return <DetailExpenses navigator={navigator} openDrawer={this.openDrawer} />
       case 'login':
       return <Login navigator={navigator} />
-
+      case 'history':
+      return <History navigator={navigator} openDrawer={this.openDrawer} />
     }
   }
 
@@ -206,7 +216,8 @@ export default class Captain2 extends Component {
   }
 
   render() {
-    var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'Fixed', icon:'money', id:'fixed'}, {name:'Close session', icon:'power-off', id:'closeSession'}]
+    console.log('Render de index');
+    var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'History', icon:'history', id:'history'},{name:'Fixed', icon:'money', id:'fixed'}, {name:'Close session', icon:'power-off', id:'closeSession'}]
     var navigationView = (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <View>

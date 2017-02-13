@@ -87,6 +87,7 @@ return null;
 
 
 render() {
+	console.log('Render de Tabs');
 	return (
 		<ScrollView>
 			<Header>

@@ -87,14 +87,14 @@ class Objectives extends Component {
 
   deleteObjective(item) {
 
-  return fetch('http://10.0.2.2:3000/' + this.state.itemSelected._id, {
-    method: 'delete'
-  }).then(response =>
-    response.json().then(json => {
-      return json;
-    })
-  );
-}
+    return fetch('http://10.0.2.2:3000/' + this.state.itemSelected._id, {
+      method: 'delete'
+    }).then(response =>
+      response.json().then(json => {
+        return json;
+      })
+    );
+  }
 
   componentWillMount() {
     fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objectives')
@@ -121,59 +121,59 @@ class Objectives extends Component {
       });
     }
   }
-    render() {
-        return (
-          <ScrollView alignItems='center'>
-            <List width={Style.DEVICE_WIDTH} dataArray={this.state.objectives}
-              renderRow={(item) =>
-                <ListItem >
-                  <Card>
-                    <CardItem>
-                      <Grid>
-                        <Col style={{width: 60, alignItems:'center'}}>
-                          <Thumbnail cardBody source={require('./badge.png')}  size={100} style={{alignItems:'center'}} />
-                        </Col>
-                        <Col style={{alignItems:'center'}}>
-                          <Row>
-                            <ToolbarAndroid
-                              style={{height: 50, width: Style.CARD_TOOLBAR_WIDTH}}
-                              actions={[{title: 'Add from savings', show: 'never'}, {title: 'Delete', show: 'never'}]}
-                              onActionSelected={(position) => {  this.onActionSelected(position,item) }}>
-                              <View>
-                                <Text style={{fontSize:Style.CARD_TOOLBAR_FONT_SIZE}}>{item.name}</Text>
-                              </View>
-                            </ToolbarAndroid>
-                          </Row>
-                          <Row>
-                            <View style={{alignItems:'center'}}>
-                              <Progress.Bar progress={item.currentAmount /item.amountToSave} width={Style.CARD_PROGRESS_WIDTH} height={8} />
-                            </View>
-                          </Row>
-                        </Col>
-                      </Grid>
-                    </CardItem>
+  render() {
+    return (
+      <ScrollView alignItems='center'>
+        <List width={Style.DEVICE_WIDTH} dataArray={this.state.objectives}
+          renderRow={(item) =>
+            <ListItem >
+              <Card>
+                <CardItem>
+                  <Grid>
+                    <Col style={{width: 60, alignItems:'center'}}>
+                      <Thumbnail cardBody source={require('./badge.png')}  size={100} style={{alignItems:'center'}} />
+                    </Col>
+                    <Col style={{alignItems:'center'}}>
+                      <Row>
+                        <ToolbarAndroid
+                          style={{height: 50, width: Style.CARD_TOOLBAR_WIDTH}}
+                          actions={[{title: 'Add from savings', show: 'never'}, {title: 'Delete', show: 'never'}]}
+                          onActionSelected={(position) => {  this.onActionSelected(position,item) }}>
+                          <View>
+                            <Text style={{fontSize:Style.CARD_TOOLBAR_FONT_SIZE}}>{item.name}</Text>
+                          </View>
+                        </ToolbarAndroid>
+                      </Row>
+                      <Row>
+                        <View style={{alignItems:'center'}}>
+                          <Progress.Bar progress={item.currentAmount /item.amountToSave} width={Style.CARD_PROGRESS_WIDTH} height={8} />
+                        </View>
+                      </Row>
+                    </Col>
+                  </Grid>
+                </CardItem>
 
-                    <CardItem style={{alignItems:'center'}}>
-                      <Grid>
-                        <Col>
-                          <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{(Math.ceil((item.currentAmount * 100)/item.amountToSave)) + '%'} {'\n'}founded</Text>
-                        </Col>
-                        <Col>
-                          <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{'$' + item.currentAmount} {'\n'}pledged</Text>
-                        </Col>
-                        <Col>
-                          <Text style={{fontSize:Style.CARD_FONT_SIZE}}> x {'\n'}days to go</Text>
-                        </Col>
-                      </Grid>
+                <CardItem style={{alignItems:'center'}}>
+                  <Grid>
+                    <Col>
+                      <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{(Math.ceil((item.currentAmount * 100)/item.amountToSave)) + '%'} {'\n'}founded</Text>
+                    </Col>
+                    <Col>
+                      <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{'$' + item.currentAmount} {'\n'}pledged</Text>
+                    </Col>
+                    <Col>
+                      <Text style={{fontSize:Style.CARD_FONT_SIZE}}> x {'\n'}days to go</Text>
+                    </Col>
+                  </Grid>
 
-                    </CardItem>
-                  </Card>
-                </ListItem>
-              }>
-          </List>
-  </ScrollView>
-      );
-    }
+                </CardItem>
+              </Card>
+            </ListItem>
+          }>
+        </List>
+      </ScrollView>
+    );
   }
+}
 
-  module.exports = Objectives;
+module.exports = Objectives;

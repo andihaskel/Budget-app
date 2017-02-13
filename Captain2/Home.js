@@ -3,20 +3,16 @@ import {
 	View,
 	StyleSheet,
 	ScrollView,
-	ListView,
 	Text
 } from 'react-native'
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import AddExpense from './AddExpense';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
-	Button,
 	List,
 	ListItem,
 	Thumbnail
 } from 'native-base'
 import Style from './Styles';
-import Dimensions from 'Dimensions';
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 
@@ -61,27 +57,22 @@ const styles = StyleSheet.create({
 class Home extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {fill:70, monthlyPayments:[], balance: 0}
+		this.state = {fill:70, monthlyPayments:[{name:'Primer pago', amount: 200, isIncome:true}, {name:'Segundo Pago', amount:150, isIncome: false}, {name:'Tercer Pago', amount:100, isIncome: false}, {name:'Cuarto Pago', amount:100, isIncome:true}], balance: 0}
 		this.editFixed = this.editFixed.bind(this);
-		console.log('Widht: ' + Style.DEVICE_WIDTH);
-		console.log('Height: ' + Style.DEVICE_HEIGHT);
-		console.log('CIRCLE_SIZE: ' + Style.CIRCLE_SIZE);
-		console.log('VIEW_HEIGHT: ' + Style.VIEW_HEIGHT);
-		console.log('TEXT_POINTS: ' + Style.TEXT_POINTS);
 	}
 
 	editFixed(item){
 		this.props.navigator.push({id: 'editFixed', data: item.value});
 	}
 
-	//usuario por defecto
+
 	componentWillMount() {
+		//Esta linea hace el reverse de la lista
 
 		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/monthlyPayments')
 		.then((response) => response.json())
 		.then((responseData) => {
-			this.setState({monthlyPayments: responseData});
-
+			this.setState({monthlyPayments: responseData.reverse()});
 		})
 		.catch(function(err) {
 			console.log('Fetch Error', err);
@@ -122,8 +113,8 @@ class Home extends Component {
 
 
 
-				<ScrollView style={{width:Style.DEVICE_WIDTH, marginTop:10}}>
 					<List dataArray={this.state.monthlyPayments}
+						style={{width:Style.DEVICE_WIDTH, marginTop:10}}
 						renderRow={(item) =>
 							<ListItem button onPress={() => {this.editFixed(item)}}>
 								<View style={{flex:1, flexDirection:'row', justifyContent:'space-between'}}>
@@ -150,7 +141,6 @@ class Home extends Component {
 							</ListItem>
 						}>
 					</List>
-				</ScrollView>
 			</View>
 		)
 
