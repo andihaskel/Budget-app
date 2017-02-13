@@ -30,11 +30,19 @@ module.exports = {
   delete: function(req,res) {
     mongoose.model('Objective').findById(req.params.objective, function(err, Objective) {
       if(err){
-        return;
+        console.log('error objective');
       }
-      mongoose.model('SavingsAccount').findById(Objective.savingsId, function(err, SavingsAccount) {
-        SavingsAccount.balance = SavingsAccount.balance + Objective.currentAmount;
-        SavingsAccount.save();
+      mongoose.model('User').findById(Objective.userId,function(err, User){
+        if(err){
+          console.log('error user');
+        }
+        mongoose.model('SavingsAccount').findById(User.savingsId, function(err, SavingsAccount){
+          if (err){
+            console.log('error savings account')
+          }
+          SavingsAccount.balance = SavingsAccount.balance + Objective.currentAmount;
+          SavingsAccount.save();
+        });
       });
       Objective.remove(function(err) {
 
@@ -42,13 +50,14 @@ module.exports = {
     });
   },
 
-  addMoneyFromSavings: function(){
-    mongoose.model('Objective').findById(req.body.objectiveId, function(err, Objective) {
-      mongoose.model('SavingsAccount').findById(Objective.savingsId, function(err, SavingsAccount) {
+  addMoneyFromSavings: function(req, res){
+    mongoose.model('Objective').findById(req.params.objective, function(err, Objective) {
+      mongoose.model('SavingsAccount').findById(req.body.savings, function(err, SavingsAccount){
+
         var objective = Objective;
         var savings = SavingsAccount;
         objective.currentAmount = parseInt(objective.currentAmount)+ req.body.amountForObjective;
-        savings.balance = SavingsAccount.balance - req.body.amountForObjective;
+        savings.balance = savings.balance - req.body.amountForObjective;
 
         objective.save(function (err) {
           if (err) return handleError(err);
@@ -56,7 +65,18 @@ module.exports = {
         savings.save(function (err) {
           if (err) return handleError(err);
         });
+
       });
+    });
+  },
+
+  getSpecificObjective: function(req,res){
+    mongoose.model('Objective').findById(req.params.objective, function(err,Objective){
+      if(err){
+        handleError(err);
+      } else{
+        res.send(Objective);
+      }
     });
   }
 

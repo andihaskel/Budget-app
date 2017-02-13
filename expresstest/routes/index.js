@@ -26,11 +26,13 @@ router.post('/:user/objective', objectiveController.store);
 
 router.delete('/:objective', objectiveController.delete);
 
-router.put('/objective/addMoney', objectiveController.addMoneyFromSavings);
+router.put('/:objective/addMoney', objectiveController.addMoneyFromSavings);
 
 router.get('/:user/payments', paymentController.getPayments);
 
 router.get('/:user/payments/monthlyPayments', paymentController.getMonthlyPayments);
+
+router.get('/:user/payments/fixedPayments', paymentController.getFixedPayments);
 
 router.get('/:user/payments/balance', paymentController.getMonthlyBalance);
 
@@ -40,13 +42,19 @@ router.get('/:user/payments/MonthlyExcomes', paymentController.getSpecificExcome
 
 router.post('/:user/payment', paymentController.store);
 
+router.post('/user', userController.createUser);
+
 router.post('/login', userController.login);
 
 
-// router.put('/:user/savings/addMoney/:Date', savingsAccountController.addMoney);
+//router.put('/:user/savings/addMoney/:Date', savingsAccountController.addMoney);
+
+router.get('/:objective/', objectiveController.getSpecificObjective);
 
 
-router.get('/:user/savings', savingsAccountController.getSavings);
+router.get('/:user/savings', savingsAccountController.getSavingsAccount);
+
+
 
 
 exports.index = function(req, res){

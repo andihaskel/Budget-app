@@ -12,8 +12,9 @@ module.exports = {
 
   },
 
+
   login: function(req,res,next) {
-    mongoose.model('User').find({'userName': req.user, 'password': req.password}, function(err,User) {
+    mongoose.model('User').find({'userName': req.body.userName, 'password': req.body.password}, function(err,User) {
         if(err){
           res.status(500).send();
         }
@@ -21,9 +22,17 @@ module.exports = {
           res.status(404).send();
         }
         if(User){
-          next();
+          res.send(User);
         }
     });
+  },
+
+  createUser: function(req,res) {
+      var newUser = new User (req.body);
+      newUser.save();
+
   }
+
+
 
 }

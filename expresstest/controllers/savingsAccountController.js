@@ -2,7 +2,7 @@ var mongoose = require ('mongoose');
 
 
 module.exports = {
-  getSavings: function (req,res) {
+  getSavingsAccount: function (req,res) {
     mongoose.model('User').findById(req.params.user, function(err, User) {
       if(err){
         return handleError(err);
@@ -14,6 +14,8 @@ module.exports = {
         res.send(SavingsAccount);
       });
     });
+  },
+
   }
   //
   // addMoney: function (req,res) {
@@ -28,5 +30,3 @@ module.exports = {
   //
   //           })
   //       })
-
-}

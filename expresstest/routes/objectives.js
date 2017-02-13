@@ -12,7 +12,7 @@ var objectiveSchema = new Schema ({
       isAchived: Boolean,
       dateToAchive: Date,
       userId: {type: Schema.Types.ObjectId, ref: 'User'},
-      savingsId: [{type: Schema.Types.ObjectId, ref: 'savingsAccount'}]
+
 });
 
 

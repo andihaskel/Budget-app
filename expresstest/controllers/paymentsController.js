@@ -31,11 +31,26 @@
     var now = new Date();
     var actualDate = new Date (now.getFullYear(), now.getMonth(), now.getDate() + 1);
     var initialMonthlyDate = new Date (actualDate.getFullYear(), actualDate.getMonth(), 02);
+    console.log({$gte: initialMonthlyDate , $lte: actualDate});
     mongoose.model('User').findById(req.params.user, function(err,User){
-      mongoose.model('Payment').find({'_id':{$in: User.paymentId},
+      mongoose.model('Payment').find({
+                                      'userId': User._id,
                                       'paymentDate': { $gte: initialMonthlyDate , $lte: actualDate}
                                       }, function(err,Payment){
 
+        res.json(Payment);
+        console.log(Payment);
+      });
+    });
+  },
+
+  getFixedPayments: function(req,res) {
+    mongoose.model('User').findById(req.params.user, function(err,User){
+      mongoose.model('Payment').find({
+                                      'userId': User._id,
+                                      'isMonthly': true
+                                      }, function(err,Payment){
+        console.log(Payment);
         res.json(Payment);
       });
     });
@@ -45,7 +60,7 @@
     var initialDate = new Date(req.params.initialDate);
     var finalDate = new Date(req.params.finalDate);
     mongoose.model('User').findById(req.params.user, function (err, User){
-      mongoose.model('Payment').find({'_id':{$in: User.paymentId},
+      mongoose.model('Payment').find({'userId': User._id,
                                       'paymentDate': { $gte: initialDate , $lte: finalDate},
                                       'isIncome': true,
 
@@ -60,7 +75,7 @@
     var initialDate = new Date(req.params.initialDate);
     var finalDate = new Date(req.params.finalDate);
     mongoose.model('User').findById(req.params.user, function (err, User){
-      mongoose.model('Payment').find({'_id': {$in: User.paymentId},
+      mongoose.model('Payment').find({'userId': User._id,
                                       'paymentDate': { $gte: initialDate , $lte: finalDate},
                                       'isIncome': false,
 
@@ -76,7 +91,7 @@
     var actualDate = new Date (now.getFullYear(), now.getMonth(), now.getDate() + 1);
     var initialMonthlyDate = new Date (actualDate.getFullYear(), actualDate.getMonth(), 02);
     mongoose.model('User').findById(req.params.user, function (err, User){
-      mongoose.model('Payment').find({'_id': {$in: User.paymentId},
+      mongoose.model('Payment').find({'userId': User._id,
       'paymentDate': { $gte: initialMonthlyDate , $lte: actualDate}
     },
     function(err, Payment) {

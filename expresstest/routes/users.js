@@ -12,7 +12,6 @@ var userSchema = new Schema ({
       email: String,
       balance: { type: Number, default: 0 },
       savingsId: {type: Schema.Types.ObjectId, ref: 'SavingsAccount'},
-      paymentId: [{type: Schema.Types.ObjectId, ref: 'Payment'}]
 });
 
 
