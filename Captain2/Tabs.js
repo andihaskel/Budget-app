@@ -25,11 +25,11 @@ import {
 import Stats from './Stats';
 import Dimensions from 'Dimensions';
 import Style from './Styles';
+import IconTabBar from './IconTabBar';
 
 
 class TabsComponent extends Component {
 	constructor(props) {
-		console.log('Constructor tabs');
 		super(props);
 		this.changeTab = this.changeTab.bind(this);
 		this.renderButton = this.renderButton.bind(this);
@@ -89,29 +89,24 @@ class TabsComponent extends Component {
 return null;
 }
 
-
 render() {
 	return (
-		<ScrollView>
+		<View style={styles.container}>
 			<Header>
 				<Button block transparent onPress={this.props.openDrawer}>
 					<Icon name='bars' size={30} />
 				</Button>
 				<Title>Aplicacion</Title>
 			</Header>
-			<ScrollableTabView onChangeTab={this.changeTab} style={{height: Style.SCROLL_VIEW_HEIGHT}} initialPage={this.props.initialPage}>
-				<ScrollView tabLabel='Objectives'>
-					<Objectives navigator={this.props.navigator} />
-				</ScrollView>
-				<ScrollView tabLabel='home'>
-					<Home navigator={this.props.navigator} />
-				</ScrollView>
-				<ScrollView tabLabel='Fixed'>
-					<Stats />
-				</ScrollView>
+			<ScrollableTabView onChangeTab={this.changeTab}
+				initialPage={this.props.initialPage}
+				renderTabBar={() => <IconTabBar />}>
+				<Objectives navigator={this.props.navigator} tabLabel='trophy' />
+				<Home navigator={this.props.navigator} tabLabel='home' />
+				<Stats tabLabel='pie-chart' />
 			</ScrollableTabView>
 			{this.renderButton.call()}
-		</ScrollView>
+		</View>
 	);
 }
 }

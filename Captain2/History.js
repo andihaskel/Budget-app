@@ -16,7 +16,8 @@ import {
   Button,
   List,
   ListItem,
-  Thumbnail
+  Thumbnail,
+  H1
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Style from './Styles';
@@ -52,8 +53,13 @@ class History extends Component {
           <Button block transparent onPress={this.props.openDrawer}>
             <Icon name='bars' size={30} />
           </Button>
-          <Title>History</Title>
+          <Title>Savings history</Title>
         </Header>
+        <View style={{alignItems:'center', width:Style.DEVICE_WIDTH}}>
+        <Text style={{marginTop:10, fontSize:35}}>Savings</Text>
+        <Text  style={{marginTop:10, fontSize:30}}>$30000</Text>
+        <Text style={{marginTop:10, fontSize:25}}>History</Text>
+      </View>
         <Picker
           mode='dropdown'
           style={{height:70}}

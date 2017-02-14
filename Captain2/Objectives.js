@@ -107,7 +107,6 @@ class Objectives extends Component {
     });
   }
 
-
   render() {
     return (
       <ScrollView alignItems='center'>
