@@ -85,9 +85,8 @@ var options = {}; // optional rendering options (see documentation)
 
 BackAndroid.addEventListener('hardwareBackPress', () => {
   if (_navigator.getCurrentRoutes().length === 1  ) {
-     return false;
+    return false;
   }
-  console.log('Entro al true');
   return true;
 });
 
@@ -99,12 +98,12 @@ export default class Captain2 extends Component {
     this.setUserData= this.setUserData.bind(this);
     this.addOneExpense = this.addOneExpense.bind(this);
     this.addOneIncome = this.addOneIncome.bind(this);
-    this.updateObjectives = this.updateObjectives.bind(this);
     this.navigatorRenderScene = this.navigatorRenderScene.bind(this);
     this.openDrawer = this.openDrawer.bind(this);
     this.closeDrawer = this.closeDrawer.bind(this);
 
-    this.state = {isLogged: true,
+    this.state = {
+      isLogged: true,
       username: "",
       password: "",
       incomes: 100,
@@ -112,7 +111,6 @@ export default class Captain2 extends Component {
       categories: ['General', 'Comida', 'Salidas'],
       incomesList: [ {amount:20, description: 'Prueba', category: 'General'}, {amount:80, description: 'Prueba 2', category: 'Comida'}],
       incomeDetail: {},
-      objectivesUpdated: false
     };
   }
 
@@ -155,24 +153,12 @@ export default class Captain2 extends Component {
     this.setState({list});
   }
 
-  updateObjectives() {
-    console.log('update objectives en index');
-      this.setState({objectivesUpdated:true});
-  }
-
-  objectivesUpdated () {
-    this.setState({objectivesUpdated:false});
-  }
-
-
   navigatorRenderScene(route, navigator) {
-    console.log('En el renderScene de index');
     _navigator = navigator;
     var show = null;
     switch (route.id) {
       case 'tabs':
-      return  <Tabs navigator={navigator} openDrawer={this.openDrawer} isObjectiveUpdated={this.state.objectivesUpdated}
-              objectivesUpdated={this.objectivesUpdated.bind(this)}/>
+      return  <Tabs navigator={navigator} openDrawer={this.openDrawer} initialPage={route.initialPage} />
       case 'addExpense':
       return <AddExpense navigator={navigator} />
       case 'addIncome':
@@ -180,7 +166,7 @@ export default class Captain2 extends Component {
       case 'editFixed':
       return <EditFixed navigator={navigator} item={route.data} />
       case 'addObjective':
-      return <AddObjective navigator={navigator} updateObj={this.updateObjectives} />
+      return <AddObjective navigator={navigator} />
       case 'settings':
       return <Settings openDrawer={this.openDrawer} navigator={navigator}/>
       case 'addFromSavings':
@@ -201,7 +187,6 @@ export default class Captain2 extends Component {
       return false
     }
     var goTo = -1;
-    console.log('Routes length = ' + routes.length);
     routes.map(function(route, index){
       if(route.id === id){
         goTo = index;
@@ -216,14 +201,12 @@ export default class Captain2 extends Component {
   }
 
   render() {
-    console.log('Render de index');
     var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'History', icon:'history', id:'history'},{name:'Fixed', icon:'money', id:'fixed'}, {name:'Close session', icon:'power-off', id:'closeSession'}]
     var navigationView = (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <View>
           <Image source={require('./sideBarTop.jpg')}  style={{height:Style.DRAWER_IMAGE_HEIGHT, width:Style.DRAWER_WIDTH}}>
           <View style={{marginTop:30, marginLeft: 10}}>
-            <Thumbnail size={80} source={require('./face.jpg')}/>
             <Text style={{marginTop:5, fontSize:Style.DRAWER_FONT_SIZE}}>Barack Obama</Text>
           </View>
         </Image>
@@ -255,7 +238,7 @@ export default class Captain2 extends Component {
       drawerPosition={DrawerLayoutAndroid.positions.Left}
       renderNavigationView={() => navigationView}>
       <Navigator
-        initialRoute={{id:'tabs'}}
+        initialRoute={{id:'tabs', initialPage:1}}
         ref='NAVIGATOR'
         renderScene={this.navigatorRenderScene}
         configureScene={(route, routeStack) =>

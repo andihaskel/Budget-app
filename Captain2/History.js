@@ -41,8 +41,6 @@ class History extends Component {
   }
 
   updateMonth(item) {
-    console.log('Entra a updateMonth');
-    console.log(item);
     this.setState({paymentsHistory: [{name:'Gasto 2', amount: 200, isIncome:true}],
     selectedValue: item});
   }

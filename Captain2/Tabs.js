@@ -29,11 +29,12 @@ import Style from './Styles';
 
 class TabsComponent extends Component {
 	constructor(props) {
+		console.log('Constructor tabs');
 		super(props);
 		this.changeTab = this.changeTab.bind(this);
 		this.renderButton = this.renderButton.bind(this);
 		UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-		this.state={isVisibleHome:false, isVisibleObj: true}
+		this.state={isVisibleHome:true, isVisibleObj: false}
 	}
 
 	addExpense() {
@@ -64,6 +65,9 @@ class TabsComponent extends Component {
 		}
 	}
 
+
+
+
 	renderButton() {
 		var aux;
 		if (this.state.isVisibleHome) {
@@ -87,7 +91,6 @@ return null;
 
 
 render() {
-	console.log('Render de Tabs');
 	return (
 		<ScrollView>
 			<Header>
@@ -96,7 +99,7 @@ render() {
 				</Button>
 				<Title>Aplicacion</Title>
 			</Header>
-			<ScrollableTabView onChangeTab={this.changeTab} style={{height: Style.SCROLL_VIEW_HEIGHT}} >
+			<ScrollableTabView onChangeTab={this.changeTab} style={{height: Style.SCROLL_VIEW_HEIGHT}} initialPage={this.props.initialPage}>
 				<ScrollView tabLabel='Objectives'>
 					<Objectives navigator={this.props.navigator} />
 				</ScrollView>

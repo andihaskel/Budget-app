@@ -59,7 +59,6 @@ class DetailExpenses extends Component {
 	}
 
 	render() {
-		console.log('Render de Details');
 		return(
 			<View>
 				<Header>

@@ -56,8 +56,9 @@ const styles = StyleSheet.create({
 
 class Home extends Component {
 	constructor(props) {
+		console.log('Constructor Home');
 		super(props);
-		this.state = {fill:70, monthlyPayments:[{name:'Primer pago', amount: 200, isIncome:true}, {name:'Segundo Pago', amount:150, isIncome: false}, {name:'Tercer Pago', amount:100, isIncome: false}, {name:'Cuarto Pago', amount:100, isIncome:true}], balance: 0}
+		this.state = {fill:0, monthlyPayments:[], balance: 0}
 		this.editFixed = this.editFixed.bind(this);
 	}
 
@@ -67,9 +68,8 @@ class Home extends Component {
 
 
 	componentWillMount() {
-		//Esta linea hace el reverse de la lista
-
-		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/monthlyPayments')
+		console.log('Component will mount Home');
+		fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payments/monthlyPayments')
 		.then((response) => response.json())
 		.then((responseData) => {
 			this.setState({monthlyPayments: responseData.reverse()});
@@ -78,22 +78,19 @@ class Home extends Component {
 			console.log('Fetch Error', err);
 
 		});
-
-		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/balance')
+		console.log('Segundo fetch');
+		fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payments/balance')
 		.then((response) => response.json())
 		.then((responseData) => {
 			this.setState({balance: responseData});
-
 		})
 		.catch(function(err) {
 			console.log('Fetch Error', err);
-
 		});
-
-
 	}
 
 	render() {
+		console.log('Render Home');
 		return(
 			<View style={styles.container}>
 				<Text style={styles.textImportado}>Budget</Text>
@@ -106,41 +103,37 @@ class Home extends Component {
 					linecap='round'
 					backgroundColor="#3d5875">
 				</AnimatedCircularProgress>
-
 				<View style={styles.pointsView}>
 					<Text style={styles.points}>{'$' + this.state.balance}</Text>
 				</View>
-
-
-
-					<List dataArray={this.state.monthlyPayments}
-						style={{width:Style.DEVICE_WIDTH, marginTop:10}}
-						renderRow={(item) =>
-							<ListItem button onPress={() => {this.editFixed(item)}}>
-								<View style={{flex:1, flexDirection:'row', justifyContent:'space-between'}}>
-									<Grid>
-										<Row>
-											<Col style={{width:50}}>
-												<Thumbnail size={Style.THUMBNAIL_SIZE} source={require('./cutlery.png')} />
-											</Col>
-											<Col style={{width:Style.TEXTLIST_WIDTH, paddingLeft:10, paddingRight:10}}>
-												<Text style={{fontSize:20}}>{item.name}</Text>
-											</Col>
-											<Col style={{width:60}}>
-												<Text style={{fontSize:15}}>{'$' + item.amount}</Text>
-											</Col>
-											<Col style={{width:40}}>
-												{item.isIncome ?
-													<Icon  size={30} name="angle-double-up"  color='rgb(20,255,20)'/>
-													:<Icon size={30} name="angle-double-down"  color='rgb(255,0,0)'/>
-												}
-											</Col>
-										</Row>
-									</Grid>
-								</View>
-							</ListItem>
-						}>
-					</List>
+				<List dataArray={this.state.monthlyPayments}
+					style={{width:Style.DEVICE_WIDTH, marginTop:10}}
+					renderRow={(item) =>
+						<ListItem button onPress={() => {this.editFixed(item)}}>
+							<View style={{flex:1, flexDirection:'row', justifyContent:'space-between'}}>
+								<Grid>
+									<Row>
+										<Col style={{width:50}}>
+											<Thumbnail size={Style.THUMBNAIL_SIZE} source={require('./cutlery.png')} />
+										</Col>
+										<Col style={{width:Style.TEXTLIST_WIDTH, paddingLeft:10, paddingRight:10}}>
+											<Text style={{fontSize:20}}>{item.name}</Text>
+										</Col>
+										<Col style={{width:60}}>
+											<Text style={{fontSize:15}}>{'$' + item.amount}</Text>
+										</Col>
+										<Col style={{width:40}}>
+											{item.isIncome ?
+												<Icon  size={30} name="angle-double-up"  color='rgb(20,255,20)'/>
+												:<Icon size={30} name="angle-double-down"  color='rgb(255,0,0)'/>
+											}
+										</Col>
+									</Row>
+								</Grid>
+							</View>
+						</ListItem>
+					}>
+				</List>
 			</View>
 		)
 

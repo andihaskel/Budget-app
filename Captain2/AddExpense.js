@@ -32,6 +32,7 @@ class AddExpense extends Component {
   constructor(props) {
     super(props);
     this.goBack = this.goBack.bind(this);
+    this.sendExpense = this.sendExpense.bind(this);
     this.state={name: '', amount: 0, categories: [], paymentId: '', categorySelected: {}, coin: 'shk'};
   }
   sendExpense() {
@@ -46,7 +47,7 @@ class AddExpense extends Component {
         categoryId: this.state.categorySelected._id,
         isIncome: false
       }
-      fetch("http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payment",
+      fetch("http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payment",
       {
         headers: {
           'Accept': 'application/json',
@@ -57,7 +58,7 @@ class AddExpense extends Component {
 
       });
       ToastAndroid.show('Correctly ingressed', ToastAndroid.SHORT);
-      this.props.navigator.pop();
+      this.props.navigator.immediatelyResetRouteStack([{id:'tabs', initialPage:1}]);
     }
 
   }
@@ -90,7 +91,7 @@ class AddExpense extends Component {
     }
     var rightButtonConfig = {
       title: 'Save',
-      handler: this.addIncome
+      handler: this.sendExpense
     }
 
     return (

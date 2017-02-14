@@ -41,7 +41,6 @@ class AddIncome extends Component {
 
 
   addIncome(){
-    console.log('En addIncome');
     if(this.state.name == ''){
       ToastAndroid.show('Must ingress name', ToastAndroid.SHORT);
     }else if(this.state.amount == 0){
@@ -53,9 +52,8 @@ class AddIncome extends Component {
         categoryId: this.state.categorySelected._id,
         isIncome: true
       }
-      console.log('Voy a entrar al fetch');
 
-      fetch("http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payment",
+      fetch("http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payment",
       {
         headers: {
           'Accept': 'application/json',
@@ -66,7 +64,7 @@ class AddIncome extends Component {
 
       });
       ToastAndroid.show('Correctly ingressed', ToastAndroid.SHORT);
-      this.props.navigator.pop();
+      this.props.navigator.immediatelyResetRouteStack([{id:'tabs', initialPage:1}]);
     }
   }
 
@@ -77,12 +75,9 @@ class AddIncome extends Component {
 
 
   componentWillMount() {
-    console.log('wil mount add income');
     fetch('http://10.0.2.2:3000/categories')
     .then((response) => response.json())
     .then((responseData) => {
-      console.log('Adentro del then');
-      console.log(responseData);
       this.setState({categories: responseData});
       this.setState({categorySelected: this.state.categories[0], simpleDate: new Date(2020, 4, 5),
       })
