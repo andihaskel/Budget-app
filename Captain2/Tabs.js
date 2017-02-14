@@ -26,67 +26,106 @@ import Stats from './Stats';
 import Dimensions from 'Dimensions';
 import Style from './Styles';
 import IconTabBar from './IconTabBar';
+import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
 
 class TabsComponent extends Component {
 	constructor(props) {
 		super(props);
-		this.changeTab = this.changeTab.bind(this);
 		this.renderButton = this.renderButton.bind(this);
 		UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
-		this.state={isVisibleHome:true, isVisibleObj: false}
+		this.state={isVisibleHome:true,
+			isVisibleObj: false,
+			index: 1,
+			routes: [
+				{ key: '1', icon:'trophy' },
+				{ key: '2', icon:'home' },
+				{ key: '3', icon:'pie-chart'},
+			],
+		}
 	}
 
-	addExpense() {
-		this.props.navigator.push({id:'addExpense'});
-	}
-	addIncome() {
-		this.props.navigator.push({id:'addIncome'});
-	}
-	addObjective() {
-		this.props.navigator.push({id:'addObjective'});
-	}
-
-	changeTab(obj) {
+	//ACA EMPIEZA LO NUEVO
+	_handleChangeTab = (index) => {
+		console.log('Handle change tab');
 		const CustomLayoutLinear = {
-			duration: 250,
+			duration: 100,
 			update: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity },
 			delete: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity }
 		}
 		LayoutAnimation.configureNext(CustomLayoutLinear);
-		if(obj.i === 0){
-			this.setState({isVisibleHome:false, isVisibleObj: true})
+		console.log('Afuera del swith Tabs');
+		switch (index) {
+			case 0:
+			this.setState({index: index, isVisibleObj: true, isVisibleHome:false});
+			break;
+			case 1:
+			this.setState({index: index, isVisibleObj: false, isVisibleHome:true});
+			break;
+			default:
+			this.setState({index: index, isVisibleObj: false, isVisibleHome:false});
+
 		}
-		if(obj.i === 1){
-			this.setState({isVisibleHome:true, isVisibleObj: false})
+	};
+
+	_renderIcon = ({ route }: any) => {
+		return (
+			<Icon
+				name={route.icon}
+				size={24}
+				color='white'/>
+			);
+		};
+
+		_renderHeader = (props) => {
+			return <TabBar {...props} renderIcon={this._renderIcon} />;
+		};
+
+		_renderScene = ({ route }) => {
+			switch (route.key) {
+				case '1':
+				return 	<Objectives navigator={this.props.navigator} tabLabel='trophy' />;
+				case '2':
+				return 	<Home navigator={this.props.navigator} tabLabel='home' />;
+				case '3':
+				return <Stats tabLabel='pie-chart' />;
+				default:
+				return null;
+			}
+		};
+
+		//ACA TERMINA LO NUEVO
+
+		addExpense() {
+			this.props.navigator.push({id:'addExpense'});
 		}
-		if(obj.i === 2){
-			this.setState({isVisibleHome:false, isVisibleObj: false})
+		addIncome() {
+			this.props.navigator.push({id:'addIncome'});
 		}
-	}
+		addObjective() {
+			this.props.navigator.push({id:'addObjective'});
+		}
 
 
+		renderButton() {
+			console.log('Render button');
+			if (this.state.isVisibleHome) {
+				return (<ActionButton  buttonColor="#2BB0FF" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="pencil" style={styles.actionButtonIcon} />}>
+				<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={this.addExpense.bind(this)}>
+					<Icon name="usd" style={styles.actionButtonIcon} />
+				</ActionButton.Item>
+				<ActionButton.Item buttonColor='#00CF5F' title="Add income" onPress={this.addIncome.bind(this)}>
+					<Icon name="usd" style={styles.actionButtonIcon} />
+				</ActionButton.Item>
+			</ActionButton>)
 
-
-	renderButton() {
-		var aux;
-		if (this.state.isVisibleHome) {
-			return (<ActionButton  buttonColor="#2BB0FF" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="pencil" style={styles.actionButtonIcon} />}>
-			<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={this.addExpense.bind(this)}>
-				<Icon name="usd" style={styles.actionButtonIcon} />
-			</ActionButton.Item>
-			<ActionButton.Item buttonColor='#00CF5F' title="Add income" onPress={this.addIncome.bind(this)}>
-				<Icon name="usd" style={styles.actionButtonIcon} />
-			</ActionButton.Item>
+		} else if (this.state.isVisibleObj) {
+			return (<ActionButton buttonColor="#ADFF2F" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="trophy" style={styles.actionButtonIcon} />}
+			onPress={this.addObjective.bind(this)}>
 		</ActionButton>)
 
-	} else if (this.state.isVisibleObj) {
-		return (<ActionButton buttonColor="#ADFF2F" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="trophy" style={styles.actionButtonIcon} />}
-		onPress={this.addObjective.bind(this)}>
-	</ActionButton>)
-
-}
-return null;
+	}
+	return null;
 }
 
 render() {
@@ -98,13 +137,13 @@ render() {
 				</Button>
 				<Title>Aplicacion</Title>
 			</Header>
-			<ScrollableTabView onChangeTab={this.changeTab}
-				initialPage={this.props.initialPage}
-				renderTabBar={() => <IconTabBar />}>
-				<Objectives navigator={this.props.navigator} tabLabel='trophy' />
-				<Home navigator={this.props.navigator} tabLabel='home' />
-				<Stats tabLabel='pie-chart' />
-			</ScrollableTabView>
+			<TabViewAnimated
+				style={styles.container}
+				navigationState={this.state}
+				renderScene={this._renderScene}
+				renderHeader={this._renderHeader}
+				onRequestChangeTab={this._handleChangeTab}
+			/>
 			{this.renderButton.call()}
 		</View>
 	);

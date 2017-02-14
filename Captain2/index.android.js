@@ -43,6 +43,9 @@ import Settings from './Settings';
 import AddFromSavings from './AddFromSavings';
 import DetailExpenses from './DetailExpenses';
 import History from './History';
+
+import Prueba from './Prueba'
+
 var t = require('tcomb-form-native');
 
 
@@ -177,6 +180,8 @@ export default class Captain2 extends Component {
       return <Login navigator={navigator} />
       case 'history':
       return <History navigator={navigator} openDrawer={this.openDrawer} />
+      case 'test':
+      return <Prueba />
     }
   }
 
@@ -238,7 +243,7 @@ export default class Captain2 extends Component {
       drawerPosition={DrawerLayoutAndroid.positions.Left}
       renderNavigationView={() => navigationView}>
       <Navigator
-        initialRoute={{id:'history', initialPage:1}}
+        initialRoute={{id:'tabs', initialPage:1}}
         ref='NAVIGATOR'
         renderScene={this.navigatorRenderScene}
         configureScene={(route, routeStack) =>

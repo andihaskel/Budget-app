@@ -18,18 +18,14 @@ class Stats extends Component {
 
   constructor(props) {
     super(props);
-
   }
 
   render() {
-    const chart_wh = 250
-    const series = [123, 321, 123, 789, 537]
-    const sliceColor = ['#F44336','#2196F3','#FFEB3B', '#4CAF50', '#FF9800']
-
+  console.log('Render de stats');
     return (
         <View style={styles.container}>
           <Text style={styles.title}>Expenses</Text>
-         
+
         </View>
     );
   }

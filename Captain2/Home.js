@@ -68,7 +68,6 @@ class Home extends Component {
 
 
 	componentWillMount() {
-		console.log('Component will mount Home');
 		fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payments/monthlyPayments')
 		.then((response) => response.json())
 		.then((responseData) => {
@@ -78,7 +77,6 @@ class Home extends Component {
 			console.log('Fetch Error', err);
 
 		});
-		console.log('Segundo fetch');
 		fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payments/balance')
 		.then((response) => response.json())
 		.then((responseData) => {
@@ -90,7 +88,6 @@ class Home extends Component {
 	}
 
 	render() {
-		console.log('Render Home');
 		return(
 			<View style={styles.container}>
 				<Text style={styles.textImportado}>Budget</Text>
