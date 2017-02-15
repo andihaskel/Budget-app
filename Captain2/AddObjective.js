@@ -37,7 +37,7 @@ class AddObjective extends Component {
     super(props);
     this.goBack = this.goBack.bind(this);
     this.calculateDate = this.calculateDate.bind(this);
-    this.state={price: 0,currentAmount: 0, isAchived:false, coin: 'shk', name: '', savePerMonth: 0, achivedIn: this.calculateDate}
+    this.state={price: 0, currentAmount: 0, isAchived:false, coin: 'shk', name: '', savePerMonth: 0, achivedIn: this.calculateDate}
   }
 
   goBack() {
@@ -48,7 +48,6 @@ class AddObjective extends Component {
     var ret = '0 month';
     if(this.state.price !== '0' && this.state.savePerMonth !== '0'){
       var aux = parseInt(this.state.price) / parseInt(this.state.savePerMonth);
-      console.log(aux);
       ret = aux + ' month';
     }
     return ret;
@@ -73,7 +72,7 @@ class AddObjective extends Component {
 
       }
 
-      fetch("http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objective",
+      fetch("http://10.0.2.2:3000/589af71dd65dfe0b102b164e/objective",
       {
         headers: {
           'Accept': 'application/json',
@@ -84,13 +83,11 @@ class AddObjective extends Component {
 
       });
       ToastAndroid.show('Correctly ingressed', ToastAndroid.SHORT);
-      this.props.updateObj();
-      this.props.navigator.pop();
+      this.props.navigator.immediatelyResetRouteStack([{id:'tabs', initialPage:0}]);
     }
   }
 
   render() {
-    console.log('render add objective');
     var leftButtonConfig = {
       title: 'Back',
       handler: this.goBack,

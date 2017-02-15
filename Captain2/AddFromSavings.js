@@ -28,7 +28,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 class AddFromSavings extends Component {
   constructor(props) {
     super(props);
-    console.log('En el constructor de AddFromSavings');
     this.goBack = this.goBack.bind(this);
     this.state={savings: 5, value:0, objective: {}, savingsAccount: {}, maximumValue: 0};
   }
@@ -66,7 +65,6 @@ class AddFromSavings extends Component {
          .then((response) =>  response.json())
          .then((responseData) => {
           this.setState({savingsAccount: responseData});
-          console.log('acc', this.state.savingsAccount);
           this.setState({savings: this.state.savingsAccount.balance});
 
 
@@ -95,7 +93,7 @@ class AddFromSavings extends Component {
       title: 'Back',
       handler: this.goBack,
     }
-  
+
 
     return (
       <View>

@@ -50,7 +50,7 @@ class AddExpense extends Component {
         isIncome: false,
         isMonthly: this.state.monthly
       }
-      fetch("http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payment",
+      fetch("http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payment",
       {
         headers: {
           'Accept': 'application/json',
@@ -61,7 +61,7 @@ class AddExpense extends Component {
 
       });
       ToastAndroid.show('Correctly ingressed', ToastAndroid.SHORT);
-      this.props.navigator.pop();
+      this.props.navigator.immediatelyResetRouteStack([{id:'tabs', initialPage:1}]);
     }
 
   }

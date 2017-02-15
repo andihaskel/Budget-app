@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
 class Objectives extends Component {
   constructor(props) {
     super(props);
+    this.props.navigator.getCurrentRoutes(0).map((s) => console.log(s.id));
     this.onActionSelected = this.onActionSelected.bind(this);
     this.deleteObjective = this.deleteObjective.bind(this);
     this.state={objectives:[], show: false, itemSelected: {}};
@@ -70,7 +71,6 @@ class Objectives extends Component {
 
   onActionSelected(position, item) {
     this.setState({itemSelected: item});
-    console.log(item);
     if(position === 0){
       this.props.navigator.push({id:'addFromSavings', data: item._id})
     }else {
@@ -86,7 +86,6 @@ class Objectives extends Component {
   }
 
   deleteObjective(item) {
-
     return fetch('http://10.0.2.2:3000/objective/' + this.state.itemSelected._id, {
       method: 'delete'
     }).then(response =>
@@ -97,32 +96,19 @@ class Objectives extends Component {
   }
 
   componentWillMount() {
-    fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objectives')
+    fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/objectives')
     .then((response) => response.json())
     .then((responseData) => {
-      this.setState({objectives: responseData, show: true});
+      this.setState({objectives: responseData.reverse(), show: true});
 
     })
     .catch(function(err) {
       console.log('Fetch Error', err);
     });
   }
-  componentWillUpdate(nextProps, nextState) {
-    if(nextProps.isObjectiveUpdated) {
-      nextProps.objectivesUpdated();
-      fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objectives')
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.setState({objectives: responseData, show: true});
 
-      })
-      .catch(function(err) {
-        console.log('Fetch Error', err);
-      });
-    }
-  }
   render() {
-    var date = new Date(); 
+    var date = new Date();
     return (
       <ScrollView alignItems='center'>
         <List width={Style.DEVICE_WIDTH} dataArray={this.state.objectives}
