@@ -24,7 +24,9 @@ router.get('/:user/objectives', objectiveController.getObjectives);
 
 router.post('/:user/objective', objectiveController.store);
 
-router.delete('/:objective', objectiveController.delete);
+router.delete('/objective/:objective', objectiveController.delete);
+
+router.delete('/payment/:payment', paymentController.delete);
 
 router.put('/:objective/addMoney', objectiveController.addMoneyFromSavings);
 
@@ -36,9 +38,9 @@ router.get('/:user/payments/fixedPayments', paymentController.getFixedPayments);
 
 router.get('/:user/payments/balance', paymentController.getMonthlyBalance);
 
-router.get('/:user/payments/MonthlyIncomes', paymentController.getSpecificIncomes);
+// router.get('/:user/payments/MonthlyIncomes', paymentController.getSpecificIncomes);
 
-router.get('/:user/payments/MonthlyExcomes', paymentController.getSpecificExcomes);
+// router.get('/:user/payments/MonthlyExcomes', paymentController.getSpecificExcomes);
 
 router.post('/:user/payment', paymentController.store);
 
@@ -50,6 +52,10 @@ router.post('/login', userController.login);
 //router.put('/:user/savings/addMoney/:Date', savingsAccountController.addMoney);
 
 router.get('/:objective/', objectiveController.getSpecificObjective);
+
+router.get('/payment/:payment', paymentController.getSpecificPayment);
+
+router.put('/payment/:payment', paymentController.editPayment);
 
 
 router.get('/:user/savings', savingsAccountController.getSavingsAccount);
