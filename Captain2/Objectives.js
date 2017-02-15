@@ -87,7 +87,7 @@ class Objectives extends Component {
 
   deleteObjective(item) {
 
-    return fetch('http://10.0.2.2:3000/' + this.state.itemSelected._id, {
+    return fetch('http://10.0.2.2:3000/objective/' + this.state.itemSelected._id, {
       method: 'delete'
     }).then(response =>
       response.json().then(json => {
@@ -122,6 +122,7 @@ class Objectives extends Component {
     }
   }
   render() {
+    var date = new Date(); 
     return (
       <ScrollView alignItems='center'>
         <List width={Style.DEVICE_WIDTH} dataArray={this.state.objectives}
@@ -162,7 +163,7 @@ class Objectives extends Component {
                       <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{'$' + item.currentAmount} {'\n'}pledged</Text>
                     </Col>
                     <Col>
-                      <Text style={{fontSize:Style.CARD_FONT_SIZE}}> x {'\n'}days to go</Text>
+                      <Text style={{fontSize:Style.CARD_FONT_SIZE}}> {parseInt((Date.parse(item.dateToAchive) - date)/86400000)} {'\n'}days to go</Text>
                     </Col>
                   </Grid>
 

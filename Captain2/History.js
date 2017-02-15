@@ -37,12 +37,13 @@ class History extends Component {
   }
 
   editFixed(item){
-    this.props.navigator.push({id: 'editFixed', data: item.value});
+    this.props.navigator.push({id: 'editFixed', data: item._id});
   }
 
   updateMonth(item) {
     console.log('Entra a updateMonth');
     console.log(item);
+    
     this.setState({paymentsHistory: [{name:'Gasto 2', amount: 200, isIncome:true}],
     selectedValue: item});
   }

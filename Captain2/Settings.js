@@ -5,16 +5,37 @@ import {
   TextInput,
   Picker,
   PickerItem,
+  StyleSheet,
   ToolbarAndroid
 } from 'react-native'
 import TextField from 'react-native-md-textinput';
 import NavigationBar from 'react-native-navbar';
+import { Col, Row, Grid } from "react-native-easy-grid";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   Header,
   Title,
-  Button
+  Button,
+  Container,
+  Content
 } from 'native-base';
+
+const styles = StyleSheet.create({
+  
+  subtitles: {
+    top: 20,
+    left: 12,
+    margin: 20,
+    position: 'absolute',
+    backgroundColor: 'transparent',
+    alignItems: 'center',
+    fontSize: 20
+  },
+  description: {
+
+
+  }
+});
 
 class Configuration extends Component {
   constructor(props) {
@@ -60,18 +81,29 @@ class Configuration extends Component {
             <Button block success style={{position:'absolute', top:200, left:20, width: 340, height:35}} onPress={this.finishEdition}>Done</Button>
           </View>)
           :
-          (<View style={{margin:10}}>
-            <Text style={{fontSize: 20}}>Full name</Text>
+          (
+           <View style={{height: 300, width: 500}}>  
+           <Content style={{height: 50, width: 400}} >    
+            <Grid>
+            <Row style = {{backgroundColor:'rgb(20,255,20)'}}>
+            <Text style={{top: 20, left: 12, margin: 20, fontSize: 20}}>Full name</Text>
+               </Row>
+
+            <Row>
             <Text style={{fontSize: 17}}>Gabriel Bursztein</Text>
-            <Text style={{fontSize: 20}}>Email</Text>
+            </Row>
+            <Row>
+            <Text >Email</Text>
+            </Row>
             <Text style={{fontSize: 17}}>gabibur@gmail.com</Text>
             <Button block warning style={{position:'absolute', top:200, left:20, width:340, height:35}} onPress={this.edit}>Edit</Button>
-          </View>)
+
+            </Grid>
+            </Content>
+      </View>
+          )
 
         }
-
-
-
       </View>
     )
   }

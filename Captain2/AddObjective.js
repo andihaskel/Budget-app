@@ -37,7 +37,7 @@ class AddObjective extends Component {
     super(props);
     this.goBack = this.goBack.bind(this);
     this.calculateDate = this.calculateDate.bind(this);
-    this.state={price: 0, isAchived:false, coin: 'shk', name: '', savePerMonth: 0, achivedIn: this.calculateDate}
+    this.state={price: 0,currentAmount: 0, isAchived:false, coin: 'shk', name: '', savePerMonth: 0, achivedIn: this.calculateDate}
   }
 
   goBack() {

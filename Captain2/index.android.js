@@ -223,8 +223,8 @@ export default class Captain2 extends Component {
         <View>
           <Image source={require('./sideBarTop.jpg')}  style={{height:Style.DRAWER_IMAGE_HEIGHT, width:Style.DRAWER_WIDTH}}>
           <View style={{marginTop:30, marginLeft: 10}}>
-            <Thumbnail size={80} source={require('./face.jpg')}/>
-            <Text style={{marginTop:5, fontSize:Style.DRAWER_FONT_SIZE}}>Barack Obama</Text>
+
+            <Text style={{marginTop:5, fontSize:Style.DRAWER_FONT_SIZE}}>Andi Haskel</Text>
           </View>
         </Image>
       </View>

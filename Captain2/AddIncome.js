@@ -36,7 +36,7 @@ class AddIncome extends Component {
     super(props);
     this.addIncome = this.addIncome.bind(this);
     this.goBack = this.goBack.bind(this);
-    this.state={amount: 0, name:'', categories: [], categorySelected: {}, coin: 'shk', monthly: false}
+    this.state={amount: 0, name:'', categories: [], categorySelected: {}, monthly: false}
   }
 
 
@@ -51,7 +51,8 @@ class AddIncome extends Component {
         name: this.state.name,
         amount: this.state.amount,
         categoryId: this.state.categorySelected._id,
-        isIncome: true
+        isIncome: true,
+        isMonthly: this.state.monthly
       }
       console.log('Voy a entrar al fetch');
 

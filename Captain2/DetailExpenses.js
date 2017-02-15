@@ -30,7 +30,7 @@ class DetailExpenses extends Component {
 	}
 
 	editFixed(item){
-		this.props.navigator.push({id: 'editFixed', data: item.value});
+		this.props.navigator.push({id: 'editFixed', data: item._id});
 	}
 
 	componentWillMount() {
@@ -77,7 +77,7 @@ class DetailExpenses extends Component {
 						}
 						renderHeader={() =>
 							<ListItem itemDivider>
-								<Text style={{fontSize:25}}>Incomes</Text>
+								<Text style={{fontSize:25}}>Monthly Incomes</Text>
 							</ListItem>
 						}
 						>
@@ -91,7 +91,7 @@ class DetailExpenses extends Component {
 							}
 							renderHeader={() =>
 								<ListItem itemDivider>
-									<Text style={{fontSize:25}}>Expenses</Text>
+									<Text style={{fontSize:25}}>Monthly Expenses</Text>
 								</ListItem>
 							}
 							>

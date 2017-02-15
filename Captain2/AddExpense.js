@@ -32,19 +32,23 @@ class AddExpense extends Component {
   constructor(props) {
     super(props);
     this.goBack = this.goBack.bind(this);
-    this.state={name: '', amount: 0, categories: [], paymentId: '', categorySelected: {}, coin: 'shk'};
+    this.sendExpense = this.sendExpense.bind(this);
+    this.state={name: '', amount: 0, categories: [], paymentId: '', categorySelected: {}, coin: 'shk', monthly: false}
   }
   sendExpense() {
+    console.log(this.state.name);
     if(this.state.name == ''){
       ToastAndroid.show('Must ingress name', ToastAndroid.SHORT);
     }else if(this.state.amount == 0){
       ToastAndroid.show('Must ingress price', ToastAndroid.SHORT);
     }else{
-      var expense ={
+
+      var expense = {
         name: this.state.name,
         amount: this.state.amount,
         categoryId: this.state.categorySelected._id,
-        isIncome: false
+        isIncome: false,
+        isMonthly: this.state.monthly
       }
       fetch("http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payment",
       {
@@ -90,7 +94,7 @@ class AddExpense extends Component {
     }
     var rightButtonConfig = {
       title: 'Save',
-      handler: this.addIncome
+      handler: this.sendExpense
     }
 
     return (

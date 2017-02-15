@@ -6,6 +6,7 @@ import {
   Picker,
   ToolbarAndroid,
   Switch,
+  ToastAndroid,
   Alert
 } from 'react-native'
 import {
@@ -29,16 +30,82 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 class EditFixed extends Component {
   constructor(props) {
+    console.log('estoy en edit fixed')
     super(props);
     this.goBack = this.goBack.bind(this);
     this.editFixed = this.editFixed.bind(this);
-    this.state = {edit: false, price: '0',  categories: [{name:'General'}, {name:'Comida'}, {name:'Bebida'}], categorySelected: 'General', title:'Enlatados', price:'250', categorySelected:'Comida', monthly:true};
+    this.deletePayment = this.deletePayment.bind(this);
+    this.state = {edit: false, categories: [], price: 0, categorySelected: '', title:'', payment: {}, monthly:true};
   }
   goBack() {
     this.props.navigator.pop();
   }
   editFixed() {
+      var payment ={
+        name: this.state.title,
+        amount: this.state.price, 
+        isMonthly: this.state.monthly,
+        categoryId: this.state.categorySelected
+      }
+      fetch("http://10.0.2.2:3000/payment/" + this.props.item,
+     {
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: "PUT",
+    body: JSON.stringify({
+                  name: this.state.title,
+                  amount: Number.parseInt(this.state.price,10),
+                  isMonthly: this.state.monthly
+                })
+
+     });
+    ToastAndroid.show('Correctly edited', ToastAndroid.SHORT);
+    this.props.navigator.pop(); 
     this.setState({edit: !this.state.edit})
+  }
+
+  componentWillMount() {
+
+    console.log('http://10.0.2.2:3000/payment/' + this.props.item);
+    fetch('http://10.0.2.2:3000/payment/' + this.props.item)
+    .then((response) => response.json())
+    .then((responseData) => {
+
+        fetch('http://10.0.2.2:3000/categories')
+          .then((response) => response.json())
+          .then((responseData) => {
+               this.setState({categories: responseData});
+
+          })
+            .catch(function(err) {
+            console.log('Fetch Error', err);
+}); 
+
+this.setState({ title: responseData.name, price: responseData.amount, monthly: responseData.isMonthly,
+             categorySelected: responseData.categoryId});
+
+          })
+      
+    .catch(function(err) {
+      console.log('Fetch Error', err);
+
+    });
+  }
+  deletePayment() {
+     ToastAndroid.show('Deleted correctly', ToastAndroid.SHORT);
+     this.props.navigator.pop(); 
+     return fetch('http://10.0.2.2:3000/payment/' + this.props.item, {
+      method: 'delete'
+    }).then(response =>
+      response.json().then(json => {
+        return json;
+      })
+    );
+
+        
+
   }
 
   showDelete() {
@@ -48,7 +115,7 @@ class EditFixed extends Component {
         'Are you sure?',
         [
           {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
+          {text: 'OK', onPress: () => this.deletePayment()},
         ]
       )
     )
@@ -64,6 +131,7 @@ class EditFixed extends Component {
       title: 'Save',
       handler: this.editFixed
     }
+    console.log(this.state.price);
     return (
       <Container>
         <Content style={{padding:10}}>
@@ -74,7 +142,7 @@ class EditFixed extends Component {
           />
           <Grid>
             <Row>
-              <TextInput style={{width:Style.DEVICE_WIDTH, fontSize:20}} defaultValue={this.state.title} placeholder='Title' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({name: text})} />
+              <TextInput style={{width:Style.DEVICE_WIDTH, fontSize:20}} defaultValue={this.state.title} placeholder='Title' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({title: text})} />
             </Row>
 
             <Row style={{alignItems: 'center'}}>
@@ -82,7 +150,7 @@ class EditFixed extends Component {
                 <Text style={{fontSize:30, marginVertical:10}}>$</Text>
               </Col>
               <Col size={5}>
-                <TextInput defaultValue={this.state.price}  style={{fontSize:20, height:50}} keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(amount) => this.setState({amount: amount})} />
+                <TextInput defaultValue={this.state.price + ''}  style={{fontSize:20, height:50}} keyboardType='phone-pad' placeholder='Price' highlightColor={'#00BCD4'} onChangeText={(amount) => this.setState({price: amount})} />
               </Col>
               <Col size={12}>
                 <Picker
@@ -92,8 +160,9 @@ class EditFixed extends Component {
                   { this.state.categories.map((s,i) => {
                     return <Picker.Item
                       key = {i}
-                      value={s.name}
-                      label={s.name} />
+                      value={s._id}
+                      label={s.name} 
+                      />
                     }) }
                   </Picker>
                 </Col>

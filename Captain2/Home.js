@@ -57,12 +57,13 @@ const styles = StyleSheet.create({
 class Home extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {fill:70, monthlyPayments:[{name:'Primer pago', amount: 200, isIncome:true}, {name:'Segundo Pago', amount:150, isIncome: false}, {name:'Tercer Pago', amount:100, isIncome: false}, {name:'Cuarto Pago', amount:100, isIncome:true}], balance: 0}
+		this.state = {fill: 0, monthlyPayments:[]}
 		this.editFixed = this.editFixed.bind(this);
+
 	}
 
 	editFixed(item){
-		this.props.navigator.push({id: 'editFixed', data: item.value});
+		this.props.navigator.push({id: 'editFixed', data: item._id});
 	}
 
 
@@ -82,8 +83,7 @@ class Home extends Component {
 		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/balance')
 		.then((response) => response.json())
 		.then((responseData) => {
-			this.setState({balance: responseData});
-
+			this.setState({fill: responseData.fill, balance: responseData.balance});
 		})
 		.catch(function(err) {
 			console.log('Fetch Error', err);
@@ -94,6 +94,7 @@ class Home extends Component {
 	}
 
 	render() {
+		console.log(this.state.monthlyPayments);
 		return(
 			<View style={styles.container}>
 				<Text style={styles.textImportado}>Budget</Text>
