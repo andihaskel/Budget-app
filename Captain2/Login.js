@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import { AppRegistry,
-	Button,
 	Text,
 	TextInput,
 	View,
 	Form,
-	TouchableHighlight,
-	StyleSheet
+	TouchableOpacity,
+	StyleSheet,
+	Image,
+	ToastAndroid
 } from 'react-native';
-
+import {
+	Container,
+	Content,
+	Button
+} from 'native-base'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Style from './Styles';
+import { Col, Row, Grid } from "react-native-easy-grid";
+import TextField from 'react-native-md-textinput';
 
 const styles = StyleSheet.create({
 	pointsView: {
@@ -32,53 +41,84 @@ const styles = StyleSheet.create({
 
 });
 
-class Login extends Component {
+class FirstPage extends Component {
 	constructor (props) {
 		super(props);
-
-		this.state={name: '', password: ''};
-
+		this.input={email:'', password:''};
 	}
 
+	signUp() {
+		this.props.navigator.push({id:'signUp'});
+	}
 	login() {
-		var User = {
-		   userName: this.state.name,
-           password: this.state.password
+		if(this.input.email === 'gabibur@gmail.com' && this.input.password === 'gabi'){
+			this.props.navigator.push({id:'tabs'});
+		} else {
+			ToastAndroid.show('Incorrect User/Password', ToastAndroid.SHORT);
 		}
-	   
-	   fetch("http://10.0.2.2:3000/login",
-       {
-       headers: {
-       'Accept': 'application/json',
-       'Content-Type': 'application/json'
-       },
-       method: "POST",
-       body: JSON.stringify(User)
-     });
-
-
-
-
-
-
 	}
-
 
 	render () {
-		console.log('Render de login');
-
 		return  (
+			<Image style={{flex: 1, width: null, height: null}} source={require('./FirstPageImage.jpg')}>
+			<Container style={{alignItems:'center'}}>
+				<Content>
+					<View style={{marginTop:150}}>
+						<TextField
+							label={'Email'}
+							labelColor={'#FFF'}
+							textColor={'#FFF'}
+							highlightColor={'#00BCD4'}
+							onChangeText={(email) => this.input.email = email}
+							inputStyle={{fontSize:20, height:50}}
+						/>
+						<TextField
+							label={'Password'}
+							labelColor={'#FFF'}
+							textColor={'#FFF'}
+							highlightColor={'#00BCD4'}
+							secureTextEntry={true}
+							onChangeText={(pass) => this.input.password = pass}
+							inputStyle={{fontSize:20, height:40}}
+						/>
+					</View>
+					<View style={{marginTop:20}}>
+						<Icon.Button width={270} name="envelope-o" borderRadius={15} size={30} paddingLeft={20} backgroundColor="#3F7874" onPress={this.login.bind(this)}>
+							<Text style={{fontSize:20, color:'#FFF', paddingLeft:20}}>Log in</Text>
+						</Icon.Button>
+					</View>
+					<Grid>
+						<Row style={{alignItems:'center', height:40}}>
+							<Col style={{width:160}}>
+								<Text style={{fontSize:15, color:'#FFF'}}>Dont have an account?</Text>
+							</Col>
+							<Col>
+								<TouchableOpacity  onPress={this.signUp.bind(this)}>
+									<Text style={{fontSize:15, fontWeight:'bold', color:'#FFF'}}>Sign Up</Text>
+								</TouchableOpacity>
+							</Col>
+						</Row>
+					</Grid>
+					<View style={{marginTop:20, alignItems:'center'}}>
+						<Text style={{fontSize:25, color:'#FFF'}}>Or</Text>
+					</View>
+					<View style={{marginTop:20}}>
+						<Icon.Button width={270} name="facebook" borderRadius={15} size={30} paddingLeft={20} backgroundColor="#3b5998" onPress={() => console.log('Prueba')}>
+							<Text style={{fontSize:20, color:'#FFF', paddingLeft:20}}>Login with Facebook</Text>
+						</Icon.Button>
+					</View>
+				</Content>
+			</Container>
+		</Image>
+	);
+}
+}
 
-			<View>
 
-			<TextInput  placeholder='userName' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({name: text})} />
- 		    <TextInput  placeholder='Price' secureTextEntry={true} highlightColor={'#00BCD4'} onChangeText={(pas) => this.setState({password: pas})} /> 
 
-			<TouchableHighlight onPress={this.onPress} underlayColor='#99d9f4'>
-			<Text></Text>
-			</TouchableHighlight>
-			<Button title= "login" onPress = {this.login.bind(this)}/>
-			</View>
-			);	}
-	}
-	module.exports = Login;
+
+
+
+
+
+module.exports = FirstPage;

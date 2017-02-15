@@ -135,7 +135,7 @@ render() {
 				<Button block transparent onPress={this.props.openDrawer}>
 					<Icon name='bars' size={30} />
 				</Button>
-				<Title>Aplicacion</Title>
+				<Title>Aplication</Title>
 			</Header>
 			<TabViewAnimated
 				style={styles.container}

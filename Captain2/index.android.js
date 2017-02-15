@@ -32,7 +32,6 @@ import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-vi
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Home from './Home';
 import AddExpense from './AddExpense';
-import Login from './Login';
 import AddIncome from './AddIncome';
 import ViewIncome from './ViewIncome';
 import Tabs from './Tabs';
@@ -43,9 +42,8 @@ import Settings from './Settings';
 import AddFromSavings from './AddFromSavings';
 import DetailExpenses from './DetailExpenses';
 import History from './History';
-
-import Prueba from './Prueba'
-
+import Login from './Login';
+import SignUp from './SignUp';
 var t = require('tcomb-form-native');
 
 
@@ -176,12 +174,12 @@ export default class Captain2 extends Component {
       return <AddFromSavings navigator={navigator} item={route.data}/>
       case 'fixed':
       return <DetailExpenses navigator={navigator} openDrawer={this.openDrawer} />
-      case 'login':
-      return <Login navigator={navigator} />
+      case 'signUp':
+      return <SignUp navigator={navigator} />
       case 'history':
       return <History navigator={navigator} openDrawer={this.openDrawer} />
-      case 'test':
-      return <Prueba />
+      case 'login':
+      return <Login navigator={navigator} />
     }
   }
 
@@ -212,7 +210,7 @@ export default class Captain2 extends Component {
         <View>
           <Image source={require('./sideBarTop.jpg')}  style={{height:Style.DRAWER_IMAGE_HEIGHT, width:Style.DRAWER_WIDTH}}>
           <View style={{marginTop:30, marginLeft: 10}}>
-            <Text style={{marginTop:5, fontSize:Style.DRAWER_FONT_SIZE}}>Barack Obama</Text>
+            <Text style={{marginTop:5, fontSize:Style.DRAWER_FONT_SIZE}}>Captain Up</Text>
           </View>
         </Image>
       </View>
