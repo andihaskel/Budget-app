@@ -69,7 +69,7 @@ class Home extends Component {
 
 
 	componentWillMount() {
-		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/monthlyPayments')
+		fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payments/monthlyPayments')
 		.then((response) => response.json())
 		.then((responseData) => {
 			this.setState({monthlyPayments: responseData.reverse()});
@@ -78,7 +78,7 @@ class Home extends Component {
 			console.log('Fetch Error', err);
 
 		});
-		fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/balance')
+		fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payments/balance')
 		.then((response) => response.json())
 		.then((responseData) => {
 			this.setState({fill: responseData.fill, balance: responseData.balance});
