@@ -38,16 +38,15 @@ class TabsComponent extends Component {
 			isVisibleObj: false,
 			index: 1,
 			routes: [
-				{ key: '1', icon:'trophy' },
-				{ key: '2', icon:'home' },
-				{ key: '3', icon:'pie-chart'},
+				{ key: '0', icon:'trophy' },
+				{ key: '1', icon:'home' },
+				{ key: '2', icon:'pie-chart'},
 			],
 		}
 	}
 
 	//ACA EMPIEZA LO NUEVO
 	_handleChangeTab = (index) => {
-		console.log('Handle change tab');
 		const CustomLayoutLinear = {
 			duration: 100,
 			update: { type: LayoutAnimation.Types.linear, property: LayoutAnimation.Properties.opacity },
@@ -83,11 +82,11 @@ class TabsComponent extends Component {
 
 		_renderScene = ({ route }) => {
 			switch (route.key) {
-				case '1':
+				case '0':
 				return 	<Objectives navigator={this.props.navigator} tabLabel='trophy' />;
-				case '2':
+				case '1':
 				return 	<Home navigator={this.props.navigator} tabLabel='home' />;
-				case '3':
+				case '2':
 				return <Stats tabLabel='pie-chart' />;
 				default:
 				return null;
@@ -106,6 +105,11 @@ class TabsComponent extends Component {
 			this.props.navigator.push({id:'addObjective'});
 		}
 
+		componentWillMount() {
+			if(this.props.initialPage !== null){
+				this.setState({index:this.props.initialPage});
+			}
+		}
 
 		renderButton() {
 			console.log('Render button');

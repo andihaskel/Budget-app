@@ -63,10 +63,9 @@ const styles = StyleSheet.create({
 class Objectives extends Component {
   constructor(props) {
     super(props);
-    this.props.navigator.getCurrentRoutes(0).map((s) => console.log(s.id));
     this.onActionSelected = this.onActionSelected.bind(this);
     this.deleteObjective = this.deleteObjective.bind(this);
-    this.state={objectives:[], show: false, itemSelected: {}};
+    this.state={objectives:[], itemSelected: {}};
   }
 
   onActionSelected(position, item) {
@@ -86,20 +85,21 @@ class Objectives extends Component {
   }
 
   deleteObjective(item) {
-    return fetch('http://10.0.2.2:3000/objective/' + this.state.itemSelected._id, {
+    fetch('http://10.0.2.2:3000/objective/' + this.state.itemSelected._id, {
       method: 'delete'
     }).then(response =>
       response.json().then(json => {
         return json;
       })
     );
+    this.props.navigator.immediatelyResetRouteStack([{id:'tabs', initialPage:0}]);
   }
 
   componentWillMount() {
     fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/objectives')
     .then((response) => response.json())
     .then((responseData) => {
-      this.setState({objectives: responseData.reverse(), show: true});
+      this.setState({objectives: responseData.reverse()});
 
     })
     .catch(function(err) {
@@ -113,7 +113,7 @@ class Objectives extends Component {
       <ScrollView alignItems='center'>
         <List width={Style.DEVICE_WIDTH} dataArray={this.state.objectives}
           renderRow={(item) =>
-            <ListItem >
+            <ListItem>
               <Card>
                 <CardItem>
                   <Grid>
@@ -133,7 +133,7 @@ class Objectives extends Component {
                       </Row>
                       <Row>
                         <View style={{alignItems:'center'}}>
-                          <Progress.Bar progress={item.currentAmount /item.amountToSave} width={Style.CARD_PROGRESS_WIDTH} height={8} />
+                          <Progress.Bar progress={(item.currentAmount /item.amountToSave) + 0.00001} width={Style.CARD_PROGRESS_WIDTH} height={8} />
                         </View>
                       </Row>
                     </Col>

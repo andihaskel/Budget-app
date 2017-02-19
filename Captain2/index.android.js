@@ -155,6 +155,7 @@ export default class Captain2 extends Component {
   }
 
   navigatorRenderScene(route, navigator) {
+    console.log('En navigator render scene');
     _navigator = navigator;
     var show = null;
     switch (route.id) {
@@ -165,7 +166,7 @@ export default class Captain2 extends Component {
       case 'addIncome':
       return <AddIncome navigator={navigator} />
       case 'editFixed':
-      return <EditFixed navigator={navigator} item={route.data} />
+      return <EditFixed navigator={navigator} item={route.data} previousWindow={route.previousWindow} />
       case 'addObjective':
       return <AddObjective navigator={navigator} />
       case 'settings':

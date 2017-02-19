@@ -69,24 +69,35 @@ class Login extends Component {
 		this.props.navigator.pop();
 	}
 	render () {
-		console.log('Render de login');
+		var rightButtonConfig = {
+			title: 'Sign in',
+			tintColor: '#000',
+			handler: this.login
+		}
 		return  (
 
 			<Image style={{ flex: 1, width: null, height: null}} source={require('./FirstPageImage.jpg')}>
-			<NavigationBar
-				tintColor='rgba(255,255,255,0.2)'
-				title={{title:'Login'}}
-				leftButton={<Icon.Button name="chevron-left" backgroundColor='transparent' color='#000' onPress={this.goBack}/>}
-			/>
+			{Style.DEVICE_HEIGHT<580 ? (
+				<NavigationBar
+					tintColor='rgba(255,255,255,0.2)'
+					title={{title:'Login'}}
+					leftButton={<Icon.Button name="chevron-left" backgroundColor='transparent' color='#000' onPress={this.goBack}/>}
+					rightButton={rightButtonConfig}
+				/>)
+				:(<NavigationBar
+					tintColor='rgba(255,255,255,0.2)'
+					title={{title:'Login'}}
+					leftButton={<Icon.Button name="chevron-left" backgroundColor='transparent' color='#000' onPress={this.goBack}/>}
+				/>) }
 			<Container style={{alignItems:'center'}}>
-				<Content style={{width:Style.DEVICE_WIDTH, padding:40}}>
+				<Content style={{width:Style.DEVICE_WIDTH, paddingLeft:40, paddingRight:40}}>
 					<TextField
 						label={'Name'}
 						labelColor={'#FFF'}
 						textColor={'#FFF'}
 						highlightColor={'#00BCD4'}
 						onChangeText={(name) => this.input.name = name}
-						inputStyle={{fontSize:20, height:50}}
+						inputStyle={{fontSize:20, height:45}}
 					/>
 					<TextField
 						label={'Email'}
@@ -94,7 +105,7 @@ class Login extends Component {
 						textColor={'#FFF'}
 						highlightColor={'#00BCD4'}
 						onChangeText={(email) => this.input.email = email}
-						inputStyle={{fontSize:20, height:50}}
+						inputStyle={{fontSize:20, height:45}}
 					/>
 					<TextField
 						label={'Password'}
@@ -103,7 +114,7 @@ class Login extends Component {
 						highlightColor={'#00BCD4'}
 						onChangeText={(pass) => this.input.email = pass}
 						secureTextEntry={true}
-						inputStyle={{fontSize:20, height:50}}
+						inputStyle={{fontSize:20, height:45}}
 					/>
 					<Button  block success onPress={this.login.bind(this)} style={{marginTop:40, borderRadius:15}}>
 						<Text style={{fontSize:20, color:'#FFF'}}>Sign in</Text>

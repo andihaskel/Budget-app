@@ -51,7 +51,7 @@ class AddFromSavings extends Component {
 
      });
      ToastAndroid.show('Correctly ingressed', ToastAndroid.SHORT);
-     this.props.navigator.pop();
+     this.props.navigator.immediatelyResetRouteStack([{id:'tabs', initialPage:0}]);
   }
 
   componentWillMount() {

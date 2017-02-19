@@ -63,14 +63,14 @@ class FirstPage extends Component {
 			<Image style={{flex: 1, width: null, height: null}} source={require('./FirstPageImage.jpg')}>
 			<Container style={{alignItems:'center'}}>
 				<Content>
-					<View style={{marginTop:150}}>
+					<View style={{marginTop:Style.MARGIN_TOP_LOGIN}}>
 						<TextField
 							label={'Email'}
 							labelColor={'#FFF'}
 							textColor={'#FFF'}
 							highlightColor={'#00BCD4'}
 							onChangeText={(email) => this.input.email = email}
-							inputStyle={{fontSize:20, height:50}}
+							inputStyle={{fontSize:20, height:45}}
 						/>
 						<TextField
 							label={'Password'}
@@ -79,18 +79,18 @@ class FirstPage extends Component {
 							highlightColor={'#00BCD4'}
 							secureTextEntry={true}
 							onChangeText={(pass) => this.input.password = pass}
-							inputStyle={{fontSize:20, height:40}}
+							inputStyle={{fontSize:20, height:45}}
 						/>
 					</View>
 					<View style={{marginTop:20}}>
-						<Icon.Button width={270} name="envelope-o" borderRadius={15} size={30} paddingLeft={20} backgroundColor="#3F7874" onPress={this.login.bind(this)}>
+						<Icon.Button width={Style.LOGIN_WIDTH} name="envelope-o" borderRadius={15} size={30} paddingLeft={20} backgroundColor="#3F7874" onPress={this.login.bind(this)}>
 							<Text style={{fontSize:20, color:'#FFF', paddingLeft:20}}>Log in</Text>
 						</Icon.Button>
 					</View>
 					<Grid>
 						<Row style={{alignItems:'center', height:40}}>
-							<Col style={{width:160}}>
-								<Text style={{fontSize:15, color:'#FFF'}}>Dont have an account?</Text>
+							<Col style={{width:170}}>
+								<Text style={{fontSize:15, color:'#FFF', textAlign:'center'}}>Dont have an account?</Text>
 							</Col>
 							<Col>
 								<TouchableOpacity  onPress={this.signUp.bind(this)}>
@@ -103,7 +103,7 @@ class FirstPage extends Component {
 						<Text style={{fontSize:25, color:'#FFF'}}>Or</Text>
 					</View>
 					<View style={{marginTop:20}}>
-						<Icon.Button width={270} name="facebook" borderRadius={15} size={30} paddingLeft={20} backgroundColor="#3b5998" onPress={() => console.log('Prueba')}>
+						<Icon.Button width={Style.LOGIN_WIDTH} name="facebook" borderRadius={15} size={30} paddingLeft={20} backgroundColor="#3b5998" onPress={() => console.log('Prueba')}>
 							<Text style={{fontSize:20, color:'#FFF', paddingLeft:20}}>Login with Facebook</Text>
 						</Icon.Button>
 					</View>
