@@ -36,7 +36,7 @@ class History extends Component {
       months: [],
       selectedValue: '',
       paymentsHistory: [],
-      savingsAccount: {}
+      savingsAccount: {},
       userId: '',
     };
   }
@@ -50,9 +50,18 @@ class History extends Component {
     this.loadPayments(item);
   }
 
-  <<<<<<< HEAD
   loadPayments(month) {
-    fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/' + month)
+    var userId = '';
+    let realm = new Realm({
+      schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+    });
+
+    if(realm.objects('User').length>0){
+      userId = realm.objects('User')[0].id;
+    } else {
+      console.log('ERROR, NO SE ENCONTRO UN USUARIO');
+    }
+    fetch('http://10.0.2.2:3000/'+ userId +'/payments/' + month)
     .then((response) => response.json())
     .then((responseData) => {
       this.setState({paymentsHistory: responseData});

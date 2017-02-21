@@ -18,7 +18,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Style from './Styles';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import TextField from 'react-native-md-textinput';
-import storage from './session';
 
 
 const styles = StyleSheet.create({

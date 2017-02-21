@@ -86,21 +86,6 @@ class EditFixed extends Component {
         categorySelected: responseData.categoryId});
       });
     }
-    deletePayment() {
-      ToastAndroid.show('Deleted correctly', ToastAndroid.SHORT);
-      this.props.navigator.pop();
-      fetch('http://10.0.2.2:3000/payment/' + this.props.item, {
-        method: 'delete'
-      }).then(response =>
-        response.json().then(json => {
-          return json;
-        })
-
-        .catch(function(err) {
-          console.log('Fetch Error', err);
-
-        });
-      }
 
       deletePayment() {
         ToastAndroid.show('Deleted correctly', ToastAndroid.SHORT);
