@@ -21,7 +21,7 @@ import {
 } from 'native-base';
 
 const styles = StyleSheet.create({
-  
+
   subtitles: {
     top: 20,
     left: 12,
@@ -43,7 +43,10 @@ class Configuration extends Component {
     this.goBack = this.goBack.bind(this);
     this.edit = this.edit.bind(this);
     this.finishEdition = this.finishEdition.bind(this);
-    this.state = {edition: false};
+    this.state = {
+      edition: false,
+      userId: '',
+    };
   }
 
   goBack() {
@@ -57,6 +60,18 @@ class Configuration extends Component {
     this.setState({edition: false})
   }
 
+  componentWillMount() {
+    var userId = '';
+    let realm = new Realm({
+      schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+    });
+    if(realm.objects('User').length>0){
+      userId = realm.objects('User')[0].id;
+    } else {
+      console.log('ERROR, NO SE ENCONTRO UN USUARIO');
+    }
+    this.setState({id: userId});
+  }
 
   render() {
     var leftButtonConfig = {
@@ -82,25 +97,25 @@ class Configuration extends Component {
           </View>)
           :
           (
-           <View style={{height: 300, width: 500}}>  
-           <Content style={{height: 50, width: 400}} >    
-            <Grid>
-            <Row style = {{backgroundColor:'rgb(20,255,20)'}}>
-            <Text style={{top: 20, left: 12, margin: 20, fontSize: 20}}>Full name</Text>
-               </Row>
+            <View style={{height: 300, width: 500}}>
+              <Content style={{height: 50, width: 400}} >
+                <Grid>
+                  <Row style = {{backgroundColor:'rgb(20,255,20)'}}>
+                    <Text style={{top: 20, left: 12, margin: 20, fontSize: 20}}>Full name</Text>
+                  </Row>
 
-            <Row>
-            <Text style={{fontSize: 17}}>Gabriel Bursztein</Text>
-            </Row>
-            <Row>
-            <Text >Email</Text>
-            </Row>
-            <Text style={{fontSize: 17}}>gabibur@gmail.com</Text>
-            <Button block warning style={{position:'absolute', top:200, left:20, width:340, height:35}} onPress={this.edit}>Edit</Button>
+                  <Row>
+                    <Text style={{fontSize: 17}}>Gabriel Bursztein</Text>
+                  </Row>
+                  <Row>
+                    <Text >Email</Text>
+                  </Row>
+                  <Text style={{fontSize: 17}}>gabibur@gmail.com</Text>
+                  <Button block warning style={{position:'absolute', top:200, left:20, width:340, height:35}} onPress={this.edit}>Edit</Button>
 
-            </Grid>
-            </Content>
-      </View>
+                </Grid>
+              </Content>
+            </View>
           )
 
         }

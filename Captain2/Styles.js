@@ -26,6 +26,14 @@ const drawerWidth = x * mulDrawer;
 const mulImageDrawer = 0.27;
 const imageDrawerSize = y * mulImageDrawer;
 
+//Margin top Login
+const marginTopLogin =  y * 0.10;
+
+//Login width
+const loginWidth = x * 0.85;
+
+
+
 //Constants
 export default Style = {
 DEVICE_WIDTH: x,
@@ -47,4 +55,6 @@ SCROLL_VIEW_HEIGHT: ScrollViewHeight,
 DRAWER_WIDTH: drawerWidth,
 DRAWER_FONT_SIZE: y>600 ? 20 : 15,
 DRAWER_IMAGE_HEIGHT: imageDrawerSize,
+MARGIN_TOP_LOGIN: marginTopLogin,
+LOGIN_WIDTH: loginWidth,
 }

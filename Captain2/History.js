@@ -31,12 +31,13 @@ class History extends Component {
     this.editFixed = this.editFixed.bind(this);
     this.updateMonth = this.updateMonth.bind(this);
     this.loadPayments = this.loadPayments.bind(this);
-   
+
     this.state = {
       months: [],
       selectedValue: '',
-       paymentsHistory: [],
-       savingsAccount: {}
+      paymentsHistory: [],
+      savingsAccount: {}
+      userId: '',
     };
   }
 
@@ -49,6 +50,7 @@ class History extends Component {
     this.loadPayments(item);
   }
 
+  <<<<<<< HEAD
   loadPayments(month) {
     fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/' + month)
     .then((response) => response.json())
@@ -62,20 +64,29 @@ class History extends Component {
 
   }
   componentWillMount() {
-    fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/monthsActive')
+    var userId = '';
+    let realm = new Realm({
+      schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+    });
+
+    if(realm.objects('User').length>0){
+      userId = realm.objects('User')[0].id;
+    } else {
+      console.log('ERROR, NO SE ENCONTRO UN USUARIO');
+    }
+
+    fetch('http://10.0.2.2:3000/'+ userId +'/monthsActive')
     .then((response) => response.json())
     .then((responseData) => {
       this.setState({months: responseData});
       this.setState({selectedValue: this.state.months[0]});
       this.loadPayments(this.state.selectedValue);
-
     })
     .catch(function(err) {
       console.log('Fetch Error', err);
-
     });
 
-    fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/savings')
+    fetch('http://10.0.2.2:3000/' + userId +'/savings')
     .then((response) => response.json())
     .then((responseData) => {
       this.setState({savingsAccount: responseData});
@@ -83,8 +94,11 @@ class History extends Component {
     .catch(function(err) {
       console.log('Fetch Error', err);
     });
+    this.setState({userId: userId});
+
   }
- 
+
+
   render() {
     console.log(this.state.selectedValue);
     return (
@@ -96,10 +110,10 @@ class History extends Component {
           <Title>Savings history</Title>
         </Header>
         <View style={{alignItems:'center', width:Style.DEVICE_WIDTH}}>
-        <Text style={{marginTop:10, fontSize:35}}>Savings</Text>
-        <Text  style={{marginTop:10, fontSize:30}}>$ {this.state.savingsAccount.balance}</Text>
-        <Text style={{marginTop:10, fontSize:25}}>History</Text>
-      </View>
+          <Text style={{marginTop:10, fontSize:35}}>Savings</Text>
+          <Text  style={{marginTop:10, fontSize:30}}>$ {this.state.savingsAccount.balance}</Text>
+          <Text style={{marginTop:10, fontSize:25}}>History</Text>
+        </View>
         <Picker
           mode='dropdown'
           style={{height:70}}

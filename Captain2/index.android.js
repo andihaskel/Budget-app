@@ -45,9 +45,9 @@ import History from './History';
 import Login from './Login';
 import SignUp from './SignUp';
 var t = require('tcomb-form-native');
-
-
+import Realm from 'realm';
 var Form = t.form.Form;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -93,17 +93,13 @@ BackAndroid.addEventListener('hardwareBackPress', () => {
 export default class Captain2 extends Component {
   constructor() {
     super();
-    this.setLogin = this.setLogin.bind(this);
-    this.setLogout = this.setLogout.bind(this);
-    this.setUserData= this.setUserData.bind(this);
     this.addOneExpense = this.addOneExpense.bind(this);
     this.addOneIncome = this.addOneIncome.bind(this);
     this.navigatorRenderScene = this.navigatorRenderScene.bind(this);
     this.openDrawer = this.openDrawer.bind(this);
     this.closeDrawer = this.closeDrawer.bind(this);
-
     this.state = {
-      isLogged: true,
+      isLogged: false,
       username: "",
       password: "",
       incomes: 100,
@@ -112,21 +108,9 @@ export default class Captain2 extends Component {
       incomesList: [ {amount:20, description: 'Prueba', category: 'General'}, {amount:80, description: 'Prueba 2', category: 'Comida'}],
       incomeDetail: {},
     };
+
   }
 
-  setLogin() {
-    this.setState({ isLogged: true });
-  }
-
-  setLogout() {
-    this.setState({ isLogged: false });
-  }
-  setUserData() {
-    this.setState({ username: Person.username,
-      password: Person.password,
-      isLogged: true,
-    });
-  }
   openDrawer() {
     this.refs['DRAWER'].openDrawer();
   }
@@ -153,8 +137,8 @@ export default class Captain2 extends Component {
     this.setState({list});
   }
 
-  navigatorRenderScene(route, navigator) {
 
+  navigatorRenderScene(route, navigator) {
     _navigator = navigator;
     var show = null;
     switch (route.id) {
@@ -165,7 +149,7 @@ export default class Captain2 extends Component {
       case 'addIncome':
       return <AddIncome navigator={navigator} />
       case 'editFixed':
-      return <EditFixed navigator={navigator} item={route.data} />
+      return <EditFixed navigator={navigator} item={route.data} previousWindow={route.previousWindow} />
       case 'addObjective':
       return <AddObjective navigator={navigator} />
       case 'settings':
@@ -180,10 +164,23 @@ export default class Captain2 extends Component {
       return <History navigator={navigator} openDrawer={this.openDrawer} />
       case 'login':
       return <Login navigator={navigator} />
+      case 'prueba':
+      return <PruebaRealm />
     }
   }
 
   goToOption(id) {
+    if(id == 'closeSession'){
+      let realm = new Realm({
+        schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+      });
+      realm.write(() => {
+        realm.delete(realm.objects('User'));
+      })
+      this.refs['DRAWER'].closeDrawer();
+      this.refs['NAVIGATOR'].immediatelyResetRouteStack([{id:'login'}]);
+
+  } else {
     this.refs['DRAWER'].closeDrawer();
     var routes = this.refs['NAVIGATOR'].getCurrentRoutes(0);
     if(routes[routes.length - 1].id === id){
@@ -203,55 +200,67 @@ export default class Captain2 extends Component {
     }
   }
 
-  render() {
-    var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'Savings History', icon:'history', id:'history'},{name:'Fixed', icon:'money', id:'fixed'}, {name:'Close session', icon:'power-off', id:'closeSession'}]
-    var navigationView = (
-      <View style={{flex: 1, backgroundColor: '#fff'}}>
-        <View>
-          <Image source={require('./sideBarTop.jpg')}  style={{height:Style.DRAWER_IMAGE_HEIGHT, width:Style.DRAWER_WIDTH}}>
-          <View style={{marginTop:30, marginLeft: 10}}>
-            <Text style={{marginTop:5, fontSize:Style.DRAWER_FONT_SIZE}}>Captain Up</Text>
-          </View>
-        </Image>
-      </View>
-      <View>
-        <List dataArray={items}
-          renderRow={(item) =>
-            <ListItem button onPress={() => {this.goToOption(item.id)}}>
-              <View style={{
-                flex: 1,
-                flexDirection: 'row'}}>
-                <View style={{width: 50}} >
-                  <Icon name={item.icon} size={30}/>
-                </View>
-                <View>
-                  <Text style={{fontSize:Style.DRAWER_FONT_SIZE}}>{item.name}</Text>
-                </View>
-              </View>
-            </ListItem>
-          }>
-        </List>
-      </View>
-    </View>
-  );
-  return (
-    <DrawerLayoutAndroid
-      ref='DRAWER'
-      drawerWidth={Style.DRAWER_WIDTH}
-      drawerPosition={DrawerLayoutAndroid.positions.Left}
-      renderNavigationView={() => navigationView}>
-      <Navigator
-        initialRoute={{id:'tabs', initialPage:1}}
-        ref='NAVIGATOR'
-        renderScene={this.navigatorRenderScene}
-        configureScene={(route, routeStack) =>
-          Navigator.SceneConfigs.FadeAndroid}
-        />
-      </DrawerLayoutAndroid>
+}
 
-
-    );
+componentWillMount() {
+  let realm = new Realm({
+    schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+  });
+  if(realm.objects('User').length != 0) {
+    this.setState({isLogged: true});
   }
+}
+
+render() {
+  var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'Savings History', icon:'history', id:'history'},{name:'Fixed', icon:'money', id:'fixed'}, {name:'Close session', icon:'power-off', id:'closeSession'}]
+  var navigationView = (
+    <View style={{flex: 1, backgroundColor: '#fff'}}>
+      <View>
+        <Image source={require('./sideBarTop.jpg')}  style={{height:Style.DRAWER_IMAGE_HEIGHT, width:Style.DRAWER_WIDTH}}>
+        <View style={{marginTop:30, marginLeft: 10}}>
+          <Text style={{marginTop:5, fontSize:Style.DRAWER_FONT_SIZE}}>Captain Up</Text>
+        </View>
+      </Image>
+    </View>
+    <View>
+      <List dataArray={items}
+        renderRow={(item) =>
+          <ListItem button onPress={() => {this.goToOption(item.id)}}>
+            <View style={{
+              flex: 1,
+              flexDirection: 'row'}}>
+              <View style={{width: 50}} >
+                <Icon name={item.icon} size={30}/>
+              </View>
+              <View>
+                <Text style={{fontSize:Style.DRAWER_FONT_SIZE}}>{item.name}</Text>
+              </View>
+            </View>
+          </ListItem>
+        }>
+      </List>
+    </View>
+  </View>
+);
+return (
+  <DrawerLayoutAndroid
+    ref='DRAWER'
+    drawerWidth={Style.DRAWER_WIDTH}
+    drawerPosition={DrawerLayoutAndroid.positions.Left}
+    drawerLockMode={'locked-closed'}
+    renderNavigationView={() => navigationView}>
+    <Navigator
+      ref='NAVIGATOR'
+      initialRoute={this.state.isLogged ? {id:'tabs', initialPage:1} : {id:'login'}}
+      renderScene={this.navigatorRenderScene}
+      configureScene={(route, routeStack) =>
+        Navigator.SceneConfigs.FadeAndroid}
+      />
+    </DrawerLayoutAndroid>
+
+
+  );
+}
 
 }
 

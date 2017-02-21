@@ -63,10 +63,13 @@ const styles = StyleSheet.create({
 class Objectives extends Component {
   constructor(props) {
     super(props);
-    this.props.navigator.getCurrentRoutes(0).map((s) => console.log(s.id));
     this.onActionSelected = this.onActionSelected.bind(this);
     this.deleteObjective = this.deleteObjective.bind(this);
-    this.state={objectives:[], show: false, itemSelected: {}};
+    this.state={
+      objectives:[],
+      itemSelected: {},
+      userId: '',
+    };
   }
 
   onActionSelected(position, item) {
@@ -94,15 +97,24 @@ class Objectives extends Component {
         return json;
       })
     );
+    this.props.navigator.immediatelyResetRouteStack([{id:'tabs', initialPage:0}]);
   }
 
   componentWillMount() {
-    console.log('will mount obj');
-    fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objectives')
+    var userId = '';
+    let realm = new Realm({
+      schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+    });
+    if(realm.objects('User').length > 0){
+      userId = realm.objects('User')[0].id;
+    } else {
+      console.log('ERROR, NO SE ENCONTRO UN USUARIO');
+    }
+
+    fetch('http://10.0.2.2:3000/' + userId + '/objectives')
     .then((response) => response.json())
     .then((responseData) => {
-      this.setState({objectives: responseData.reverse(), show: true});
-
+      this.setState({objectives: responseData.reverse()});
     })
     .catch(function(err) {
       console.log('Fetch Error', err);
@@ -112,10 +124,12 @@ class Objectives extends Component {
   render() {
     var date = new Date();
     return (
-      <ScrollView alignItems='center'>
-        <List width={Style.DEVICE_WIDTH} dataArray={this.state.objectives}
+      <ScrollView
+        contentContainerStyle={{height:(Style.VIEW_HEIGHT)}}>
+        <List dataArray={this.state.objectives}
+          style={{width:Style.DEVICE_WIDTH}}
           renderRow={(item) =>
-            <ListItem >
+            <ListItem>
               <Card>
                 <CardItem>
                   <Grid>
@@ -135,7 +149,7 @@ class Objectives extends Component {
                       </Row>
                       <Row>
                         <View style={{alignItems:'center'}}>
-                          <Progress.Bar progress={item.currentAmount /item.amountToSave} width={Style.CARD_PROGRESS_WIDTH} height={8} />
+                          <Progress.Bar progress={(item.currentAmount /item.amountToSave) + 0.00001} width={Style.CARD_PROGRESS_WIDTH} height={8} />
                         </View>
                       </Row>
                     </Col>
@@ -151,7 +165,7 @@ class Objectives extends Component {
                       <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{'$' + item.currentAmount} {'\n'}pledged</Text>
                     </Col>
                     <Col>
-                      <Text style={{fontSize:Style.CARD_FONT_SIZE}}> {item.achiveIn} {'\n'}days to go</Text>
+                      <Text style={{fontSize:Style.CARD_FONT_SIZE}}> {parseInt((Date.parse(item.dateToAchive) - date)/86400000) } {'\n'}days to go</Text>
                     </Col>
                   </Grid>
 

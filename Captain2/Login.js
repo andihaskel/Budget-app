@@ -46,68 +46,54 @@ const styles = StyleSheet.create({
 class FirstPage extends Component {
 	constructor (props) {
 		super(props);
-		this.state={email:'', password:''};
+		this.input={email:'', password:''};
 	}
 
 	signUp() {
 		this.props.navigator.push({id:'signUp'});
 	}
 	login() {
-		
-    		var loggedUser= {};
-			fetch("http://10.0.2.2:3000/login", {
-			   headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        },
-	            method: "POST",
-	            body: JSON.stringify({email: this.state.email, password: this.state.password })
-	        }).then(response => {
-	            return response.json();
-	        }).then(responseData => {
-					console.log(responseData);
-	        		if(responseData){
-	        				loggedUser = responseData;
-	        				console.log('encontrado', storage); 				
-					        
-
-	        				//ACA SE GUARDA
-					
-	        		}
-	           		else {
-	           			console.log('no encontrado');
-	           		}
-	                });
-
+		var loggedUser= {};
+		fetch("http://10.0.2.2:3000/login", {
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			method: "POST",
+			body: JSON.stringify({email: this.input.email, password: this.input.password })
+		}).then(response => {
+			return response.json();
+		}).then(responseData => {
+			console.log(responseData);
+			if(responseData){
+				loggedUser = responseData;
+				let realm = new Realm({
+					schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+				});
+				realm.write(() => {
+					realm.create('User', {name: loggedUser.userName, id: loggedUser._id});
+				});
+				this.props.navigator.push({id:'tabs', initialPage:1});
+			}
+			else {
+				ToastAndroid.show('Incorrect email or password', ToastAndroid.SHORT);
+			}
+		});
 	}
-
-
-// 		if(this.input.email === 'gabibur@gmail.com' && this.input.password === 'gabi'){
-// 			this.props.navigator.push({id:'tabs'});
-// 			storage.save({
-//    				 key: 'user',  // Note: Do not use underscore("_") in key!
-//     			 id: '1001',   // Note: Do not use underscore("_") in id!    
-//     			 rawData: userA,
-//   				  expires: 1000 * 60   
-// });
-// 		} else {
-// 			ToastAndroid.show('Incorrect User/Password', ToastAndroid.SHORT);
-// 		}
-	
 
 	render () {
 		return  (
 			<Image style={{flex: 1, width: null, height: null}} source={require('./FirstPageImage.jpg')}>
 			<Container style={{alignItems:'center'}}>
 				<Content>
-					<View style={{marginTop:150}}>
+					<View style={{marginTop:Style.MARGIN_TOP_LOGIN}}>
 						<TextField
 							label={'Email'}
 							labelColor={'#FFF'}
 							textColor={'#FFF'}
 							highlightColor={'#00BCD4'}
-							onChangeText={(email) => this.state.email = email}
-							inputStyle={{fontSize:20, height:50}}
+							onChangeText={(email) => this.input.email = email}
+							inputStyle={{fontSize:20, height:45}}
 						/>
 						<TextField
 							label={'Password'}
@@ -115,19 +101,19 @@ class FirstPage extends Component {
 							textColor={'#FFF'}
 							highlightColor={'#00BCD4'}
 							secureTextEntry={true}
-							onChangeText={(pass) => this.state.password = pass}
-							inputStyle={{fontSize:20, height:40}}
+							onChangeText={(pass) => this.input.password = pass}
+							inputStyle={{fontSize:20, height:45}}
 						/>
 					</View>
 					<View style={{marginTop:20}}>
-						<Icon.Button width={270} name="envelope-o" borderRadius={15} size={30} paddingLeft={20} backgroundColor="#3F7874" onPress={this.login.bind(this)}>
+						<Icon.Button width={Style.LOGIN_WIDTH} name="envelope-o" borderRadius={15} size={30} paddingLeft={20} backgroundColor="#3F7874" onPress={this.login.bind(this)}>
 							<Text style={{fontSize:20, color:'#FFF', paddingLeft:20}}>Log in</Text>
 						</Icon.Button>
 					</View>
 					<Grid>
 						<Row style={{alignItems:'center', height:40}}>
-							<Col style={{width:160}}>
-								<Text style={{fontSize:15, color:'#FFF'}}>Dont have an account?</Text>
+							<Col style={{width:170}}>
+								<Text style={{fontSize:15, color:'#FFF', textAlign:'center'}}>Dont have an account?</Text>
 							</Col>
 							<Col>
 								<TouchableOpacity  onPress={this.signUp.bind(this)}>
@@ -140,7 +126,7 @@ class FirstPage extends Component {
 						<Text style={{fontSize:25, color:'#FFF'}}>Or</Text>
 					</View>
 					<View style={{marginTop:20}}>
-						<Icon.Button width={270} name="facebook" borderRadius={15} size={30} paddingLeft={20} backgroundColor="#3b5998" onPress={() => console.log('Prueba')}>
+						<Icon.Button width={Style.LOGIN_WIDTH} name="facebook" borderRadius={15} size={30} paddingLeft={20} backgroundColor="#3b5998" onPress={() => console.log('Prueba')}>
 							<Text style={{fontSize:20, color:'#FFF', paddingLeft:20}}>Login with Facebook</Text>
 						</Icon.Button>
 					</View>

@@ -20,7 +20,8 @@ import {
   Badge,
   Container,
   Content,
-  Item
+  Item,
+  Header
 } from 'native-base';
 import { Col, Row, Grid } from "react-native-easy-grid";
 
@@ -50,7 +51,7 @@ class AddExpense extends Component {
         isIncome: false,
         isMonthly: this.state.monthly
       }
-      fetch("http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payment",
+      fetch("http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payment",
       {
         headers: {
           'Accept': 'application/json',
@@ -99,13 +100,15 @@ class AddExpense extends Component {
 
     return (
       <Container>
-        <Content style={{padding:10}}>
+
+
+        <Content>
           <NavigationBar
             title={{title:'Add expense'}}
             leftButton={leftButtonConfig}
             rightButton={rightButtonConfig}
           />
-          <Grid>
+          <Grid style={{padding:10}}>
             <Row>
               <TextInput autoFocus={true} style={{width:Style.DEVICE_WIDTH, fontSize:20}}  placeholder='Title' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({name: text})} />
             </Row>

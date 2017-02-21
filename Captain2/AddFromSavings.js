@@ -37,56 +37,56 @@ class AddFromSavings extends Component {
 
   addMoneyFromSavings(){
 
-       fetch("http://10.0.2.2:3000/" + this.state.objective._id + "/addMoney",
-     {
+    fetch("http://10.0.2.2:3000/" + this.state.objective._id + "/addMoney",
+    {
       headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    method: "PUT",
-    body: JSON.stringify({
-                  savings: this.state.savingsAccount._id,
-                  amountForObjective: this.state.value,
-                })
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "PUT",
+      body: JSON.stringify({
+        savings: this.state.savingsAccount._id,
+        amountForObjective: this.state.value,
+      })
 
-     });
-     ToastAndroid.show('Correctly ingressed', ToastAndroid.SHORT);
-     this.props.navigator.pop();
+    });
+    ToastAndroid.show('Correctly ingressed', ToastAndroid.SHORT);
+    this.props.navigator.immediatelyResetRouteStack([{id:'tabs', initialPage:0}]);
   }
 
   componentWillMount() {
-      fetch('http://10.0.2.2:3000/' + this.props.item)
-        .then((response) => response.json())
-        .then((responseData) => {
-          this.setState({objective: responseData});
+    fetch('http://10.0.2.2:3000/' + this.props.item)
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({objective: responseData});
 
 
-         fetch('http://10.0.2.2:3000/' + this.state.objective.userId + '/savings')
-         .then((response) =>  response.json())
-         .then((responseData) => {
-          this.setState({savingsAccount: responseData});
-          this.setState({savings: this.state.savingsAccount.balance});
+      fetch('http://10.0.2.2:3000/' + this.state.objective.userId + '/savings')
+      .then((response) =>  response.json())
+      .then((responseData) => {
+        this.setState({savingsAccount: responseData});
+        this.setState({savings: this.state.savingsAccount.balance});
 
 
-           if((this.state.objective.amountToSave - this.state.objective.currentAmount) > this.state.savings){
-                  this.setState({maximumValue: this.state.savings});
+        if((this.state.objective.amountToSave - this.state.objective.currentAmount) > this.state.savings){
+          this.setState({maximumValue: this.state.savings});
 
-                } else{
-                  this.setState({maximumValue: this.state.objective.amountToSave - this.state.objective.currentAmount});
-            }
-
-
-        })
-        .catch(function(err) {
-           console.log('Fetch Error', err);
-         });
+        } else{
+          this.setState({maximumValue: this.state.objective.amountToSave - this.state.objective.currentAmount});
+        }
 
 
-        })
-        .catch(function(err) {
-           console.log('Fetch Error', err);
-         });
-    }
+      })
+      .catch(function(err) {
+        console.log('Fetch Error', err);
+      });
+
+
+    })
+    .catch(function(err) {
+      console.log('Fetch Error', err);
+    });
+  }
 
   render() {
     var leftButtonConfig = {
@@ -97,7 +97,6 @@ class AddFromSavings extends Component {
 
     return (
       <View>
-
         <NavigationBar
           title={{title:'Add from savings'}}
           leftButton={leftButtonConfig}
@@ -111,7 +110,9 @@ class AddFromSavings extends Component {
             style={{width:300}}
             onValueChange={(value) => this.setState({value: Math.round(value)})} />
             <Text style={{fontSize:25}}>{'$' + this.state.value}</Text>
-            <Button block onPress={this.addMoneyFromSavings.bind(this)}> Add </Button>
+            <Button block onPress={this.addMoneyFromSavings.bind(this)}  style={{marginTop:40, margin:20, borderRadius:15}}>
+  						<Text style={{fontSize:20, color:'#FFF'}}>Add</Text>
+  					</Button>
           </View>
         </View>
       )

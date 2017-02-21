@@ -22,13 +22,13 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 
 
 const styles = StyleSheet.create({
-    description: {
-      fontWeight:'normal',
-      fontStyle:'italic',
-       fontSize:16,
-       textAlign:'left',
-       fontFamily:'arial'
-    }
+  description: {
+    fontWeight:'normal',
+    fontStyle:'italic',
+    fontSize:16,
+    textAlign:'left',
+    fontFamily:'arial'
+  }
 });
 
 
@@ -73,7 +73,7 @@ class AddObjective extends Component {
 
       }
 
-      fetch("http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objective",
+      fetch("http://10.0.2.2:3000/589af71dd65dfe0b102b164e/objective",
       {
         headers: {
           'Accept': 'application/json',
@@ -99,13 +99,13 @@ class AddObjective extends Component {
     }
     return (
       <Container>
-        <Content style={{padding:10}}>
+        <Content>
           <NavigationBar
-            title={{title:'Add objective'}}
+            title={{title:'Add expense'}}
             leftButton={leftButtonConfig}
             rightButton={rightButtonConfig}
           />
-          <Grid>
+          <Grid style={{padding:10}}>
             <Row>
               <TextInput autoFocus={true} style={{width:Style.DEVICE_WIDTH, fontSize:20}}  placeholder='Title' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({name: text})} />
             </Row>
