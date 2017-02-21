@@ -24,6 +24,9 @@
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ED8B70852DA94725858658D8 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB7AAD5F1E84F07A6BEBCD0 /* libRCTFBSDK.a */; };
+		BE5A425609ED4F619BE6B532 /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 623EAFDC0A164002AEFF4DC9 /* libRealmReact.a */; };
+		24FCFEE09CFD44EC9F1C614C /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E464BF6AB6544605A85D5229 /* libc++.tbd */; };
+		2C762C98731A4890B00406A6 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A8B9AE57033B4658BBFCA1E8 /* libz.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -236,6 +239,10 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		449C6C82A201402881285CE4 /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; name = "RCTFBSDK.xcodeproj"; path = "../node_modules/react-native-fbsdk/ios/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		4AB7AAD5F1E84F07A6BEBCD0 /* libRCTFBSDK.a */ = {isa = PBXFileReference; name = "libRCTFBSDK.a"; path = "libRCTFBSDK.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		3E1B9F88A66D43B590AE1FDB /* RealmReact.xcodeproj */ = {isa = PBXFileReference; name = "RealmReact.xcodeproj"; path = "../node_modules/realm/react-native/ios/RealmReact.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		623EAFDC0A164002AEFF4DC9 /* libRealmReact.a */ = {isa = PBXFileReference; name = "libRealmReact.a"; path = "libRealmReact.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		E464BF6AB6544605A85D5229 /* libc++.tbd */ = {isa = PBXFileReference; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		A8B9AE57033B4658BBFCA1E8 /* libz.tbd */ = {isa = PBXFileReference; name = "libz.tbd"; path = "usr/lib/libz.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +270,9 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				ED8B70852DA94725858658D8 /* libRCTFBSDK.a in Frameworks */,
+				BE5A425609ED4F619BE6B532 /* libRealmReact.a in Frameworks */,
+				24FCFEE09CFD44EC9F1C614C /* libc++.tbd in Frameworks */,
+				2C762C98731A4890B00406A6 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +418,7 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				449C6C82A201402881285CE4 /* RCTFBSDK.xcodeproj */,
+				3E1B9F88A66D43B590AE1FDB /* RealmReact.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -428,6 +439,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* Captain2Tests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				66CF44A80E5D4FE6BA453F73 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -440,6 +452,16 @@
 				00E356EE1AD99517003FC87E /* Captain2Tests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		66CF44A80E5D4FE6BA453F73 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E464BF6AB6544605A85D5229 /* libc++.tbd */,
+				A8B9AE57033B4658BBFCA1E8 /* libz.tbd */,
+			);
+			name = Frameworks;
+			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -832,6 +854,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -848,6 +871,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Captain2.app/Captain2";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};

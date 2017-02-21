@@ -34,6 +34,7 @@ class History extends Component {
       months: [{month:'January', year: 2017},{month:'February', year:2017}],
       paymentsHistory: [{name:'Gasto 1', amount: 150}],
       selectedValue: 'January-2017',
+      userId: '',
     };
   }
 
@@ -46,6 +47,18 @@ class History extends Component {
     selectedValue: item});
   }
 
+  componentWillMount() {
+    var userId = '';
+    let realm = new Realm({
+      schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+    });
+    if(realm.objects('User').length>0){
+      userId = realm.objects('User')[0].id;
+    } else {
+      console.log('ERROR, NO SE ENCONTRO UN USUARIO');
+    }
+    this.setState({userId: userId});
+  }
   render() {
     return (
       <View>
@@ -56,10 +69,10 @@ class History extends Component {
           <Title>Savings history</Title>
         </Header>
         <View style={{alignItems:'center', width:Style.DEVICE_WIDTH}}>
-        <Text style={{marginTop:10, fontSize:35}}>Savings</Text>
-        <Text  style={{marginTop:10, fontSize:30}}>$30000</Text>
-        <Text style={{marginTop:10, fontSize:25}}>History</Text>
-      </View>
+          <Text style={{marginTop:10, fontSize:35}}>Savings</Text>
+          <Text  style={{marginTop:10, fontSize:30}}>$30000</Text>
+          <Text style={{marginTop:10, fontSize:25}}>History</Text>
+        </View>
         <Picker
           mode='dropdown'
           style={{height:70}}

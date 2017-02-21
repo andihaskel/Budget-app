@@ -135,7 +135,7 @@ class TabsComponent extends Component {
 render() {
 	return (
 		<View style={styles.container}>
-			<Header>
+			<Header noShadow={true}>
 				<Button block transparent onPress={this.props.openDrawer}>
 					<Icon name='bars' size={30} />
 				</Button>
@@ -167,6 +167,8 @@ const styles = StyleSheet.create({
 	},
 	container: {
 		height: Style.DEVICE_HEIGHT,
+		shadowOffset: {height: 0, width: 0},
+		shadowOpacity: 0,
 	},
 	welcome: {
 		fontSize: 20,

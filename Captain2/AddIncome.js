@@ -103,13 +103,13 @@ class AddIncome extends Component {
 
     return (
       <Container>
-        <Content style={{padding:10}}>
+        <Content>
           <NavigationBar
-            title={{title:'Add income'}}
+            title={{title:'Add expense'}}
             leftButton={leftButtonConfig}
             rightButton={rightButtonConfig}
           />
-          <Grid>
+          <Grid style={{padding:10}}>
             <Row>
               <TextInput autoFocus={true} style={{width:Style.DEVICE_WIDTH, fontSize:20}}  placeholder='Title' highlightColor={'#00BCD4'} onChangeText={(text) => this.setState({name: text})} />
             </Row>

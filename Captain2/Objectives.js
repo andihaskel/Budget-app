@@ -65,7 +65,11 @@ class Objectives extends Component {
     super(props);
     this.onActionSelected = this.onActionSelected.bind(this);
     this.deleteObjective = this.deleteObjective.bind(this);
-    this.state={objectives:[], itemSelected: {}};
+    this.state={
+      objectives:[],
+      itemSelected: {},
+      userId: '',
+    };
   }
 
   onActionSelected(position, item) {
@@ -96,7 +100,16 @@ class Objectives extends Component {
   }
 
   componentWillMount() {
-    fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/objectives')
+    var userId = '';
+    let realm = new Realm({
+      schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+    });
+    if(realm.objects('User').length > 0){
+      userId = realm.objects('User')[0].id;
+    } else {
+      console.log('ERROR, NO SE ENCONTRO UN USUARIO');
+    }
+    fetch('http://10.0.2.2:3000/' + userId + '/objectives')
     .then((response) => response.json())
     .then((responseData) => {
       this.setState({objectives: responseData.reverse()});
@@ -110,8 +123,10 @@ class Objectives extends Component {
   render() {
     var date = new Date();
     return (
-      <ScrollView alignItems='center'>
-        <List width={Style.DEVICE_WIDTH} dataArray={this.state.objectives}
+      <ScrollView
+        contentContainerStyle={{height:(Style.VIEW_HEIGHT)}}>
+        <List dataArray={this.state.objectives}
+          style={{width:Style.DEVICE_WIDTH}}
           renderRow={(item) =>
             <ListItem>
               <Card>
@@ -149,7 +164,7 @@ class Objectives extends Component {
                       <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{'$' + item.currentAmount} {'\n'}pledged</Text>
                     </Col>
                     <Col>
-                      <Text style={{fontSize:Style.CARD_FONT_SIZE}}> {parseInt((Date.parse(item.dateToAchive) - date)/86400000)} {'\n'}days to go</Text>
+                      <Text style={{fontSize:Style.CARD_FONT_SIZE}}> {parseInt((Date.parse(item.dateToAchive) - date)/86400000) } {'\n'}days to go</Text>
                     </Col>
                   </Grid>
 

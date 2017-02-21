@@ -51,10 +51,16 @@ class FirstPage extends Component {
 		this.props.navigator.push({id:'signUp'});
 	}
 	login() {
-		if(this.input.email === 'gabibur@gmail.com' && this.input.password === 'gabi'){
-			this.props.navigator.push({id:'tabs'});
-		} else {
-			ToastAndroid.show('Incorrect User/Password', ToastAndroid.SHORT);
+		let realm = new Realm({
+			schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+		});
+		if(this.input.email == 'gabi' && this.input.password == 'gabi') {
+			realm.write(() => {
+	      realm.create('User', {name: 'Gabriel', id:'589af71dd65dfe0b102b164e'});
+	    });
+			this.props.navigator.push({id:'tabs', initialPage:1});
+		}else{
+			ToastAndroid.show('Incorrect email or password', ToastAndroid.SHORT);
 		}
 	}
 

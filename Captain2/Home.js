@@ -58,7 +58,12 @@ class Home extends Component {
 	constructor(props) {
 		console.log('Constructor Home');
 		super(props);
-		this.state = {fill:0, monthlyPayments:[], balance: 0, backColor:'#008000'}
+		this.state = {fill:0,
+			monthlyPayments:[],
+			balance: 0,
+			backColor:'#008000',
+			userId: '',
+		}
 		this.editFixed = this.editFixed.bind(this);
 
 	}
@@ -69,7 +74,17 @@ class Home extends Component {
 
 
 	componentWillMount() {
-		fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payments/monthlyPayments')
+		var userId = '';
+		let realm = new Realm({
+			schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+		});
+		if(realm.objects('User').length>0){
+			userId = realm.objects('User')[0].id;
+		} else {
+			console.log('ERROR, NO SE ENCONTRO UN USUARIO');
+		}
+
+		fetch('http://10.0.2.2:3000/' + userId + '/payments/monthlyPayments')
 		.then((response) => response.json())
 		.then((responseData) => {
 			this.setState({monthlyPayments: responseData.reverse()});
@@ -78,12 +93,12 @@ class Home extends Component {
 			console.log('Fetch Error', err);
 
 		});
-		fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payments/balance')
+		fetch('http://10.0.2.2:3000/' + userId + '/payments/balance')
 		.then((response) => response.json())
 		.then((responseData) => {
-			var color = '#008000';
+			var color = '#7FBF7F';
 			if(responseData.fill > 60){
-				color = '#FFFF00'
+				color = '#e6e600'
 			}
 			if(responseData.fill > 85){
 				color = '#FF0000'
@@ -95,6 +110,9 @@ class Home extends Component {
 			console.log('Fetch Error', err);
 		});
 
+		this.setState({userId: userId});
+
+
 	}
 
 	render() {
@@ -104,7 +122,7 @@ class Home extends Component {
 				<AnimatedCircularProgress
 					size={Style.CIRCLE_SIZE}
 					width={7}
-					fill={100 - this.state.fill}
+					fill={this.state.fill}
 					tintColor="#00e0ff"
 					rotation={0}
 					linecap='round'
