@@ -45,10 +45,10 @@ class AddObjective extends Component {
   }
 
   calculateDate() {
-    var ret = '0 month';
+    var ret = 0;
     if(this.state.price !== '0' && this.state.savePerMonth !== '0'){
       var aux = parseInt(this.state.price) / parseInt(this.state.savePerMonth);
-      ret = aux + ' month';
+      ret = aux;
     }
     return ret;
   }
@@ -62,13 +62,14 @@ class AddObjective extends Component {
       ToastAndroid.show('Must ingress price', ToastAndroid.SHORT);
     }
     else{
+      console.log(this.state.achivedIn);
       var objective ={
         name: this.state.name,
         amountToSavePerMonth: this.state.savePerMonth,
         amountToSave: this.state.price,
         currentAmount: this.state.currentAmount,
         isAchived: this.state.isAchived,
-        dateToAchive: this.state.achivedIn,
+        achiveIn: this.state.achivedIn,
 
       }
 

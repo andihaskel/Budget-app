@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
+
 // var session = require('express-session');
 
 
@@ -28,6 +29,10 @@ var SavingsAccount = require ('./routes/savingsAccounts');
 
 
 
+// var hola = new User ({
+//     userName: 'andres'
+// });
+// hola.save();
   //
   // var cat1 = new Category ({name:'category de andres'});
   // cat1.save();
@@ -73,13 +78,7 @@ var SavingsAccount = require ('./routes/savingsAccounts');
 
 
 
-//-------
-//--//
-// var andres = new User ({
-//     userName: 'andres',
-//     objective: mongoose.Types.ObjectId(obj.id)
-// });
-// andres.save();
+
 //
 // //-----
 // var incomeAndres = new Payment({

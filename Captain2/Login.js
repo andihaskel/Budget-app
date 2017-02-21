@@ -18,6 +18,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Style from './Styles';
 import { Col, Row, Grid } from "react-native-easy-grid";
 import TextField from 'react-native-md-textinput';
+import storage from './session';
+
 
 const styles = StyleSheet.create({
 	pointsView: {
@@ -44,19 +46,54 @@ const styles = StyleSheet.create({
 class FirstPage extends Component {
 	constructor (props) {
 		super(props);
-		this.input={email:'', password:''};
+		this.state={email:'', password:''};
 	}
 
 	signUp() {
 		this.props.navigator.push({id:'signUp'});
 	}
 	login() {
-		if(this.input.email === 'gabibur@gmail.com' && this.input.password === 'gabi'){
-			this.props.navigator.push({id:'tabs'});
-		} else {
-			ToastAndroid.show('Incorrect User/Password', ToastAndroid.SHORT);
-		}
+		
+    		var loggedUser= {};
+			fetch("http://10.0.2.2:3000/login", {
+			   headers: {
+	          'Accept': 'application/json',
+	          'Content-Type': 'application/json'
+	        },
+	            method: "POST",
+	            body: JSON.stringify({email: this.state.email, password: this.state.password })
+	        }).then(response => {
+	            return response.json();
+	        }).then(responseData => {
+					console.log(responseData);
+	        		if(responseData){
+	        				loggedUser = responseData;
+	        				console.log('encontrado', storage); 				
+					        
+
+	        				//ACA SE GUARDA
+					
+	        		}
+	           		else {
+	           			console.log('no encontrado');
+	           		}
+	                });
+
 	}
+
+
+// 		if(this.input.email === 'gabibur@gmail.com' && this.input.password === 'gabi'){
+// 			this.props.navigator.push({id:'tabs'});
+// 			storage.save({
+//    				 key: 'user',  // Note: Do not use underscore("_") in key!
+//     			 id: '1001',   // Note: Do not use underscore("_") in id!    
+//     			 rawData: userA,
+//   				  expires: 1000 * 60   
+// });
+// 		} else {
+// 			ToastAndroid.show('Incorrect User/Password', ToastAndroid.SHORT);
+// 		}
+	
 
 	render () {
 		return  (
@@ -69,7 +106,7 @@ class FirstPage extends Component {
 							labelColor={'#FFF'}
 							textColor={'#FFF'}
 							highlightColor={'#00BCD4'}
-							onChangeText={(email) => this.input.email = email}
+							onChangeText={(email) => this.state.email = email}
 							inputStyle={{fontSize:20, height:50}}
 						/>
 						<TextField
@@ -78,7 +115,7 @@ class FirstPage extends Component {
 							textColor={'#FFF'}
 							highlightColor={'#00BCD4'}
 							secureTextEntry={true}
-							onChangeText={(pass) => this.input.password = pass}
+							onChangeText={(pass) => this.state.password = pass}
 							inputStyle={{fontSize:20, height:40}}
 						/>
 					</View>

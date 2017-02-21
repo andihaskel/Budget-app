@@ -10,7 +10,7 @@ var objectiveSchema = new Schema ({
       amountToSavePerMonth: Number,
       currentAmount: {type:Number, required: true},
       isAchived: Boolean,
-      dateToAchive: Date,
+      achiveIn: Number,
       userId: {type: Schema.Types.ObjectId, ref: 'User'},
 
 });

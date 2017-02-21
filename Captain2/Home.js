@@ -89,7 +89,6 @@ class Home extends Component {
 	}
 
 	render() {
-		console.log(this.state.monthlyPayments);
 		return(
 			<View style={styles.container}>
 				<Text style={styles.textImportado}>Budget</Text>

@@ -86,16 +86,18 @@ class Objectives extends Component {
   }
 
   deleteObjective(item) {
-    return fetch('http://10.0.2.2:3000/objective/' + this.state.itemSelected._id, {
+    fetch('http://10.0.2.2:3000/objective/' + this.state.itemSelected._id, {
       method: 'delete'
     }).then(response =>
       response.json().then(json => {
+        console.log('RETORNO');
         return json;
       })
     );
   }
 
   componentWillMount() {
+    console.log('will mount obj');
     fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/objectives')
     .then((response) => response.json())
     .then((responseData) => {
@@ -149,7 +151,7 @@ class Objectives extends Component {
                       <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{'$' + item.currentAmount} {'\n'}pledged</Text>
                     </Col>
                     <Col>
-                      <Text style={{fontSize:Style.CARD_FONT_SIZE}}> {parseInt((Date.parse(item.dateToAchive) - date)/86400000)} {'\n'}days to go</Text>
+                      <Text style={{fontSize:Style.CARD_FONT_SIZE}}> {item.achiveIn} {'\n'}days to go</Text>
                     </Col>
                   </Grid>
 

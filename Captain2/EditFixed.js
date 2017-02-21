@@ -96,10 +96,11 @@ this.setState({ title: responseData.name, price: responseData.amount, monthly: r
   deletePayment() {
      ToastAndroid.show('Deleted correctly', ToastAndroid.SHORT);
      this.props.navigator.pop(); 
-     return fetch('http://10.0.2.2:3000/payment/' + this.props.item, {
+     fetch('http://10.0.2.2:3000/payment/' + this.props.item, {
       method: 'delete'
     }).then(response =>
       response.json().then(json => {
+        console.log(json);
         return json;
       })
     );

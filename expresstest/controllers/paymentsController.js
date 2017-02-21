@@ -21,6 +21,10 @@ module.exports = {
   },
 
   editPayment: function (req, res) {
+    var now = new Date();
+    var actualDate = new Date (now.getFullYear(), now.getMonth(), now.getDate() + 1);
+    var initialMonthlyDate = new Date (actualDate.getFullYear(), actualDate.getMonth(), 02);
+
     var query = {"_id": req.params.payment};
     console.log(query);
 
@@ -29,8 +33,13 @@ module.exports = {
 Payment.findOneAndUpdate(query, update, options, function(err, Payment) {
   if (err) {
     console.log('got an error');
+  } else if ((Payment.paymentDate > initialMonthlyDate) && (Payment.paymentDate < actualDate)) {
+      console.log(Payment);
+  } else {
+    res.code(404).send();
+    console.log('el payment no es de este mes');
   }
-  console.log(Payment);
+
 
   console.log('edito payment');
 
@@ -95,14 +104,16 @@ Payment.findOneAndUpdate(query, update, options, function(err, Payment) {
     });
   },
 
-  getSpecificIncomes: function (req, res) {
-    var initialDate = new Date(req.params.initialDate);
-    var finalDate = new Date(req.params.finalDate);
+  getPaymentsForSpecificDate: function (req, res) {
+    var now = new Date(req.params.date);
+    var initialDate = new Date(now.getFullYear(), now.getMonth(), 02)
+    var finalDate = new Date(now.getFullYear(), now.getMonth() + 1, 02);
+    console.log(initialDate);
+    console.log(finalDate);
     mongoose.model('User').findById(req.params.user, function (err, User){
-      mongoose.model('Payment').find({'userId': User._id,
-      'paymentDate': { $gte: initialDate , $lte: finalDate},
-      'isIncome': true,
-
+      mongoose.model('Payment').find({
+        'userId': User._id,
+        'paymentDate': { $gte: initialDate , $lte: finalDate}
     },
     function(err, Payment) {
       res.send(Payment);
@@ -110,20 +121,7 @@ Payment.findOneAndUpdate(query, update, options, function(err, Payment) {
   });
 },
 
-getSpecificExcomes: function (req, res) {
-  var initialDate = new Date(req.params.initialDate);
-  var finalDate = new Date(req.params.finalDate);
-  mongoose.model('User').findById(req.params.user, function (err, User){
-    mongoose.model('Payment').find({'userId': User._id,
-    'paymentDate': { $gte: initialDate , $lte: finalDate},
-    'isIncome': false,
 
-  },
-  function(err, Payment) {
-    res.json(Payment);
-  });
-});
-},
 
 getMonthlyBalance: function(req, res) {
   var now = new Date();
@@ -150,6 +148,11 @@ getMonthlyBalance: function(req, res) {
   });
 });
 }
+
+// transferBalanceToSavings: function() {
+//
+//
+// }
 
 
 }

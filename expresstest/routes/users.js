@@ -7,10 +7,11 @@ var Payment = require ('./payments')
 
 
 var userSchema = new Schema ({
-      userName: String,
-      password: String,
-      email: String,
+      userName: {type: String, required: true},
+      password: {type: String, required: true},
+      email: {type: String, required: true},
       balance: { type: Number, default: 0 },
+      dateCreated: {type: Date, default: new Date()},
       savingsId: {type: Schema.Types.ObjectId, ref: 'SavingsAccount'},
 });
 

@@ -30,10 +30,13 @@ class History extends Component {
     super(props);
     this.editFixed = this.editFixed.bind(this);
     this.updateMonth = this.updateMonth.bind(this);
+    this.loadPayments = this.loadPayments.bind(this);
+   
     this.state = {
-      months: [{month:'January', year: 2017},{month:'February', year:2017}],
-      paymentsHistory: [{name:'Gasto 1', amount: 150}],
-      selectedValue: 'January-2017',
+      months: [],
+      selectedValue: '',
+       paymentsHistory: [],
+       savingsAccount: {}
     };
   }
 
@@ -42,11 +45,48 @@ class History extends Component {
   }
 
   updateMonth(item) {
-    this.setState({paymentsHistory: [{name:'Gasto 2', amount: 200, isIncome:true}],
-    selectedValue: item});
+    this.setState({selectedValue: item});
+    this.loadPayments(item);
   }
 
+  loadPayments(month) {
+    fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/payments/' + month)
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({paymentsHistory: responseData});
+
+    })
+    .catch(function(err) {
+      console.log('Fetch Error', err);
+    });
+
+  }
+  componentWillMount() {
+    fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/monthsActive')
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({months: responseData});
+      this.setState({selectedValue: this.state.months[0]});
+      this.loadPayments(this.state.selectedValue);
+
+    })
+    .catch(function(err) {
+      console.log('Fetch Error', err);
+
+    });
+
+    fetch('http://10.0.2.2:3000/5891e76d1f3d5d7aefb2e830/savings')
+    .then((response) => response.json())
+    .then((responseData) => {
+      this.setState({savingsAccount: responseData});
+    })
+    .catch(function(err) {
+      console.log('Fetch Error', err);
+    });
+  }
+ 
   render() {
+    console.log(this.state.selectedValue);
     return (
       <View>
         <Header>
@@ -57,7 +97,7 @@ class History extends Component {
         </Header>
         <View style={{alignItems:'center', width:Style.DEVICE_WIDTH}}>
         <Text style={{marginTop:10, fontSize:35}}>Savings</Text>
-        <Text  style={{marginTop:10, fontSize:30}}>$30000</Text>
+        <Text  style={{marginTop:10, fontSize:30}}>$ {this.state.savingsAccount.balance}</Text>
         <Text style={{marginTop:10, fontSize:25}}>History</Text>
       </View>
         <Picker
@@ -69,14 +109,14 @@ class History extends Component {
           { this.state.months.map((s,i) => {
             return (<Picker.Item
               key = {i}
-              value={s.month + '-' + s.year}
-              label={s.month + ' ' + s.year} />)
+              value={s}
+              label={s} />)
             }) }
           </Picker>
           <ScrollView>
             <List dataArray={this.state.paymentsHistory}
               renderRow= {(item) =>
-                <ListItem button onPress={(item) => {this.editFixed(item)}}>
+                <ListItem button onPress={() => {this.editFixed(item)}}>
                   <View style={{flex:1, flexDirection:'row', justifyContent:'space-between'}}>
                     <Grid>
                       <Row>

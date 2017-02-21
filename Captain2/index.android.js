@@ -47,7 +47,6 @@ import SignUp from './SignUp';
 var t = require('tcomb-form-native');
 
 
-
 var Form = t.form.Form;
 const styles = StyleSheet.create({
   container: {
@@ -155,6 +154,7 @@ export default class Captain2 extends Component {
   }
 
   navigatorRenderScene(route, navigator) {
+
     _navigator = navigator;
     var show = null;
     switch (route.id) {
@@ -175,7 +175,7 @@ export default class Captain2 extends Component {
       case 'fixed':
       return <DetailExpenses navigator={navigator} openDrawer={this.openDrawer} />
       case 'signUp':
-      return <SignUp navigator={navigator} />
+      return <SignUp navigator={navigator}/>
       case 'history':
       return <History navigator={navigator} openDrawer={this.openDrawer} />
       case 'login':
