@@ -44,9 +44,7 @@ import DetailExpenses from './DetailExpenses';
 import History from './History';
 import Login from './Login';
 import SignUp from './SignUp';
-var t = require('tcomb-form-native');
 import Realm from 'realm';
-var Form = t.form.Form;
 
 const styles = StyleSheet.create({
   container: {
@@ -77,11 +75,7 @@ const styles = StyleSheet.create({
     color: 'white',
   }
 });
-var Person = t.struct({
-  username: t.String,
-  password: t.String,
-});
-var options = {};
+
 
 BackAndroid.addEventListener('hardwareBackPress', () => {
   if (_navigator.getCurrentRoutes().length === 1  ) {
