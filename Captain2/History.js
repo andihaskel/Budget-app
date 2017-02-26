@@ -42,7 +42,7 @@ class History extends Component {
   }
 
   editFixed(item){
-    this.props.navigator.push({id: 'editFixed', data: item._id});
+    this.props.navigator.push({id: 'editFixed', data: item._id, previousWindow: 'history'});
   }
 
   updateMonth(item) {

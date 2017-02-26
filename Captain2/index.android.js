@@ -251,7 +251,7 @@ return (
     renderNavigationView={() => navigationView}>
     <Navigator
       ref='NAVIGATOR'
-      initialRoute={this.state.isLogged ? {id:'tabs', initialPage:1} : {id:'login'}}
+      initialRoute={this.state.isLogged ? {id:'login', initialPage:1} : {id:'login'}}
       renderScene={this.navigatorRenderScene}
       configureScene={(route, routeStack) =>
         Navigator.SceneConfigs.FadeAndroid}

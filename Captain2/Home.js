@@ -83,7 +83,6 @@ class Home extends Component {
 		} else {
 			console.log('ERROR, NO SE ENCONTRO UN USUARIO');
 		}
-
 		fetch('http://10.0.2.2:3000/' + userId + '/payments/monthlyPayments')
 		.then((response) => response.json())
 		.then((responseData) => {

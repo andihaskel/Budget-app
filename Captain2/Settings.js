@@ -79,7 +79,7 @@ class Configuration extends Component {
       handler: this.goBack,
     }
     return (
-      <View>
+      <View >
         <Header>
           <Button block transparent onPress={this.props.openDrawer}>
             <Icon name='bars' size={30} />
@@ -97,20 +97,20 @@ class Configuration extends Component {
           </View>)
           :
           (
-            <View style={{height: 300, width: 500}}>
-              <Content style={{height: 50, width: 400}} >
-                <Grid>
-                  <Row style = {{backgroundColor:'rgb(20,255,20)'}}>
-                    <Text style={{top: 20, left: 12, margin: 20, fontSize: 20}}>Full name</Text>
+            <View style={{height: 1000, width: 600}}>
+              <Content style={{height: 1000, width: 600}} >
+                <Grid style={{height: 500, width: 400}}>
+                  <Row>
+                    <Text style={{top: 20, left: 12, margin: 5, fontSize: 20}}>Full name</Text>
                   </Row>
 
                   <Row>
-                    <Text style={{fontSize: 17}}>Gabriel Bursztein</Text>
+                    <Text style={{fontSize: 17, margin: 5, top: 16, left: 10}}>Gabriel Bursztein</Text>
                   </Row>
                   <Row>
-                    <Text >Email</Text>
+                    <Text style={{fontSize: 20, margin: 5, top: 20, left: 10}}>Email</Text>
                   </Row>
-                  <Text style={{fontSize: 17}}>gabibur@gmail.com</Text>
+                  <Text style={{fontSize: 20, margin: 5, top: 16, left: 10}}>gabibur@gmail.com</Text>
                   <Button block warning style={{position:'absolute', top:200, left:20, width:340, height:35}} onPress={this.edit}>Edit</Button>
 
                 </Grid>

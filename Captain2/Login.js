@@ -72,6 +72,7 @@ class FirstPage extends Component {
 				realm.write(() => {
 					realm.create('User', {name: loggedUser.userName, id: loggedUser._id});
 				});
+
 				this.props.navigator.push({id:'tabs', initialPage:1});
 			}
 			else {

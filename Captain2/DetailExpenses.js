@@ -37,7 +37,17 @@ class DetailExpenses extends Component {
 	var incomes= [];
 	var expenses = [];
 
-	fetch('http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payments/fixedPayments')
+	var userId = '';
+	let realm = new Realm({
+			schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+		});
+		if(realm.objects('User').length>0){
+			userId = realm.objects('User')[0].id;
+		} else {
+			console.log('ERROR, NO SE ENCONTRO UN USUARIO');
+		}
+
+	fetch('http://10.0.2.2:3000/'+ userId+'/payments/fixedPayments')
     .then((response) => response.json())
     .then((responseData) => {
 

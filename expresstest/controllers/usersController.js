@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var User = require ('../routes/users');
 var moment = require('moment');
-
+var SavingsAccount = require ('../routes/savingsAccounts');
 
 
 module.exports = {
@@ -34,11 +34,13 @@ module.exports = {
   login: function(req,res,next) {
     console.log('login');
     mongoose.model('User').findOne({'email': req.body.email, 'password': req.body.password}, function(err,User) {
+        console.log('entro al user');
         if(err){
           res.status(500).send();
         }
         if(!User){
-          res.code(404).send();
+
+          res.status(404).send();
         }
         if(User){
           console.log('user', User);
@@ -51,10 +53,20 @@ module.exports = {
       var newUser = new User (req.body);
       console.log(newUser);
       newUser.save(function(err){
+        var account = new SavingsAccount({
+            _id: newUser.savingsId,
+            name: 'savings Account from' + newUser.userName
+        });
+        account.save(function(err){
+          if(err){
+            console.log(err);
+          }
+        });
         if(err){
           console.log('error',err);
         }
       });
+      console.log('account',account);
   }
 
 

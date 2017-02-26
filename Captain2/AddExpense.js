@@ -44,6 +44,16 @@ class AddExpense extends Component {
       ToastAndroid.show('Must ingress price', ToastAndroid.SHORT);
     }else{
 
+    var userId = '';
+    let realm = new Realm({
+      schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+    });
+    if(realm.objects('User').length>0){
+      userId = realm.objects('User')[0].id;
+    } else {
+      console.log('ERROR, NO SE ENCONTRO UN USUARIO');
+    }
+
       var expense = {
         name: this.state.name,
         amount: this.state.amount,
@@ -51,7 +61,7 @@ class AddExpense extends Component {
         isIncome: false,
         isMonthly: this.state.monthly
       }
-      fetch("http://10.0.2.2:3000/589af71dd65dfe0b102b164e/payment",
+      fetch("http://10.0.2.2:3000/"+ userId +"/payment",
       {
         headers: {
           'Accept': 'application/json',

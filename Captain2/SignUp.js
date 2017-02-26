@@ -50,12 +50,12 @@ class Login extends Component {
 	}
 
 	createUser() {
-		if(this.state.name == ''){
+		if(this.input.name == ''){
 			ToastAndroid.show('Must ingress name', ToastAndroid.SHORT);
-		}else if(this.state.password == ''){
+		}else if(this.input.password == ''){
 			console.log('entra pass')
 			ToastAndroid.show('Must ingress password', ToastAndroid.SHORT);
-		}else if (this.state.email == ''){
+		}else if (this.input.email == ''){
 			ToastAndroid.show('Must ingress email', ToastAndroid.SHORT);
 		}else {
 			var User = {
@@ -125,7 +125,7 @@ class Login extends Component {
 							labelColor={'#FFF'}
 							textColor={'#FFF'}
 							highlightColor={'#00BCD4'}
-							onChangeText={(pass) => this.state.password = pass}
+							onChangeText={(pass) => this.input.password = pass}
 							secureTextEntry={true}
 							inputStyle={{fontSize:20, height:45}}
 						/>

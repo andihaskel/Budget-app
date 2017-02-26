@@ -48,9 +48,8 @@ class AddObjective extends Component {
     var ret = 0;
     if(this.state.price !== '0' && this.state.savePerMonth !== '0'){
       var aux = parseInt(this.state.price) / parseInt(this.state.savePerMonth);
-      ret = aux;
+      this.setState({achivedIn: aux}); 
     }
-    return ret;
   }
 
 
@@ -62,7 +61,7 @@ class AddObjective extends Component {
       ToastAndroid.show('Must ingress price', ToastAndroid.SHORT);
     }
     else{
-      console.log(this.state.achivedIn);
+      console.log('achived in :', this.state.achivedIn);
       var objective ={
         name: this.state.name,
         amountToSavePerMonth: this.state.savePerMonth,
@@ -70,10 +69,19 @@ class AddObjective extends Component {
         currentAmount: this.state.currentAmount,
         isAchived: this.state.isAchived,
         achiveIn: this.state.achivedIn,
-
       }
 
-      fetch("http://10.0.2.2:3000/589af71dd65dfe0b102b164e/objective",
+    var userId = '';
+    let realm = new Realm({
+      schema: [{name: 'User', properties: {name: 'string', id: 'string'}}]
+    });
+    if(realm.objects('User').length>0){
+      userId = realm.objects('User')[0].id;
+    } else {
+      console.log('ERROR, NO SE ENCONTRO UN USUARIO');
+    }
+
+      fetch("http://10.0.2.2:3000/"+ userId +"/objective",
       {
         headers: {
           'Accept': 'application/json',
