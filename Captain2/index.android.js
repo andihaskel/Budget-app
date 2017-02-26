@@ -38,7 +38,6 @@ import Tabs from './Tabs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EditFixed from './EditFixed';
 import AddObjective from './AddObjective';
-import Settings from './Settings';
 import AddFromSavings from './AddFromSavings';
 import DetailExpenses from './DetailExpenses';
 import History from './History';
@@ -146,8 +145,6 @@ export default class Captain2 extends Component {
       return <EditFixed navigator={navigator} item={route.data} previousWindow={route.previousWindow} />
       case 'addObjective':
       return <AddObjective navigator={navigator} />
-      case 'settings':
-      return <Settings openDrawer={this.openDrawer} navigator={navigator}/>
       case 'addFromSavings':
       return <AddFromSavings navigator={navigator} item={route.data}/>
       case 'fixed':
@@ -206,7 +203,7 @@ componentWillMount() {
 }
 
 render() {
-  var items = [{name:'Home', icon:'home', id:'tabs'}, {name: 'Settings', icon:'cog', id:'settings'}, {name:'Savings History', icon:'history', id:'history'},{name:'Fixed', icon:'money', id:'fixed'}, {name:'Close session', icon:'power-off', id:'closeSession'}]
+  var items = [{name:'Home', icon:'home', id:'tabs'}, {name:'Savings History', icon:'history', id:'history'},{name:'Fixed', icon:'money', id:'fixed'}, {name:'Close session', icon:'power-off', id:'closeSession'}]
   var navigationView = (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <View>
@@ -245,7 +242,7 @@ return (
     renderNavigationView={() => navigationView}>
     <Navigator
       ref='NAVIGATOR'
-      initialRoute={this.state.isLogged ? {id:'login', initialPage:1} : {id:'login'}}
+      initialRoute={this.state.isLogged ? {id:'tabs', initialPage:1} : {id:'login'}}
       renderScene={this.navigatorRenderScene}
       configureScene={(route, routeStack) =>
         Navigator.SceneConfigs.FadeAndroid}

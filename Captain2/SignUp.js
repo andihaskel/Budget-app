@@ -53,7 +53,6 @@ class Login extends Component {
 		if(this.input.name == ''){
 			ToastAndroid.show('Must ingress name', ToastAndroid.SHORT);
 		}else if(this.input.password == ''){
-			console.log('entra pass')
 			ToastAndroid.show('Must ingress password', ToastAndroid.SHORT);
 		}else if (this.input.email == ''){
 			ToastAndroid.show('Must ingress email', ToastAndroid.SHORT);

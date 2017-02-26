@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
 
 class Home extends Component {
 	constructor(props) {
-		console.log('Constructor Home');
 		super(props);
 		this.state = {fill:0,
 			monthlyPayments:[],

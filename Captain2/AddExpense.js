@@ -37,7 +37,6 @@ class AddExpense extends Component {
     this.state={name: '', amount: 0, categories: [], paymentId: '', categorySelected: {}, coin: 'shk', monthly: false}
   }
   sendExpense() {
-    console.log(this.state.name);
     if(this.state.name == ''){
       ToastAndroid.show('Must ingress name', ToastAndroid.SHORT);
     }else if(this.state.amount == 0){
@@ -50,9 +49,7 @@ class AddExpense extends Component {
     });
     if(realm.objects('User').length>0){
       userId = realm.objects('User')[0].id;
-    } else {
-      console.log('ERROR, NO SE ENCONTRO UN USUARIO');
-    }
+    } 
 
       var expense = {
         name: this.state.name,

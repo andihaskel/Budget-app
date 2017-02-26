@@ -61,7 +61,6 @@ class AddObjective extends Component {
       ToastAndroid.show('Must ingress price', ToastAndroid.SHORT);
     }
     else{
-      console.log('achived in :', this.state.achivedIn);
       var objective ={
         name: this.state.name,
         amountToSavePerMonth: this.state.savePerMonth,
@@ -77,9 +76,7 @@ class AddObjective extends Component {
     });
     if(realm.objects('User').length>0){
       userId = realm.objects('User')[0].id;
-    } else {
-      console.log('ERROR, NO SE ENCONTRO UN USUARIO');
-    }
+    } 
 
       fetch("http://10.0.2.2:3000/"+ userId +"/objective",
       {

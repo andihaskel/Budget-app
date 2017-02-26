@@ -63,7 +63,6 @@ class FirstPage extends Component {
 		}).then(response => {
 			return response.json();
 		}).then(responseData => {
-			console.log(responseData);
 			if(responseData){
 				loggedUser = responseData;
 				let realm = new Realm({

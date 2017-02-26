@@ -45,7 +45,6 @@ class TabsComponent extends Component {
 		}
 	}
 
-	//ACA EMPIEZA LO NUEVO
 	_handleChangeTab = (index) => {
 		const CustomLayoutLinear = {
 			duration: 100,
@@ -112,7 +111,6 @@ class TabsComponent extends Component {
 		}
 
 		renderButton() {
-			console.log('Render button');
 			if (this.state.isVisibleHome) {
 				return (<ActionButton  buttonColor="#2BB0FF" bgColor='rgba(50,50,50,0.8)' icon={<Icon name="pencil" style={styles.actionButtonIcon} />}>
 				<ActionButton.Item buttonColor='#C51428' title="Add expense" onPress={this.addExpense.bind(this)}>

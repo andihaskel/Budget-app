@@ -33,7 +33,6 @@ const IconTabBar = React.createClass({
     });
   },
 
-  //color between rgb(59,89,152) and rgb(204,204,204)
   iconColor(progress) {
     const red = 59 + (204 - 59) * progress;
     const green = 89 + (204 - 89) * progress;
