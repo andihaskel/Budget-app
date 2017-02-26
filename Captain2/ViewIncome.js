@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 
+
 class ViewIncome extends Component {
   constructor(props){
     super(props);
