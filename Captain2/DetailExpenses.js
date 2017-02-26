@@ -15,7 +15,6 @@ import {
 	ListItem,
 	Badge
 } from 'native-base';
-import details from './demoData';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 

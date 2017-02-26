@@ -26,8 +26,6 @@ import {
   ListItem,
   Thumbnail
 } from 'native-base';
-import Dialogo from './Dialogo';
-import Page2 from './Page2';
 import ScrollableTabView, {DefaultTabBar, } from 'react-native-scrollable-tab-view';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Home from './Home';
