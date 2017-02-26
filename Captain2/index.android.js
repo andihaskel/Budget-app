@@ -207,7 +207,7 @@ render() {
       <View>
         <Image source={require('./sideBarTop.jpg')}  style={{height:Style.DRAWER_IMAGE_HEIGHT, width:Style.DRAWER_WIDTH}}>
         <View style={{marginTop:30, marginLeft: 10}}>
-          <Text style={{marginTop:5, fontSize:Style.DRAWER_FONT_SIZE}}>Captain Up</Text>
+          <Text style={{marginTop:5, fontSize:Style.DRAWER_FONT_SIZE}}>Jhon Smith</Text>
         </View>
       </Image>
     </View>

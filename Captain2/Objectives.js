@@ -162,7 +162,7 @@ class Objectives extends Component {
                       <Text  style={{fontSize:Style.CARD_FONT_SIZE}}>{'$' + item.currentAmount} {'\n'}pledged</Text>
                     </Col>
                     <Col>
-                      <Text style={{fontSize:Style.CARD_FONT_SIZE}}> {item.dateToAchive} {'\n'}days to go</Text>
+                      <Text style={{fontSize:Style.CARD_FONT_SIZE}}> 7 {'\n'}days to go</Text>
                     </Col>
                   </Grid>
 
